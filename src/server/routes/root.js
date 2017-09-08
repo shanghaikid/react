@@ -4,7 +4,7 @@ import serve from 'koa-better-static2';
 import css from '../../assets/css/style.scss';
 import template from '../templates/root.html';
 
-// create route
+// create router
 const router = new Router();
 // static assets
 router.get('/assets/*', serve('.'));

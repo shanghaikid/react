@@ -1,8 +1,8 @@
 import Router from 'koa-router';
 import path from 'path';
 import serve from 'koa-better-static2';
-import css from './../assets/css/style.scss';
-import template from 'html-loader!./../templates/root.html';
+import css from '../../assets/css/style.scss';
+import template from '../templates/root.html';
 
 // create route
 const router = new Router();

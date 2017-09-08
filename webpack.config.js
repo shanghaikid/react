@@ -35,13 +35,26 @@ let config = {
                 test: /\.scss$/,
                 use: extractSass.extract({
                     use: [{
-                        loader: "css-loader"
+                        loader: 'css-loader'
                     }, {
-                        loader: "sass-loader"
+                        loader: 'sass-loader'
                     }],
                     // use style-loader in development
-                    fallback: "style-loader"
+                    fallback: 'style-loader'
                 })
+            },
+            {
+                test: /\.(svg|png|jpg|gif)$/,
+                use: [
+                  {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[path][name].[ext]',
+                        context: 'src',
+                        publicPath: '/', // make it absolute to root, eg: /assets/images/loading.svg
+                    }
+                  }
+                ]
             }
         ]
     },

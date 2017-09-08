@@ -1,0 +1,11 @@
+.loading {
+  background: url(/assets/images/loading.svg) no-repeat center; }
+
+.test {
+  background: url(/assets/images/others/test.svg) no-repeat center; }
+
+body a {
+  color: #06C;
+  background: red; }
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhc3NldHMvY3NzL3N0eWxlLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/

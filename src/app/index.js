@@ -1,5 +1,5 @@
+App = {};
 
-let d = () => {console.log('test')};
-let testObj = {a: 1, b:2};
-let {a, b} = testObj
-console.log('test', a, b);
+App.render = function(text, node) {
+    node.innerHTML = text + '<h4>test2</h4>';
+};

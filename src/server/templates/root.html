@@ -3,10 +3,18 @@
     <head>
         <meta charset="UTF-8"/>
         <title>server template</title>
-        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+        <script src="public/app.js"></script>
     </head>
     <body>
         <div class="loading"></div>
-        <p>You have ${input.count} messages</p>
+        <div id="root"></div>
     </body>
+
+    <script>
+        App.render(
+            '<h1>hello2</h1>',
+            document.getElementById('root')
+        );
+    </script>
 </html>

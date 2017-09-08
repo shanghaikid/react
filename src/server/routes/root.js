@@ -1,17 +1,16 @@
 import Router from 'koa-router';
 import path from 'path';
 import serve from 'koa-better-static2';
-import css from '../../assets/css/style.scss';
+import css from 'css/style.scss';
 import template from '../templates/root.html';
 
 // create router
 const router = new Router();
 // static assets
-router.get('/assets/*', serve('.'));
+router.get('/public/*', serve('.'));
 
 // root
 router.get('/', async function (ctx, next) {
-    ctx.type = 'html';
     ctx.body = template;
 });
 

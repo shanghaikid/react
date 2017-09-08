@@ -1,7 +1,6 @@
 * feature
     ** using template
     ** nicer logger
-    ** using app in server
 
 * gulp (only for development)
     ** copy to lib-dev

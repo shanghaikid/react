@@ -11,11 +11,18 @@ Object
     });
 
 const extractSass = new ExtractTextPlugin({
-    filename: 'assets/css/style.css'
+    filename: 'public/css/style.css'
 });
 
 // Add common Configuration
 let config = {
+    resolve: {
+        alias: {
+            css: path.resolve(__dirname, 'src/public/css'),
+            images: path.resolve(__dirname, 'src/public/images'),
+            components: path.resolve(__dirname, 'src/components')
+        }
+    },
     module: {
         rules: [
             {
@@ -51,7 +58,7 @@ let config = {
                     options: {
                         name: '[path][name].[ext]',
                         context: 'src',
-                        publicPath: '/', // make it absolute to root, eg: /assets/images/loading.svg
+                        publicPath: '/', // make it absolute to root, eg: /public/images/loading.svg
                     }
                   }
                 ]
@@ -80,7 +87,7 @@ let app = {...config,
     entry: ['./src/app/index.js'],
     output: {
         filename: 'app.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist/public')
     }
 }
 

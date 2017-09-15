@@ -1,8 +1,12 @@
-.loading {
+body .hide {
+  display: none !important; }
+
+body .loading {
   background: url(/public/images/loading.svg) no-repeat center; }
 
-.test {
-  background: url(/public/images/others/test.svg) no-repeat center; }
+body footer small {
+  color: gray;
+  font-size: 11px; }
 
 body a {
   color: #06C;

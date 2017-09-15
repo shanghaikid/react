@@ -84,11 +84,19 @@ let server = {...config,
 
 // front-end app config
 let app = {...config,
-    entry: ['./src/app/index.js'],
+    entry: ['./src/app/app.js'],
     output: {
         filename: 'app.js',
         path: path.resolve(__dirname, 'dist/public')
     }
 }
 
-module.exports = [server, app];
+// entry
+let index = {...config,
+    entry: ['./src/app/index.js'],
+    output: {
+        filename: 'index.js',
+        path: path.resolve(__dirname, 'dist/public')
+    }
+}
+module.exports = [server, app, index];

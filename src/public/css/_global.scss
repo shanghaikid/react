@@ -1,6 +1,16 @@
-.loading {
-    background: url(../images/loading.svg) no-repeat center;
-}
-.test {
-    background: url(../images/others/test.svg) no-repeat center;
+body {
+    .hide {
+        display: none !important;
+    }
+
+    .loading {
+        background: url(../images/loading.svg) no-repeat center;
+    }
+
+    footer {
+        small {
+            color: gray;
+            font-size: 11px;
+        }
+    }
 }

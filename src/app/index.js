@@ -1,5 +1,3 @@
-App = {};
-
-App.render = function(text, node) {
-    node.innerHTML = text + '<h4>test2</h4>';
-};
+import App from './app';
+window.App = App;
+App.init();

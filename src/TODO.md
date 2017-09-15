@@ -1,5 +1,4 @@
 * feature
-    ** using template
     ** nicer logger
 
 * gulp (only for development)
@@ -11,11 +10,6 @@
     ** test suit
     ** benchmark suit
 
-* others
-    ** .babel.rc
-
 * scss mixins
     ** color
     ** icon
-
-* eslinter

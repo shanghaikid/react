@@ -6,9 +6,9 @@ const page = (ctx) => `<!doctype html>
 
     <script>
         App.render(
-            '<h1>hello2</h1>',
-            document.getElementById('root')
-        );
+            document.getElementById('root'),
+            '<h1>hello2</h1>'
+                    );
     </script>
 
     ${footer_tpl(ctx)}

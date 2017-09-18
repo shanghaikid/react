@@ -7,7 +7,6 @@
 
 * test
     ** headless chrome
-    ** test suit
     ** benchmark suit
 
 * scss mixins

@@ -1,10 +1,11 @@
+@import 'loading';
+.hidden {
+    display: none !important;
+}
 body {
-    .hide {
-        display: none !important;
-    }
-
-    .loading {
-        background: url(../images/loading.svg) no-repeat center;
+    a {
+        color: #06C;
+        background: red;
     }
 
     footer {

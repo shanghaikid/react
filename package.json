@@ -9,7 +9,7 @@
     "build": "webpack",
     "watch": "npm run clean && `npm bin`/webpack --watch --verbose",
     "start": "webpack --config webpack.config.js",
-    "server": "cd dist && NODE_ENV=dev nodemon --config ./nodemon.json server.js --watch server.js",
+    "server": "cd dist && NODE_ENV=dev nodemon --config ./nodemon.json server.js",
     "debug": "cd dist && node --nolazy --inspect-brk=5858 server.js"
   },
   "author": "jiangruiyi@gmail.com",
@@ -21,10 +21,8 @@
     "koa-router": "^7.2.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
-    "babel-plugin-istanbul": "^4.1.4",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.26.0",
     "css-loader": "^0.28.7",
@@ -50,6 +48,9 @@
   },
   "nodemonConfig": {
     "verbose": true,
+    "watch": [
+      "server.js"
+    ],
     "ignore": [
       "test/*",
       "docs/*"

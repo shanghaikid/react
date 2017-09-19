@@ -1,0 +1,22 @@
+<!doctype html>
+<!-- you still can use html in the routes by require or import static html file, then you need to assign it to the body -->
+<!-- if you want to render context, please see ./templates.js instead -->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>server template</title>
+        <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+        <script src="public/app.js"></script>
+    </head>
+    <body>
+        <div class="loading"></div>
+        <div id="root"></div>
+    </body>
+
+    <script>
+        App.render(
+            '<h1>hello2</h1>',
+            document.getElementById('root')
+        );
+    </script>
+</html>

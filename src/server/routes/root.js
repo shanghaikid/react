@@ -1,6 +1,5 @@
 import Router from 'koa-router';
 import serve from 'koa-better-static2';
-import 'css/style.scss';
 import page from '../templates/templates';
 
 // create router

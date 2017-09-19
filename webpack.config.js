@@ -72,7 +72,7 @@ let config = {
 };
 
 // server config
-let server = {...config,
+let server = Object.assign({}, config, {
     entry: ['./src/server/index.js'],
     output: {
         filename: 'server.js',
@@ -80,23 +80,23 @@ let server = {...config,
     },
     target: 'node',
     externals: nodeModules
-}
+});
 
 // front-end app config
-let app = {...config,
+let app = Object.assign({}, config, {
     entry: ['./src/app/app.js'],
     output: {
         filename: 'app.js',
         path: path.resolve(__dirname, 'dist/public')
     }
-}
+});
 
 // entry
-let index = {...config,
+let index = Object.assign({}, config, {
     entry: ['./src/app/index.js'],
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist/public')
     }
-}
+});
 module.exports = [server, app, index];

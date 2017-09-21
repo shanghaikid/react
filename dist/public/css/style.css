@@ -1,0 +1,17 @@
+.loading {
+  background: url(/../../public/images/loading.svg) no-repeat center; }
+
+.hidden {
+  display: none !important; }
+
+body a {
+  color: #06C;
+  text-decoration: underline;
+  background: red; }
+
+body footer small {
+  color: gray;
+  font-size: 11px; }
+
+body a {
+  color: #06C; }

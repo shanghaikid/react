@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "test": "mocha --compilers js:babel-core/register $(find src -name '*.test.js')",
-    "build": "webpack",
+    "build": "npm run clean && webpack",
     "watch": "npm run clean && `npm bin`/webpack --watch --verbose",
     "start": "cd dist && node server.js",
     "server": "cd dist && NODE_ENV=dev nodemon --config ./nodemon.json server.js",

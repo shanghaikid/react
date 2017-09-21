@@ -99,4 +99,50 @@ let index = Object.assign({}, config, {
         path: path.resolve(__dirname, 'dist/public')
     }
 });
-module.exports = [server, app, index];
+
+const extractSass2 = new ExtractTextPlugin({
+    filename: 'style.css'
+});
+
+// entry
+let style = {
+    entry: ['./src/public/css/style.scss'],
+    output: {
+        filename: '_', // we don't need this file
+        path: path.resolve(__dirname, 'dist/public/css')
+    },
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: extractSass2.extract({
+                    use: [{
+                        loader: 'css-loader'
+                    }, {
+                        loader: 'sass-loader'
+                    }],
+                    // use style-loader in development
+                    fallback: 'style-loader'
+                })
+            },
+            {
+                test: /\.(svg|png|jpg|gif)$/,
+                use: [
+                  {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[path][name].[ext]',
+                        context: 'src',
+                        outputPath: '../../',
+                        publicPath: '/', // make it absolute to root, eg: /public/images/loading.svg
+                    }
+                  }
+                ]
+            }
+        ]
+    },
+    plugins: [
+        extractSass2
+    ]
+};
+module.exports = [server, app, index, style];

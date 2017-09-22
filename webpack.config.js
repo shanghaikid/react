@@ -93,7 +93,7 @@ let app = Object.assign({}, config, {
 
 // entry
 let index = Object.assign({}, config, {
-    entry: ['./src/app/index.js'],
+    entry: ['./src/client/index.js'],
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist/public')

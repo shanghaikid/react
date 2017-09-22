@@ -15,7 +15,8 @@ const files = {
         client: [ 'src/app/**/*.js', '!src/app/**/*.test.js'],
         server: [ 'src/server/**/*.js',  '!src/server/**/*.test.js'],
         css: ['src/public/css/**/*.scss'],
-        copy: ['src/server/**/*.html']
+        copy: ['src/server/**/*.html'],
+        script: ['src/public/js/**/*.js']
     },
     destination = 'dev',
     browsers = ['last 2 versions', 'ff esr', 'not ie < 11', 'not ie_mob < 11'],
@@ -91,13 +92,20 @@ gulp.task('server', () => {
 });
 gulp.task('server:watch', ['server'], () => gulp.watch(files.server, ['server']));
 
+// script
+gulp.task('script', () => {
+    gulp.src(files.script)
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(`${destination}/public/js`))
+});
+
 // server html
 gulp.task('copy', function () {
     gulp.src(files.copy)
         .pipe(gulp.dest(`${destination}`));
 });
-gulp.task('copy:watch', ['copy'], () => gulp.watch(files.server, ['copy']));
+gulp.task('copy:watch', ['copy'], () => gulp.watch(files.copy, ['copy']));
 
 
-gulp.task('default', ['sass', 'server', 'client', 'copy']);
+gulp.task('default', ['sass', 'server', 'client', 'copy', 'script']);
 gulp.task('watch', ['sass:watch', 'server:watch', 'client:watch', 'copy:watch']);

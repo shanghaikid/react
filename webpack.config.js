@@ -122,6 +122,10 @@ let style = {
                 })
             },
             {
+                test: /\.(svg)$/,
+                use: 'base64-inline-loader?limit=1000&name=[name].[ext]'
+            },
+            {
                 test: /\.(svg|png|jpg|gif)$/,
                 use: [
                   {

@@ -1,5 +1,5 @@
 .loading {
-  background: url(/public/images/loading.svg) no-repeat center; }
+  background: url(data:image/svg+xml;charset=utf-8;base64,bW9kdWxlLmV4cG9ydHMgPSAiL3B1YmxpYy9pbWFnZXMvbG9hZGluZy5zdmciOw==) no-repeat center; }
 
 .hidden {
   display: none !important; }

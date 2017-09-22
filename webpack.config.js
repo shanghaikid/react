@@ -100,22 +100,18 @@ let index = Object.assign({}, config, {
     }
 });
 
-const extractSass2 = new ExtractTextPlugin({
-    filename: 'style.css'
-});
-
 // entry
 let style = {
     entry: ['./src/public/css/style.scss'],
     output: {
-        filename: '_', // we don't need this file
-        path: path.resolve(__dirname, 'dist/public/css')
+        filename: './tmp/_', // we don't need this file
+        path: path.resolve(__dirname, 'dist')
     },
     module: {
         rules: [
             {
                 test: /\.scss$/,
-                use: extractSass2.extract({
+                use: extractSass.extract({
                     use: [{
                         loader: 'css-loader'
                     }, {
@@ -133,7 +129,6 @@ let style = {
                     options: {
                         name: '[path][name].[ext]',
                         context: 'src',
-                        outputPath: '../../',
                         publicPath: '/', // make it absolute to root, eg: /public/images/loading.svg
                     }
                   }
@@ -142,7 +137,7 @@ let style = {
         ]
     },
     plugins: [
-        extractSass2
+        extractSass
     ]
 };
 module.exports = [server, app, index, style];

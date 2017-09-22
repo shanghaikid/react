@@ -6,10 +6,11 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "test": "mocha --compilers js:babel-core/register $(find src -name '*.test.js')",
-    "build": "npm run clean && webpack",
+    "build": "npm run clean && webpack && rm -rf dist/tmp",
     "watch": "npm run clean && `npm bin`/webpack --watch --verbose",
     "start": "cd dist && node server.js",
-    "server": "cd dist && NODE_ENV=dev nodemon --config ./nodemon.json server.js",
+    "dev": "cd dev && NODE_ENV=dev nodemon --config ./nodemon.json index.js",
+    "server": "cd dist && NODE_ENV=production nodemon --config ./nodemon.json server.js",
     "debug": "cd dist && node --nolazy --inspect-brk=5858 server.js"
   },
   "author": "jiangruiyi@gmail.com",

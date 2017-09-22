@@ -9,7 +9,7 @@
     "build": "npm run clean && webpack && rm -rf dist/tmp",
     "watch": "npm run clean && `npm bin`/webpack --watch --verbose",
     "start": "cd dist && node server.js",
-    "dev": "cd dist && NODE_ENV=dev nodemon --config ./nodemon.json index.js",
+    "dev": "cd dist && NODE_ENV=dev nodemon --config ./nodemon.json server.js",
     "server": "cd dist && NODE_ENV=production nodemon --config ./nodemon.json server.js",
     "debug": "cd dist && node --nolazy --inspect-brk=5858 server.js"
   },

@@ -68,7 +68,24 @@ let config = {
     devtool: 'inline-source-map',
     plugins: [
         extractSass
-    ]
+    ],
+    externals: {
+        // Use external version of React
+        react: {
+            root: 'React',
+            commonjs2: 'react',
+            commonjs: 'react',
+            amd: 'react',
+            umd: 'react',
+          },
+          'react-dom': {
+            root: 'ReactDOM',
+            commonjs2: 'react-dom',
+            commonjs: 'react-dom',
+            amd: 'react-dom',
+            umd: 'react-dom',
+          }
+    }
 };
 
 // server config

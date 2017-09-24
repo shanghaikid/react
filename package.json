@@ -4,10 +4,10 @@
   "description": "koa based server with app template",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf ./dist",
+    "clean": "rimraf ./dist",
     "test": "mocha --compilers js:babel-core/register $(find src -name '*.test.js')",
-    "build": "npm run clean && webpack && rm -rf dist/tmp",
-    "watch": "npm run clean && `npm bin`/webpack --watch --verbose",
+    "build": "npm run clean && webpack && rimraf ./dist/tmp",
+    "watch": "npm run clean && webpack --watch --verbose",
     "start": "cd dist && node server.js",
     "dev": "cd dist && cross-env NODE_ENV=dev nodemon server.js",
     "server": "cd dist && cross-env NODE_ENV=production nodemon server.js",
@@ -39,6 +39,7 @@
     "node-sass": "^4.5.3",
     "nodemon": "^1.12.1",
     "postcss-svg": "^2.1.0",
+    "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.5.5"

@@ -2,7 +2,7 @@ import {page, body_tpl, header_tpl, footer_tpl} from '../templates/templates';
 import {JSDOM} from 'jsdom';
 
 describe('templates', function() {
-    it('body should be the test', () => {
+    test('body should be the test', () => {
         let testBody = `<div id="test"></div>`;
         let tpl = body_tpl({body: testBody});
         const dom = new JSDOM(tpl);

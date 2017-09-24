@@ -67,5 +67,8 @@
       "test/*",
       "docs/*"
     ]
+  },
+  "jest": {
+    "verbose": true
   }
 }

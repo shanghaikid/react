@@ -84,7 +84,7 @@ let server = Object.assign({}, config, {
 
 // front-end app config
 let app = Object.assign({}, config, {
-    entry: ['./src/app/app.js'],
+    entry: ['./src/app/App.jsx'],
     output: {
         filename: 'app.js',
         path: path.resolve(__dirname, 'dist/public')

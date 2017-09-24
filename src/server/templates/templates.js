@@ -4,13 +4,6 @@ const page = (ctx) => `<!doctype html>
     ${header_tpl(ctx)}
     ${body_tpl(ctx)}
 
-    <script>
-        App.render(
-            document.getElementById('root'),
-            '<h1>hello2</h1>'
-                    );
-    </script>
-
     ${footer_tpl(ctx)}
 </html>`;
 
@@ -22,22 +15,23 @@ export const body_tpl = ({body=`<div class="loading"></div><div id="root"></div>
 }
 
 // header template
-export const header_tpl = ({title="serverTemplate", charset="UTF-8", cssHref="public/css/style.css", scriptSrc="public/index.js"}={}) => `<head>
+export const header_tpl = ({title="serverTemplate", charset="UTF-8", cssHref="public/css/style.css"}={}) => `<head>
     <meta charset="${charset}"/>
     <title>${title}</title>
     <link rel="stylesheet" type="text/css" href="${cssHref}" />
-    <script src="${scriptSrc}"></script>
 </head>`;
 
 // footer template
-export const footer_tpl = ({startTime}) => {
+export const footer_tpl = ({startTime, scriptSrc="public/index.js"}) => {
     if (typeof startTime === 'undefined') {
         return '';
     }
     const NS_PER_SEC = 1e9;
     const diff = process.hrtime(startTime);
 
-    return `<footer>
+    return `
+            <script src="${scriptSrc}"></script>
+            <footer>
             <small>Page generate time: ${diff[0] * NS_PER_SEC + diff[1]} nanoseconds</small>
             </footer>`
 };

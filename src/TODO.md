@@ -1,6 +1,8 @@
 * component viewer
+    ** page container/layout
+    ** resizer
     ** tree
-    ** viewer
+    ** pane
     ** output
 
 * components

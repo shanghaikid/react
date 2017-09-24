@@ -1,7 +1,8 @@
-* test
-    ** headless chrome
-    ** benchmark suit
+* component viewer
+    ** tree
+    ** viewer
+    ** output
 
-* scss mixins
-    ** color
-    ** icon
+* components
+
+* websocket

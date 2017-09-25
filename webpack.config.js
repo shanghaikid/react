@@ -5,9 +5,13 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const fs = require('fs-extra');
 
 // copy public file to dist
-fs.copy('src/public/js', 'dist/public/js').then(() => {
-    console.info('> src/public/js copied to dist/public/js');
+const dir = 'dist/public/js';
+fs.ensureDir(dir).then(() => {
+    fs.copy('src/public/js', dir).then(() => {
+        console.info('> src/public/js copied to dist/public/js');
+    });
 });
+
 
 // get external dependencies
 Object

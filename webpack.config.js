@@ -27,7 +27,8 @@ let config = {
             css: path.resolve(__dirname, 'src/public/css'),
             images: path.resolve(__dirname, 'src/public/images'),
             components: path.resolve(__dirname, 'src/components')
-        }
+        },
+        extensions: ['.js', '.jsx']
     },
     module: {
         rules: [

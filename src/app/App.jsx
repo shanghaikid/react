@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Header from 'components/Header';
 
-export default class App extends Component {
+export default class App extends React.Component {
     render() {
         return (
             <div>
-                <h1>Electricity {this.props.name}</h1>
+                <Header text="Electricity" />
             </div>
         );
     }

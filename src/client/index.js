@@ -1,8 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '../app/App.jsx';
+import App from '../app/App';
 
-ReactDOM.render(
-    <App name="hello electricity" />,
-    document.getElementById('root')
-);
+ReactDOM.render(<App name="OK" />, document.getElementById('root'));

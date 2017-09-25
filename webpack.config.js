@@ -2,6 +2,12 @@ const path = require('path');
 const { dependencies } = require('./package.json');
 const nodeModules = {};
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const fs = require('fs-extra');
+
+// copy public file to dist
+fs.copy('src/public/js', 'dist/public/js').then(() => {
+    console.info('> src/public/js copied to dist/public/js');
+});
 
 // get external dependencies
 Object
@@ -21,7 +27,8 @@ let config = {
             css: path.resolve(__dirname, 'src/public/css'),
             images: path.resolve(__dirname, 'src/public/images'),
             components: path.resolve(__dirname, 'src/components')
-        }
+        },
+        extensions: ['.js', '.jsx']
     },
     module: {
         rules: [
@@ -70,21 +77,8 @@ let config = {
         extractSass
     ],
     externals: {
-        // Use external version of React
-        react: {
-            root: 'React',
-            commonjs2: 'react',
-            commonjs: 'react',
-            amd: 'react',
-            umd: 'react',
-          },
-          'react-dom': {
-            root: 'ReactDOM',
-            commonjs2: 'react-dom',
-            commonjs: 'react-dom',
-            amd: 'react-dom',
-            umd: 'react-dom',
-          }
+        "react": "React",
+        "react-dom": "ReactDOM"
     }
 };
 
@@ -97,15 +91,6 @@ let server = Object.assign({}, config, {
     },
     target: 'node',
     externals: nodeModules
-});
-
-// front-end app config
-let app = Object.assign({}, config, {
-    entry: ['./src/app/App.jsx'],
-    output: {
-        filename: 'app.js',
-        path: path.resolve(__dirname, 'dist/public')
-    }
 });
 
 // entry
@@ -161,4 +146,4 @@ let style = {
         extractSass
     ]
 };
-module.exports = [server, app, index, style];
+module.exports = [server, index, style];

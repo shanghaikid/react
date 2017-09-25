@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactShallowRenderer from 'react-test-renderer/shallow';
-import Header from './Header';
+import Header from './';
 
 describe('Header', () => {
     test('renders with text', () => {

@@ -22,7 +22,7 @@ export default class Pane extends BaseComponent {
             cls = this.baseClass + (`${isVertical ? ` verticalPane` : ''}`) + (` ${className}`);
 
         return (
-            <div {...this.props} onClick={this.handleEvent} className={cls}>
+            <div {...this.props} onClick={this.handleEvent.bind(this)} className={cls}>
                 {children}
                 {spliter ? spliter : ''}
             </div>

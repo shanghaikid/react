@@ -15,7 +15,6 @@ describe('BorderContainer', () => {
         expect(result.props.className).toBe('borderContainer' + ' ' + className);
         expect(result.props.liveSplitters).toBe(liveSplitters);
         expect(result.props.persist).toBe(persist);
-
         // expect(result.props.children).toBe(testText);
     });
 });

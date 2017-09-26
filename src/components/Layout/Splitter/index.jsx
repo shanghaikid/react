@@ -47,13 +47,13 @@ export default class Splitter extends BaseComponent {
 
         return (
             <div 
-                onMouseOver={this.handleEvent}
-                onMouseLeave={this.handleEvent}
-                onMouseEnter={this.handleEvent}
-                onMouseMove={this.handleEvent}
-                onDragStart={this.handleEvent}
-                onDragEnd={this.handleEvent}
-                onDrag={this.handleEvent}
+                onMouseOver={this.handleEvent.bind(this)}
+                onMouseLeave={this.handleEvent.bind(this)}
+                onMouseEnter={this.handleEvent.bind(this)}
+                onMouseMove={this.handleEvent.bind(this)}
+                onDragStart={this.handleEvent.bind(this)}
+                onDragEnd={this.handleEvent.bind(this)}
+                onDrag={this.handleEvent.bind(this)}
                 {...this.props}
                 className={cls}>
                 </div>

@@ -4,13 +4,56 @@
 .hidden {
   display: none !important; }
 
-body a {
-  color: #06C;
-  text-decoration: underline;
-  background: red; }
+body {
+  margin: 0;
+  padding: 0; }
+  body footer {
+    display: none; }
 
-body footer {
-  display: none; }
+body .borderContainer {
+  display: flex;
+  height: 100vh; }
 
-body a {
-  color: #06C; }
+body .pane {
+  height: 100vh;
+  position: relative; }
+  body .pane.leftPane {
+    width: 20%;
+    background: #FFF; }
+  body .pane.rightPane {
+    width: 100%;
+    background: #FFF; }
+
+body .splitter {
+  position: absolute;
+  background: #F7F7F7; }
+  body .splitter:after {
+    content: "";
+    width: 1px;
+    height: 20px;
+    position: absolute;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1); }
+  body .splitter.horizontal {
+    width: 100%;
+    height: 10px;
+    bottom: 0;
+    left: 0;
+    cursor: row-resize; }
+    body .splitter.horizontal:after {
+      transform: rotate(270deg);
+      left: 50%;
+      top: -5px; }
+  body .splitter.vertical {
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 10px;
+    cursor: col-resize; }
+    body .splitter.vertical:after {
+      left: 3.5px;
+      top: 50%; }
+  body .splitter.disabled {
+    cursor: not-allowed; }
+    body .splitter.disabled:hover {
+      border-color: transparent; }

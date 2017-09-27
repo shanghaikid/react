@@ -18,8 +18,8 @@ export const body_tpl = ({body=`<div id="root"></div>`}={}) => {
 export const header_tpl = ({title="serverTemplate", charset="UTF-8", cssHref="public/css/style.css"}={}) => `<head>
     <meta charset="${charset}"/>
     <title>${title}</title>
-    <script src="/public/js/react.min.js"></script>
-    <script src="/public/js/react-dom.min.js"></script>
+    <script src="/public/js/react.production.min.js"></script>
+    <script src="/public/js/react-dom.production.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="${cssHref}" />
 </head>`;

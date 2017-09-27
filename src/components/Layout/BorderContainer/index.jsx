@@ -14,7 +14,6 @@ export default class BorderContainer extends BaseComponent {
     }
 
     // TODO: control splitter in child
-
     render() {
         let {className, children} = this.props;
         return (

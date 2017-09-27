@@ -8,7 +8,7 @@ export default class App extends React.Component {
         return (
             <BorderContainer>
                 <Pane className="leftPane" splitter="vertical" size={200} minSize={200} maxSize={500} sizeUnit="px" />
-                <Pane className="rightPane">
+                <Pane className="rightPane" display="flex" direction="column">
                     <Pane splitter="horizontal" size={75} maxSize={80} />
                     <Pane />
                 </Pane>

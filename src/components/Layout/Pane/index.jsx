@@ -77,9 +77,11 @@ export default class Pane extends BaseComponent {
     }
 
     render() {
-        const {className, children, splitter} = this.props,
+        const {className, children, splitter, direction, display} = this.props,
             cls = this.baseClass + (`${splitter === 'vertical' ? ` verticalPane` : ''}`) + (` ${className}`),
             style = {
+                display: display,
+                flexDirection: direction
             },
             splitterStyle = {
                 zIndex: 1
@@ -104,7 +106,8 @@ export default class Pane extends BaseComponent {
                     left: 0
                 });
                 Object.assign(style, {
-                    height: this.state.top
+                    height: this.state.top,
+                    minHeight: this.state.top
                 });
             }
 
@@ -131,7 +134,9 @@ Pane.defaultProps = {
     size: 25,
     minSize: 15,
     maxSize: 50,
-    sizeUnit: '%'
+    sizeUnit: '%',
+    display: 'block',
+    direction: 'column'
 };
 
 Pane.propTypes = {
@@ -139,5 +144,7 @@ Pane.propTypes = {
     splitter: PropTypes.string,
     size: PropTypes.number,
     minSize: PropTypes.number,
-    maxSize: PropTypes.number
+    maxSize: PropTypes.number,
+    display: PropTypes.string,
+    direction: PropTypes.string
 };

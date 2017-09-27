@@ -10,10 +10,9 @@ export default class BorderContainer extends BaseComponent {
     }
 
     componentDidMount() {
-        console.log(this.props.children)
+        // console.log(this.props.children)
     }
 
-    // TODO: control splitter in child
     render() {
         let {className, children} = this.props;
         return (
@@ -25,13 +24,11 @@ export default class BorderContainer extends BaseComponent {
 }
 
 BorderContainer.defaultProps = {
-    liveSplitters: false,
     persist: false,
     className: ''
 };
 
 BorderContainer.propTypes = {
     className: PropTypes.string,
-    liveSplitters: PropTypes.bool,
     persist: PropTypes.bool
 };

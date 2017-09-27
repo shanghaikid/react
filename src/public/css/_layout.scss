@@ -6,13 +6,13 @@ body {
     .pane {
         height: 100vh;
         position: relative;
+        background: #FFF;
         &.leftPane {
-            width: 20%;
-            background: #FFF;
+            background: rgba(245, 247, 250, 1);
         }
         &.rightPane {
             width: 100%;
-            background: #FFF;
+            background: gray;
         }
     }
 

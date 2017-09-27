@@ -10,10 +10,11 @@ Component.prototype.handleEvent = (function () {
         mouseenter: 'onMouseEnter',
         mouseleave: 'onMouseLeave',
         mouseout: 'onMouseOut',
+        mousedown: 'onMouseDown',
+        mouseup: 'onMouseUp',
+        mousemove: 'onMouseMove',
         focus: 'onFocus',
-        blur: 'onBlur',
-        dragstart: 'onDragStart',
-        dragend: 'onDragEnd'
+        blur: 'onBlur'
     };
 
     // fallback helper
@@ -24,6 +25,7 @@ Component.prototype.handleEvent = (function () {
     // one handleEvent to rule them all
     return function handleEvent(e) {
         var method = map[e.type] || capitalize(e.type);
+        console.info(method, this.constructor.name);
         if (method in this.props) this.props[method](e);
         if (method in this) this[method](e);
     };

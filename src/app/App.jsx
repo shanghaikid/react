@@ -7,8 +7,11 @@ export default class App extends React.Component {
     render() {
         return (
             <BorderContainer>
-                <Pane className="leftPane" spliter={<Splitter isVertical={true} />} maxSize="30"></Pane>
-                <Pane className="rightPane"></Pane>
+                <Pane className="leftPane" splitter="vertical" />
+                <Pane className="rightPane">
+                    <Pane splitter="horizontal" />
+                    <Pane />
+                </Pane>
             </BorderContainer>
         );
     }

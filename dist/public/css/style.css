@@ -16,13 +16,13 @@ body .borderContainer {
 
 body .pane {
   height: 100vh;
-  position: relative; }
+  position: relative;
+  background: #FFF; }
   body .pane.leftPane {
-    width: 20%;
-    background: #FFF; }
+    background: #f5f7fa; }
   body .pane.rightPane {
     width: 100%;
-    background: #FFF; }
+    background: gray; }
 
 body .splitter {
   position: absolute;

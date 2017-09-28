@@ -57,4 +57,29 @@ body {
             }
         }
     }
+
+    // TODO: setup vars
+    .treeView {
+        ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul {
+            margin: 10px;
+            & > li {
+                margin-bottom: 10px;
+                padding-left: 20px;
+            }
+        }
+        li {
+            a:link {
+                text-decoration: none;
+                display: block;
+            }
+            &.focused {
+                font-weight: 700;
+            }
+        }
+    }
 }

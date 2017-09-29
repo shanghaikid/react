@@ -24,7 +24,7 @@ class TreeNode extends BaseComponent {
         }
 
         if (typeof this.props.onTreeNodeClick !== 'undefined') {
-            this.props.onTreeNodeClick(this.props);
+            this.props.onTreeNodeClick(this.props, this.state);
         }
     }
 
@@ -69,14 +69,18 @@ export default class TreeView extends BaseComponent {
         };
     }
 
-    onTreeNodeClick(treeNode) {
+    onTreeNodeClick(treeNode, state) {
         let {id, children} = treeNode,
             {onTreeNodeClick} = this.props,
-            focusId = (children && children[0]) ? children[0].id : id;
+            {expand} = state;
 
-        onTreeNodeClick(treeNode);
+        // callback
+        onTreeNodeClick(treeNode, state);
 
-        this.setState({ focusId });
+        // if no selection or no children, focus target
+        if (!children || this.state.focusId === -1) {
+            this.setState({ focusId: id });
+        }
     }
 
     render() {

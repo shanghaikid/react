@@ -24,10 +24,15 @@ export default class App extends BaseComponent {
         };
     }
 
-    onTreeNodeClick(node) {
-        this.setState({
-            content: node.value
-        });
+    onTreeNodeClick(node, state) {
+        console.log(node);
+        let {expand} = state;
+
+        if (typeof node.value !== 'undefined' && expand !== true) {
+            this.setState({
+                content: node.value
+            });
+        }
     }
 
     render() {

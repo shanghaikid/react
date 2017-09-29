@@ -29,14 +29,15 @@ class TreeNode extends BaseComponent {
     }
 
     render() {
-        let {id, label, url, children, onTreeNodeClick, focusId} = this.props,
+        let {id, label, url, children, onTreeNodeClick, activeId} = this.props,
             expand = this.state.expand;
+
         return (
             <li key={id} 
-                className={(focusId === id && !children) ? this.props.focusClass : (expand ? this.props.expandoClass : this.props.expandoClass)}
+                className={(activeId === id && !children) ? this.props.focusClass : (expand ? this.props.expandoClass : this.props.expandoClass)}
                 onClick={this.handleEvent.bind(this)}>
-                <a href={url ? url : '#'}>{label}</a>
-                {children && expand ? <ul>{children.map(c => <TreeNode focusId={focusId} onTreeNodeClick={onTreeNodeClick} {...c} />)}</ul>: ''}
+                <a href={url ? url : 'javascript:void(0)'}>{label}</a>
+                {children && expand ? <ul>{children.map(c => <TreeNode activeId={activeId} onTreeNodeClick={onTreeNodeClick} {...c} />)}</ul>: ''}
             </li>
         );
     }
@@ -62,13 +63,6 @@ TreeNode.propTypes = {
 };
 
 export default class TreeView extends BaseComponent {
-    constructor(...args) {
-        super(...args);
-        this.state = {
-            focusId: -1
-        };
-    }
-
     onTreeNodeClick(treeNode, state) {
         let {id, children} = treeNode,
             {onTreeNodeClick} = this.props,
@@ -78,15 +72,15 @@ export default class TreeView extends BaseComponent {
         onTreeNodeClick(treeNode, state);
 
         // if no selection or no children, focus target
-        if (!children || this.state.focusId === -1) {
-            this.setState({ focusId: id });
+        if (!children || this.props.activeId === -1) {
+            this.setState({ activeId: id });
         }
     }
 
     render() {
         return (
             <div {...this.props}>
-                <ul>{this.props.data.map(c => <TreeNode focusId={this.state.focusId} onTreeNodeClick={this.onTreeNodeClick.bind(this)} {...c} />)}</ul>
+                <ul>{this.props.def.map(c => <TreeNode activeId={this.props.activeId} onTreeNodeClick={this.onTreeNodeClick.bind(this)} {...c} />)}</ul>
             </div>
         );
     }

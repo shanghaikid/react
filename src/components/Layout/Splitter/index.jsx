@@ -8,10 +8,6 @@ export default class Splitter extends BaseComponent {
         this.baseClass = 'splitter';
     }
 
-    componentDidMount() {
-        console.log(this.props);
-    }
-
     render() {
         let {className, children, isVertical} = this.props,
             cls = this.baseClass + (`${isVertical ? ` vertical` : ' horizontal'}`);

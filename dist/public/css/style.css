@@ -78,3 +78,7 @@ body .treeView li a:link {
 
 body .treeView li.focused {
   font-weight: 700; }
+
+body .contentPane {
+  height: 100%;
+  width: 100%; }

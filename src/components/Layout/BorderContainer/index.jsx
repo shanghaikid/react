@@ -3,14 +3,8 @@ import BaseComponent from '../../BaseComponent';
 import PropTypes from 'prop-types';
 
 export default class BorderContainer extends BaseComponent {
-    constructor(...args) {
-        super(...args);
-        // properties
+    init() {
         this.baseClass = 'borderContainer';
-    }
-
-    componentDidMount() {
-        // console.log(this.props.children)
     }
 
     render() {

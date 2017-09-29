@@ -3,8 +3,7 @@ import BaseComponent from '../../BaseComponent';
 import PropTypes from 'prop-types';
 
 class TreeNode extends BaseComponent {
-    constructor(...args) {
-        super(...args);
+    init() {
         this.state = {
             expand: false
         };

@@ -31,4 +31,11 @@ Component.prototype.handleEvent = (function () {
     };
 }());
 
-export default class BaseComponent extends Component {}
+export default class BaseComponent extends Component {
+    constructor(...args) {
+        super(...args);
+        this.init();
+    }
+
+    init() {}
+}

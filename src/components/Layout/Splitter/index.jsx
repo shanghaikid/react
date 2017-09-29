@@ -3,8 +3,7 @@ import BaseComponent from '../../BaseComponent';
 import PropTypes from 'prop-types';
 
 export default class Splitter extends BaseComponent {
-    constructor(...args) {
-        super(...args);
+    init() {
         // properties
         this.baseClass = 'splitter';
     }

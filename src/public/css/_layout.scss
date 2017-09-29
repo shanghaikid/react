@@ -1,8 +1,12 @@
 body {
+
+    // component
     .borderContainer {
         display: flex;
         height: 100vh;
     }
+
+    // component
     .pane {
         height: 100vh;
         position: relative;
@@ -16,6 +20,7 @@ body {
         }
     }
 
+    // component
     .splitter {
         position: absolute;
         background: #F7F7F7;
@@ -59,6 +64,7 @@ body {
     }
 
     // TODO: setup vars
+    // component
     .treeView {
         ul, li {
             margin: 0;
@@ -81,5 +87,11 @@ body {
                 font-weight: 700;
             }
         }
+    }
+
+    // component
+    .contentPane {
+        height: 100%;
+        width: 100%;
     }
 }

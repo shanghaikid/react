@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 
 // TODO: keyboard event
 export default class Pane extends BaseComponent {
-    constructor(...args) {
-        super(...args);
+    init() {
         // properties
         this.baseClass = 'pane';
         this.mousemoveHandler = this.onMouseMove.bind(this);

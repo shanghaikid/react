@@ -8,12 +8,12 @@ import Header from 'components/BasicUI/Header';
 import BaseComponent from 'components/BaseComponent';
 
 const nav = [
-    {id: 'mon', label: 'Monitoring', url: '/#mon', component: <Header test="Monitoring" />},
+    {id: 'mon', label: 'Monitoring', url: '/#mon', component: <Header text="Monitoring" />},
     {id: 'form', label: 'Form Widgets', url: '/#form', component: <Header text="Forms Widget" />},
     {id: 'widgets', label: 'Widgets', expand: true, children: [
-        {id: 'dialogs', label: 'Dialogs', url: '/#widgets/dialogs', component: <Header test="Dialogs" />},
-        {id: 'wizard', label: 'Wizard', url: '/#widgets/wizard', component: <Header test="Wiard" />},
-        {id: 'tooltip', label: 'Tooltip', url: '/#widgets/tooltip', component: <Header test="Tooltips" />}
+        {id: 'dialogs', label: 'Dialogs', url: '/#widgets/dialogs', component: <Header text="Dialogs" />},
+        {id: 'wizard', label: 'Wizard', url: '/#widgets/wizard', component: <Header text="Wiard" />},
+        {id: 'tooltip', label: 'Tooltip', url: '/#widgets/tooltip', component: <Header text="Tooltips" />}
     ]}
 ];
 

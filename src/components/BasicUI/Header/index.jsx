@@ -8,6 +8,6 @@ export default class Header extends BaseComponent {
         };
     }
     render() {
-        return (<h1>{this.props.text} {this.state.test}</h1>)
+        return (<h1 gid={this.state.test}>{this.props.text}</h1>)
     }
 }

@@ -35,7 +35,7 @@ class TreeNode extends BaseComponent {
         return (
             <li key={id} 
                 className={(activeId === id && !children) ? this.props.focusClass : (expand ? this.props.expandoClass : this.props.expandoClass)}
-                onClick={this.handleEvent.bind(this)}>
+                onClick={this.handleEvent}>
                 <a href={url ? url : 'javascript:void(0)'}>{label}</a>
                 {children && expand ? <ul>{children.map(c => <TreeNode activeId={activeId} onTreeNodeClick={onTreeNodeClick} {...c} />)}</ul>: ''}
             </li>

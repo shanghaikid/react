@@ -112,15 +112,15 @@ export default class Pane extends BaseComponent {
 
         return (
             <div ref={(pane) => { this.domNode = pane; }}
-                {...this.props} style={style} onClick={this.handleEvent.bind(this)}
+                {...this.props} style={style} onClick={this.handleEvent}
                 className={cls}>
                     {children}
                     {splitter !== 'null' ? <Splitter 
                                             style={splitterStyle} 
-                                            onMouseDown={this.handleEvent.bind(this)} 
-                                            onMouseUp={this.handleEvent.bind(this)} 
-                                            onTouchStart={this.handleEvent.bind(this)} 
-                                            onTouchEnd={this.handleEvent.bind(this)}
+                                            onMouseDown={this.handleEvent} 
+                                            onMouseUp={this.handleEvent} 
+                                            onTouchStart={this.handleEvent} 
+                                            onTouchEnd={this.handleEvent}
                                             isVertical={isVertical} /> : ''}
             </div>
         );

@@ -35,6 +35,9 @@ export default class BaseComponent extends Component {
     constructor(...args) {
         super(...args);
         this.init();
+
+        // TODO: find a better way to save memory
+        this.handleEvent = this.handleEvent.bind(this);
     }
 
     init() {}

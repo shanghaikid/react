@@ -13,72 +13,82 @@ body {
   body footer {
     display: none; }
 
-body .e-borderContainer {
+.e-borderContainer {
   display: flex;
   height: 100vh; }
 
-body .e-pane {
+.e-pane {
   height: 100vh;
   position: relative;
   background: #FFF; }
-  body .e-pane.leftPane {
+  .e-pane.leftPane {
     background: #f5f7fa; }
-  body .e-pane.rightPane {
+  .e-pane.rightPane {
     width: 100%;
     background: gray; }
 
-body .e-splitter {
+.e-splitter {
   position: absolute;
   background: #F7F7F7; }
-  body .e-splitter:after {
+  .e-splitter:after {
     content: "";
     width: 1px;
     height: 20px;
     position: absolute;
     border-left: 1px solid rgba(0, 0, 0, 0.1);
     border-right: 1px solid rgba(0, 0, 0, 0.1); }
-  body .e-splitter.horizontal {
+  .e-splitter.horizontal {
     width: 100%;
     height: 10px;
     bottom: 0;
     left: 0;
     cursor: row-resize; }
-    body .e-splitter.horizontal:after {
+    .e-splitter.horizontal:after {
       transform: rotate(270deg);
       left: 50%;
       top: -5px; }
-  body .e-splitter.vertical {
+  .e-splitter.vertical {
     right: 0;
     top: 0;
     height: 100%;
     width: 10px;
     cursor: col-resize; }
-    body .e-splitter.vertical:after {
+    .e-splitter.vertical:after {
       left: 3.5px;
       top: 50%; }
-  body .e-splitter.disabled {
+  .e-splitter.disabled {
     cursor: not-allowed; }
-    body .e-splitter.disabled:hover {
+    .e-splitter.disabled:hover {
       border-color: transparent; }
 
-body .e-treeView ul, body .e-treeView li {
+.e-treeView ul, .e-treeView li {
   margin: 0;
   padding: 0;
   list-style: none; }
 
-body .e-treeView ul {
+.e-treeView ul {
   margin: 10px; }
-  body .e-treeView ul > li {
+  .e-treeView ul > li {
     margin-bottom: 10px;
     padding-left: 20px; }
 
-body .e-treeView li a:link {
+.e-treeView li a:link {
   text-decoration: none;
   display: block; }
 
-body .e-treeView li.focused {
+.e-treeView li.focused {
   font-weight: 700; }
 
-body .e-contentPane {
+.e-contentPane {
   height: 100%;
   width: 100%; }
+
+.e-dialog {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  position: relative;
+  background: #FFF;
+  min-width: 500px;
+  max-width: 75%;
+  height: auto;
+  max-height: 90%;
+  padding: 2.75rem 3rem 0; }

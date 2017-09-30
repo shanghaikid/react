@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 
 export default class Switch extends BaseComponent {
     init() {
-        this.baseClass = 'switch';
+        this.baseClassName = 'switch';
     }
+
     render() {
         const style = {
             width: '100%',

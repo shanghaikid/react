@@ -46,5 +46,9 @@ export default class BaseComponent extends Component {
         return `${this.libClassPrefix}-${this.baseClassName} ${this.props.className || ''}`;
     }
 
+    getLibPrefixedClass(cls) {
+        return `${this.libClassPrefix}-${cls}`;
+    }
+
     init() {}
 }

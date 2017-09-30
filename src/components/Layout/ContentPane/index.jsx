@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default class ContentPane extends BaseComponent {
     init() {
-        this.baseClass = `contentPane`;
+        this.baseClassName = `contentPane`;
     }
     render() {
         return (

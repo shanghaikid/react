@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 export default class Splitter extends BaseComponent {
     init() {
         // properties
-        this.baseClass = 'splitter';
+        this.baseClassName = `splitter`;
     }
 
     render() {
         let {className, children, isVertical} = this.props,
-            cls = this.baseClass + (`${isVertical ? ` vertical` : ' horizontal'}`);
+            cls = this.className + (`${isVertical ? ` vertical` : ' horizontal'}`);
 
         return (
             <div 

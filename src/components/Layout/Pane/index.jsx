@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 export default class Pane extends BaseComponent {
     init() {
         // properties
-        this.baseClass = 'pane';
+        this.baseClassName = `pane`;
         this.mousemoveHandler = this.onMouseMove.bind(this);
         this.mouseupHandler = this.onMouseUp.bind(this);
         this.state = {
@@ -77,7 +77,7 @@ export default class Pane extends BaseComponent {
 
     render() {
         const {className, children, splitter, direction, display, splitterSize} = this.props,
-            cls = this.baseClass + (`${splitter === 'vertical' ? ` verticalPane` : ''}`) + (` ${className}`),
+            cls = this.className + (`${splitter === 'vertical' ? ` verticalPane` : ''}`),
             style = {
                 display: display,
                 flexDirection: direction

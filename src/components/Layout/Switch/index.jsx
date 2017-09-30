@@ -4,6 +4,9 @@ import ContentPane from '../ContentPane';
 import PropTypes from 'prop-types';
 
 export default class Switch extends BaseComponent {
+    init() {
+        this.baseClass = 'switch';
+    }
     render() {
         const style = {
             width: '100%',
@@ -11,7 +14,7 @@ export default class Switch extends BaseComponent {
         };
 
         return (
-            <div style={style} data-active-id={this.props.activeId}>
+            <div style={style} data-active-id={this.props.activeId} className={this.className}>
                 {this.props.def.map(c => (
                     <ContentPane className={c.id === this.props.activeId ? this.props.activeId : 'hidden'}>
                         {c.component}
@@ -23,12 +26,10 @@ export default class Switch extends BaseComponent {
 }
 
 Switch.defaultProps = {
-    className: 'contentPane',
     def: []
 };
 
 Switch.propTypes = {
-    className: PropTypes.string,
     def: PropTypes.array,
     activeId: PropTypes.string
 };

@@ -1,13 +1,13 @@
 body {
 
     // component
-    .borderContainer {
+    .e-borderContainer {
         display: flex;
         height: 100vh;
     }
 
     // component
-    .pane {
+    .e-pane {
         height: 100vh;
         position: relative;
         background: #FFF;
@@ -21,7 +21,7 @@ body {
     }
 
     // component
-    .splitter {
+    .e-splitter {
         position: absolute;
         background: #F7F7F7;
         &:after {
@@ -65,7 +65,7 @@ body {
 
     // TODO: setup vars
     // component
-    .treeView {
+    .e-treeView {
         ul, li {
             margin: 0;
             padding: 0;
@@ -90,7 +90,7 @@ body {
     }
 
     // component
-    .contentPane {
+    .e-contentPane {
         height: 100%;
         width: 100%;
     }

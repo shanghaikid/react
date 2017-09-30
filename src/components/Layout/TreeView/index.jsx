@@ -63,6 +63,9 @@ TreeNode.propTypes = {
 };
 
 export default class TreeView extends BaseComponent {
+    init() {
+        this.baseClassName = 'treeView';
+    }
     onTreeNodeClick(treeNode, state) {
         let {id, children} = treeNode,
             {onTreeNodeClick} = this.props,
@@ -79,16 +82,13 @@ export default class TreeView extends BaseComponent {
 
     render() {
         return (
-            <div {...this.props}>
+            <div {...this.props} className={this.className}>
                 <ul>{this.props.def.map(c => <TreeNode activeId={this.props.activeId} onTreeNodeClick={this.onTreeNodeClick.bind(this)} {...c} />)}</ul>
             </div>
         );
     }
 }
 
-TreeView.defaultProps = {
-    className: 'treeView'
-};
 
 TreeView.propTypes = {
     onTreeNodeClick: PropTypes.func,

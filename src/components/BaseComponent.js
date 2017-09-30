@@ -34,10 +34,16 @@ Component.prototype.handleEvent = (function () {
 export default class BaseComponent extends Component {
     constructor(...args) {
         super(...args);
-        this.init();
-
         // TODO: find a better way to save memory
         this.handleEvent = this.handleEvent.bind(this);
+        this.libClassPrefix = 'e';
+        this.baseClassName = 'component';
+
+        this.init();
+    }
+
+    get className() {
+        return `${this.libClassPrefix}-${this.baseClassName} ${this.props.className || ''}`;
     }
 
     init() {}

@@ -4,31 +4,7 @@ import Pane from 'components/Layout/Pane';
 import Splitter from 'components/Layout/Splitter';
 import TreeView from 'components/Layout/TreeView';
 import Switch from 'components/Layout/Switch';
-import Header from 'components/BasicUI/Header';
 import BaseComponent from 'components/BaseComponent';
-
-const nav = [
-    {id: 'mon', label: 'Monitoring', url: '/#mon', component: <Header text="Monitoring" />},
-    {id: 'form', label: 'Form Widgets', url: '/#form', component: <Header text="Forms Widget" />},
-    {id: 'widgets', label: 'Widgets', expand: true, children: [
-        {id: 'dialogs', label: 'Dialogs', url: '/#widgets/dialogs', component: <Header text="Dialogs" />},
-        {id: 'wizard', label: 'Wizard', url: '/#widgets/wizard', component: <Header text="Wiard" />},
-        {id: 'tooltip', label: 'Tooltip', url: '/#widgets/tooltip', component: <Header text="Tooltips" />}
-    ]}
-];
-
-const pages = (nav => {
-    let res = [];
-    for (let i = 0; i < nav.length; i++) {
-        let n = nav[i];
-        if (n.children) {
-            n.children.forEach(n => nav.push(n));
-        } else {
-            res.push(n);
-        }
-    }
-    return res;
-})(Array.from(nav));
 
 export default class App extends BaseComponent {
     init() {
@@ -60,11 +36,11 @@ export default class App extends BaseComponent {
         return (
             <BorderContainer>
                 <Pane className="leftPane" splitter="vertical" size={200} minSize={200} maxSize={500} sizeUnit="px" >
-                    <TreeView def={nav} activeId={this.state.activeId} onTreeNodeClick={this.onTreeNodeClick.bind(this)}/>
+                    <TreeView def={this.props.nav} activeId={this.state.activeId} onTreeNodeClick={this.onTreeNodeClick.bind(this)}/>
                 </Pane>
                 <Pane className="rightPane" display="flex" direction="column">
                     <Pane splitter="horizontal" size={75} maxSize={80}>
-                        <Switch def={pages} activeId={this.state.activeId} />
+                        <Switch def={this.props.pages} activeId={this.state.activeId} />
                     </Pane>
                     <Pane />
                 </Pane>

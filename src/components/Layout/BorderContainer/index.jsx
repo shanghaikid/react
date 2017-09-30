@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 export default class BorderContainer extends BaseComponent {
     init() {
-        this.baseClass = 'borderContainer';
+        this.baseClassName = `borderContainer`;
     }
 
     render() {
         let {className, children} = this.props;
         return (
-            <div {...this.props} className={this.baseClass + ` ${className}`}>
+            <div {...this.props} className={this.className}>
                 {children}
             </div>
         );

@@ -2,6 +2,8 @@ import React from 'react';
 import BaseComponent from 'components/BaseComponent';
 import Dialog from 'components/Widgets/Dialog';
 import Button from 'components/Form/Button';
+import { toggleDialogOpen } from './DialogsAction';
+
 
 // Dialogs page
 export default class Dialogs extends BaseComponent {
@@ -27,22 +29,12 @@ export default class Dialogs extends BaseComponent {
         });
     }
 
-    componentDidMount() {
-        // console.log(this.props);
-    }
-
     onBtnClicked(e) {
-        console.log(this.state);
-        this.setState({
-            dialogOpened: true
-        });
+        this.setState(toggleDialogOpen('dialog'));
     }
 
     onDialogClose(e) {
-        console.log(e.target);
-        this.setState({
-            dialogOpened: false
-        });
+        this.setState(toggleDialogOpen('dialog'));
     }
 
     render() {

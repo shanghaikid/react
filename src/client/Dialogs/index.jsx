@@ -8,11 +8,15 @@ import { toggleDialogOpen } from './DialogsAction';
 // Dialogs page
 export default class Dialogs extends BaseComponent {
     init() {
-        this.onBtnClicked = this.onBtnClicked.bind(this);
+        this.onBtn1Clicked = this.onBtn1Clicked.bind(this);
+        this.onBtn2Clicked = this.onBtn2Clicked.bind(this);
         this.onDialogClose = this.onDialogClose.bind(this);
 
         this.state = this.transformState({
-            dialog: {
+            dialog1: {
+                opened: false
+            },
+            dialog2: {
                 opened: false
             },
             grid: {
@@ -29,8 +33,12 @@ export default class Dialogs extends BaseComponent {
         });
     }
 
-    onBtnClicked(e) {
-        this.setState(toggleDialogOpen('dialog'));
+    onBtn1Clicked(e) {
+        this.setState(toggleDialogOpen('dialog1'));
+    }
+
+    onBtn2Clicked(e) {
+        this.setState(toggleDialogOpen('dialog2'));
     }
 
     onDialogClose(e) {
@@ -45,9 +53,10 @@ export default class Dialogs extends BaseComponent {
 
         return (
             <div style={style}>
-                <Button onClicked={this.onBtnClicked} text="Open Dialog" />
-                <Dialog opened={this.state.dialogOpened} onClose={this.onDialogClose} />
-                <Dialog opened={this.state.dialogOpened} onClose={this.onDialogClose} />
+                <Button onClicked={this.onBtn1Clicked} text="toggle Dialog1" />
+                <Button onClicked={this.onBtn2Clicked} text="toggle Dialog2" />
+                <Dialog opened={this.state.dialog1Opened} title="dialog1" onClose={this.onDialogClose} />
+                <Dialog opened={this.state.dialog2Opened} title="dialog2" onClose={this.onDialogClose} />
             </div>
         );
     }

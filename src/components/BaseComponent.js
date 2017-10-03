@@ -48,7 +48,7 @@ export default class BaseComponent extends Component {
     }
 
     setState(obj) {
-        console.log(obj, this.transformState(obj));
+        // console.log(obj, this.transformState(obj));
         super.setState(obj);
     }
 

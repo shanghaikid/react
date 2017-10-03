@@ -11,7 +11,7 @@ export default class Dialogs extends BaseComponent {
 
         this.state = this.transformState({
             dialog: {
-                open: false
+                opened: false
             },
             grid: {
                 button: {
@@ -34,14 +34,14 @@ export default class Dialogs extends BaseComponent {
     onBtnClicked(e) {
         console.log(this.state);
         this.setState({
-            dialogOpen: true
+            dialogOpened: true
         });
     }
 
     onDialogClose(e) {
         console.log(e.target);
         this.setState({
-            dialogOpen: false
+            dialogOpened: false
         });
     }
 
@@ -54,8 +54,8 @@ export default class Dialogs extends BaseComponent {
         return (
             <div style={style}>
                 <Button onClicked={this.onBtnClicked} text="Open Dialog" />
-                <Dialog opened={this.state.dialogOpen} onClose={this.onDialogClose} />
-                <Dialog opened={this.state.dialogOpen} onClose={this.onDialogClose} />
+                <Dialog opened={this.state.dialogOpened} onClose={this.onDialogClose} />
+                <Dialog opened={this.state.dialogOpened} onClose={this.onDialogClose} />
             </div>
         );
     }

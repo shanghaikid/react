@@ -3,8 +3,13 @@ export function isObj(obj) {
     return Object.prototype.toString.call(obj) === "[object Object]";
 }
 
+// clone object
+export function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 // flatten state object
-// grid:{layout:{menu:{expand:true}}}} => grid-layout-menu-expand:true
+// grid:{layout:{menu:{expand:true}}}} => gridLayoutMenuExpand:true
 export function e(stateObject) {
     function _f(stateObject, root, result) {
         for (const [key, value] of Object.entries(stateObject)) {

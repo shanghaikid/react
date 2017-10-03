@@ -1,4 +1,4 @@
-import {isObj, e} from './';
+import {isObj, e, clone} from './';
 
 describe('Utils', () => {
     test('isObj', () => {
@@ -13,6 +13,16 @@ describe('Utils', () => {
         expect(isObj(a)).toBe(false);
         expect(isObj(nan)).toBe(false);
         expect(isObj(obj)).toBe(true);
+    });
+
+    test('clone obj', () => {
+        let n = {a: 1, b:2};
+
+        let b = clone(n);
+        expect(isObj(b)).toBe(true);
+        expect(b.a).toEqual(n.a);
+        expect(b.b).toEqual(n.b);
+        expect(b).not.toBe(n);
     });
 
     test('state object flatten', () => {

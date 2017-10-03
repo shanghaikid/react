@@ -12,7 +12,7 @@ describe('BorderContainer', () => {
         const renderer = new ReactShallowRenderer();
         renderer.render(<BorderContainer className={className} liveSplitters={liveSplitters} persist={persist}><div>test</div></BorderContainer>)
         const result = renderer.getRenderOutput();
-        expect(result.props.className).toBe('borderContainer' + ' ' + className);
+        expect(result.props.className).toBe('e-borderContainer' + ' ' + className);
         expect(result.props.liveSplitters).toBe(liveSplitters);
         expect(result.props.persist).toBe(persist);
         // expect(result.props.children).toBe(testText);

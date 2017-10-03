@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import {isObj, e} from '../utils';
 
 // all components share one event handler
 Component.prototype.handleEvent = (function () {
@@ -46,9 +47,19 @@ export default class BaseComponent extends Component {
         return `${this.libClassPrefix}-${this.baseClassName} ${this.props.className || ''}`;
     }
 
+    setState(obj) {
+        console.log(obj, this.transformState(obj));
+        super.setState(obj);
+    }
+
+    transformState(stateObj) {
+        return e(stateObj);
+    }
+
     getLibPrefixedClass(cls) {
         return `${this.libClassPrefix}-${cls}`;
     }
 
+    // initialize stub
     init() {}
 }

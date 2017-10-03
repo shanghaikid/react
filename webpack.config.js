@@ -30,7 +30,8 @@ let config = {
         alias: {
             css: path.resolve(__dirname, 'src/public/css'),
             images: path.resolve(__dirname, 'src/public/images'),
-            components: path.resolve(__dirname, 'src/components')
+            components: path.resolve(__dirname, 'src/components'),
+            utils: path.resolve(__dirname, 'src/utils')
         },
         extensions: ['.js', '.jsx']
     },

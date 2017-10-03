@@ -6,13 +6,18 @@ import PropTypes from 'prop-types';
 // Dialog
 export default class Dialog extends BaseComponent {
     init() {
+        // class
         this.baseClassName = `dialog`;
+        this.headerClass = this.getLibPrefixedClass('dialog-header');
+        this.closeBtnClass = this.getLibPrefixedClass('dialog-btn-close');
+        this.bodyClass = this.getLibPrefixedClass('dialog-body');
+        this.footerClass = this.getLibPrefixedClass('dialog-footer');
+        this.denyBtnClass = this.getLibPrefixedClass('dialog-btn-deny');
+        this.confirmBtnClass = this.getLibPrefixedClass('dialog-btn-confirm');
+        // handlers
         this.onDenyBtnClicked = this.onDenyBtnClicked.bind(this);
         this.onConfirmBtnClicked = this.onConfirmBtnClicked.bind(this);
         this.onCloseBtnClicked = this.onCloseBtnClicked.bind(this);
-        this.state = {
-            opened: true
-        };
     }
 
     onCloseBtnClicked(e) {
@@ -22,9 +27,6 @@ export default class Dialog extends BaseComponent {
             onClose(e);
         }
 
-        this.setState({
-            opened: false
-        });
     }
 
     onDenyBtnClicked(e) {
@@ -44,19 +46,21 @@ export default class Dialog extends BaseComponent {
     }
 
     render() {
-        const {mod, title, message, denyLabel, confirmLabel, closeBtnLabel} = this.props;
+        const {mod, title, message, denyLabel, confirmLabel, closeBtnLabel, opened} = this.props,
+                cls = this.className + ' ' + mod + (!opened ? 'hidden' : '');
+
         return (
-            <div className={this.className + ' ' + mod}>
-                <div className={this.getLibPrefixedClass('dialog-header')}>
+            <div className={cls}>
+                <div className={this.headerClass}>
                     {title}
-                    <Button title={closeBtnLabel} onClicked={this.onCloseBtnClicked} className={this.getLibPrefixedClass('dialog-btn-close')} />
+                    <Button title={closeBtnLabel} text={closeBtnLabel} onClicked={this.onCloseBtnClicked} className={this.closeBtnClass} />
                 </div>
-                <div className={this.getLibPrefixedClass('dialog-body')}>
+                <div className={this.bodyClass}>
                     {message}
                 </div>
-                <div className={this.getLibPrefixedClass('dialog-footer')}>
-                    <Button onClicked={this.onDenyBtnClicked} text={denyLabel} className={this.getLibPrefixedClass('dialog-btn-deny')} />
-                    <Button onClicked={this.onConfirmBtnClicked} text={confirmLabel} className={this.getLibPrefixedClass('dialog-btn-confirm')} />
+                <div className={this.footerClass}>
+                    <Button onClicked={this.onDenyBtnClicked} text={denyLabel} className={this.denyBtnClass} />
+                    <Button onClicked={this.onConfirmBtnClicked} text={confirmLabel} className={this.confirmBtnClass} />
                 </div>
             </div>
         );
@@ -70,7 +74,8 @@ Dialog.defaultProps = {
     helpLabel: 'Help',
     denyLabel: 'Cancel',
     confirmLabel: 'Confirm',
-    closeBtnLabel: 'Close'
+    closeBtnLabel: 'Close',
+    opened: false
 };
 
 Dialog.propTypes = {
@@ -82,5 +87,6 @@ Dialog.propTypes = {
     confirmLabel: PropTypes.string,
     closeBtnLabel: PropTypes.string,
     onDeny: PropTypes.func,
-    onConfirm: PropTypes.func
+    onConfirm: PropTypes.func,
+    opened: PropTypes.bool
 };

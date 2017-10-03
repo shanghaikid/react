@@ -1,5 +1,7 @@
-export function toggleDialogOpen(dialogName) {
+export function toggleDialogOpen(dialogName, openState) {
+    let hasStateSet = typeof openState !== 'undefined';
+
     return function(state, props) {
-        return {[dialogName + 'Opened']: !state[dialogName + 'Opened']};
+        return {[dialogName + 'Opened']: hasStateSet ? openState : !state[dialogName + 'Opened']};
     }
 }

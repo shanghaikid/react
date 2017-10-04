@@ -91,4 +91,7 @@ body {
   max-width: 75%;
   height: auto;
   max-height: 90%;
-  padding: 2.75rem 3rem 0; }
+  padding: 1rem;
+  z-index: 10; }
+  .e-dialog .e-dialog-header {
+    cursor: move; }

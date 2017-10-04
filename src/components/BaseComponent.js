@@ -43,6 +43,15 @@ export default class BaseComponent extends Component {
         this.init();
     }
 
+    // componentWillMount() {}
+    // componentDidMount() {}
+    // componentWillReceiveProps() {}
+    // shouldComponentUpdate() {}
+    // componentWillUpdate() {}
+    // componentDidUpdate() {}
+    // componentWillUnmount() {}
+    // forceUpdate() {}
+
     get className() {
         return `${this.libClassPrefix}-${this.baseClassName} ${this.props.className || ''}`;
     }

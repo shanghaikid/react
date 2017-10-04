@@ -10,7 +10,6 @@ export default class Dialogs extends BaseComponent {
     init() {
         this.onBtn1Clicked = this.onBtn1Clicked.bind(this);
         this.onBtn2Clicked = this.onBtn2Clicked.bind(this);
-        this.onDialogClose = this.onDialogClose.bind(this);
 
         this.state = this.transformState({
             dialog1: {
@@ -41,8 +40,8 @@ export default class Dialogs extends BaseComponent {
         this.setState(toggleDialogOpen('dialog2'));
     }
 
-    onDialogClose(e) {
-        this.setState(toggleDialogOpen('dialog'));
+    onDialogClose(dialogName) {
+        this.setState(toggleDialogOpen(dialogName, false));
     }
 
     render() {
@@ -55,8 +54,8 @@ export default class Dialogs extends BaseComponent {
             <div style={style}>
                 <Button onClicked={this.onBtn1Clicked} text="toggle Dialog1" />
                 <Button onClicked={this.onBtn2Clicked} text="toggle Dialog2" />
-                <Dialog opened={this.state.dialog1Opened} title="dialog1" onClose={this.onDialogClose} />
-                <Dialog opened={this.state.dialog2Opened} title="dialog2" onClose={this.onDialogClose} />
+                <Dialog opened={this.state.dialog1Opened} title="dialog1" onClose={this.onDialogClose.bind(this, 'dialog1')} />
+                <Dialog opened={this.state.dialog2Opened} title="dialog2" onClose={this.onDialogClose.bind(this, 'dialog2')} />
             </div>
         );
     }

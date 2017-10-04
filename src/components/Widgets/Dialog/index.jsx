@@ -2,6 +2,11 @@ import React from 'react';
 import BaseComponent from 'components/BaseComponent';
 import Button from '../../Form/Button';
 import PropTypes from 'prop-types';
+import { getCenterPosition } from '../../../utils';
+
+// TODO:
+// 3. overlay
+// 4. style
 
 // Dialog
 export default class Dialog extends BaseComponent {
@@ -18,13 +23,30 @@ export default class Dialog extends BaseComponent {
         this.onDenyBtnClicked = this.onDenyBtnClicked.bind(this);
         this.onConfirmBtnClicked = this.onConfirmBtnClicked.bind(this);
         this.onCloseBtnClicked = this.onCloseBtnClicked.bind(this);
+        this.mousemoveHandler = this.onMouseMove.bind(this);
+        this.mouseupHandler = this.onMouseUp.bind(this);
+        // state
+        this.state = {
+            left: 0,
+            top: 0,
+            zIndex: 10
+        };
+    }
+
+    componentDidMount() {
+        this.reposition();
+    }
+
+    reposition() {
+        let {left, top} = getCenterPosition(window, this.domNode);
+        this.setState({left, top});
     }
 
     onCloseBtnClicked(e) {
         const {onClose} = this.props;
 
         if (onClose) {
-            onClose(e);
+            onClose(e, this);
         }
 
     }
@@ -33,7 +55,7 @@ export default class Dialog extends BaseComponent {
         const {onDeny} = this.props;
 
         if (onDeny) {
-            onDeny(e);
+            onDeny(e, this);
         }
     }
 
@@ -45,13 +67,49 @@ export default class Dialog extends BaseComponent {
         }
     }
 
+    onMouseDown(e) {
+        this.lastMouseX = e.clientX;
+        this.lastMouseY = e.clientY;
+        document.addEventListener('mousemove', this.mousemoveHandler);
+        document.addEventListener('mouseup', this.mouseupHandler);
+    }
+
+    onMouseMove(e) {
+        let dialogBeingMoved = this.domNode,
+              rect = dialogBeingMoved.getBoundingClientRect(),
+              {clientX, clientY} = e,
+              {lastMouseX, lastMouseY} = this,
+              leftToMouse = clientX - lastMouseX,
+              topToMouse = clientY - lastMouseY,
+              left = Math.max(0, this.state.left + leftToMouse),
+              top = Math.max(0, this.state.top + topToMouse);
+
+        this.setState({
+            left: Math.min(window.innerWidth - rect.width, left),
+            top: Math.min(window.innerHeight - rect.height, top)
+        });
+
+        this.lastMouseX = clientX;
+        this.lastMouseY = clientY;
+    }
+
+    onMouseUp(e) {
+        document.removeEventListener('mousemove', this.mousemoveHandler);
+    }
+
     render() {
         const {mod, title, message, denyLabel, confirmLabel, closeBtnLabel, opened} = this.props,
-                cls = this.className + ' ' + mod + (!opened ? 'hidden' : '');
+                cls = this.className + ' ' + mod + (!opened ? 'hidden' : ''),
+                style = {
+                    position: 'fixed',
+                    left: this.state.left,
+                    top: this.state.top,
+                    zIndex: this.state.zIndex
+                };
 
         return (
-            <div className={cls}>
-                <div className={this.headerClass}>
+            <div style={style} className={cls} ref={dialog => this.domNode = dialog}>
+                <div className={this.headerClass} onMouseDown={this.handleEvent} onMouseUp={this.handleEvent}>
                     {title}
                     <Button title={closeBtnLabel} text={closeBtnLabel} onClicked={this.onCloseBtnClicked} className={this.closeBtnClass} />
                 </div>
@@ -75,7 +133,8 @@ Dialog.defaultProps = {
     denyLabel: 'Cancel',
     confirmLabel: 'Confirm',
     closeBtnLabel: 'Close',
-    opened: false
+    opened: false,
+    repositionOnShow: true
 };
 
 Dialog.propTypes = {
@@ -88,5 +147,9 @@ Dialog.propTypes = {
     closeBtnLabel: PropTypes.string,
     onDeny: PropTypes.func,
     onConfirm: PropTypes.func,
-    opened: PropTypes.bool
+    onShow: PropTypes.func,
+    onHide: PropTypes.func,
+    opened: PropTypes.bool,
+    zIndex: PropTypes.number,
+    repositionOnShow: PropTypes.bool
 };

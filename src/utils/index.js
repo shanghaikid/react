@@ -28,3 +28,11 @@ export function e(stateObject) {
     _f(stateObject, '', result);
     return result;
 }
+
+// get child position when it is at center of the parent
+export function getCenterPosition({innerWidth = 1000, innerHeight=800}, {width = 400, height = 400}) {
+    return {
+        left: (innerWidth - width) / 2,
+        top: (innerHeight - height) / 2
+    }
+}

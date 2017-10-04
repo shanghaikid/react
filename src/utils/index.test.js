@@ -1,4 +1,4 @@
-import {isObj, e, clone} from './';
+import {isObj, e, clone, getCenterPosition} from './';
 
 describe('Utils', () => {
     test('isObj', () => {
@@ -51,5 +51,14 @@ describe('Utils', () => {
         expect(result['gridHidden']).toBe(false);
         expect(result['hidden']).toBe(false);
 
+    });
+
+    test('get center position', () => {
+        let parent = {innerWidth: 1280, innerHeight: 900},
+            child = {width: 280, height:200},
+            pos = getCenterPosition(parent, child);
+
+        expect(pos.left).toBe(500);
+        expect(pos.top).toBe(350);
     });
 });

@@ -3,10 +3,12 @@ import BaseComponent from 'components/BaseComponent';
 import Button from '../../Form/Button';
 import PropTypes from 'prop-types';
 import { getCenterPosition } from '../../../utils';
+import { zIndexs } from '../../../Constants';
 
 // TODO:
 // 3. overlay
 // 4. style
+let zIndex = zIndexs.Dialog;
 
 // Dialog
 export default class Dialog extends BaseComponent {
@@ -29,7 +31,7 @@ export default class Dialog extends BaseComponent {
         this.state = {
             left: 0,
             top: 0,
-            zIndex: 10
+            zIndex: zIndex++
         };
     }
 
@@ -54,6 +56,7 @@ export default class Dialog extends BaseComponent {
             if (repositionOnShow) {
                 this.reposition();
             }
+            this.setState({zIndex: zIndex++})
         }
 
         if (hide === true) {

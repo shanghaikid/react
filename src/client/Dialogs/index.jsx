@@ -4,7 +4,6 @@ import Dialog from 'components/Widgets/Dialog';
 import Button from 'components/Form/Button';
 import { toggleDialogOpen } from './DialogsAction';
 
-
 // Dialogs page
 export default class Dialogs extends BaseComponent {
     init() {

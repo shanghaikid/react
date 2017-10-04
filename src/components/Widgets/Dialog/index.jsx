@@ -5,9 +5,6 @@ import PropTypes from 'prop-types';
 import { getCenterPosition } from '../../../utils';
 import { zIndexs } from '../../../Constants';
 
-// TODO:
-// 3. overlay
-// 4. style
 let zIndex = zIndexs.Dialog;
 
 // Dialog
@@ -73,6 +70,7 @@ export default class Dialog extends BaseComponent {
             onClose(e, this);
         }
 
+        e.stopPropagation();
     }
 
     onDenyBtnClicked(e) {
@@ -92,6 +90,8 @@ export default class Dialog extends BaseComponent {
     }
 
     onMouseDown(e) {
+        // only click on the header , we start draging the dialog
+        if (e.currentTarget !== e.target) return;
         this.lastMouseX = e.clientX;
         this.lastMouseY = e.clientY;
         document.addEventListener('mousemove', this.mousemoveHandler);

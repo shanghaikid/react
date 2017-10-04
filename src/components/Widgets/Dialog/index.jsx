@@ -42,6 +42,27 @@ export default class Dialog extends BaseComponent {
         this.setState({left, top});
     }
 
+    componentWillReceiveProps(props) {
+        const { onShow, onHide, repositionOnShow, opened} = this.props,
+            show = props.opened === true && opened === false,
+            hide = props.opened === false && opened === true;
+
+        if (show === true)  {
+            if (onShow) {
+                onShow(this);
+            }
+            if (repositionOnShow) {
+                this.reposition();
+            }
+        }
+
+        if (hide === true) {
+            if (onHide) {
+                onHide(this);
+            }
+        }
+    }
+
     onCloseBtnClicked(e) {
         const {onClose} = this.props;
 

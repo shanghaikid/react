@@ -55,7 +55,7 @@ export default class Dialogs extends BaseComponent {
                 <Button onClicked={this.onBtn1Clicked} text="toggle Dialog1" />
                 <Button onClicked={this.onBtn2Clicked} text="toggle Dialog2" />
                 <Dialog opened={this.state.dialog1Opened} title="dialog1" onClose={this.onDialogClose.bind(this, 'dialog1')} />
-                <Dialog opened={this.state.dialog2Opened} title="dialog2" onClose={this.onDialogClose.bind(this, 'dialog2')} />
+                <Dialog opened={this.state.dialog2Opened} title="dialog2" repositionOnShow={false} onClose={this.onDialogClose.bind(this, 'dialog2')} />
             </div>
         );
     }

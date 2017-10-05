@@ -32,6 +32,9 @@ Component.prototype.handleEvent = (function () {
     };
 }());
 
+// use for componentId
+let registry = {};
+
 export default class BaseComponent extends Component {
     constructor(...args) {
         super(...args);
@@ -41,6 +44,7 @@ export default class BaseComponent extends Component {
         this.baseClassName = 'component';
 
         this.init();
+        this.register();
     }
 
     // componentWillMount() {}
@@ -54,6 +58,16 @@ export default class BaseComponent extends Component {
 
     get className() {
         return `${this.libClassPrefix}-${this.baseClassName} ${this.props.className || ''}`;
+    }
+
+    register() {
+        let name = this.constructor.name;
+        // ensure we have register
+        registry[name] = registry[name] || 0;
+        // add one
+        registry[name] = registry[name] + 1;
+        // assign name
+        this.componentId = name.charAt(0).toLowerCase() + name.slice(1) + registry[name];
     }
 
     setState(obj) {

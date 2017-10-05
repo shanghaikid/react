@@ -1,21 +1,24 @@
 import React from 'react';
 import BaseComponent from 'components/BaseComponent';
 import Dialog from 'components/Widgets/Dialog';
+import Overlay from 'components/Widgets/Overlay';
 import Button from 'components/Form/Button';
+
 import { toggleDialogOpen } from './DialogsAction';
+import { zIndexs } from '../../Constants';
 
 // Dialogs page
 export default class Dialogs extends BaseComponent {
     init() {
-        this.onBtn1Clicked = this.onBtn1Clicked.bind(this);
-        this.onBtn2Clicked = this.onBtn2Clicked.bind(this);
+        this.onButtonClicked = this.onButtonClicked.bind(this);
+        this.onDialogClose = this.onDialogClose.bind(this);
 
         this.state = this.transformState({
             dialog1: {
-                opened: false
+                isOpen: false
             },
             dialog2: {
-                opened: false
+                isOpen: false
             },
             grid: {
                 button: {
@@ -31,16 +34,16 @@ export default class Dialogs extends BaseComponent {
         });
     }
 
-    onBtn1Clicked(e) {
-        this.setState(toggleDialogOpen('dialog1'));
+    onButtonClicked(e, button) {
+        this.setState(toggleDialogOpen(button.props.dialog));
     }
 
-    onBtn2Clicked(e) {
-        this.setState(toggleDialogOpen('dialog2'));
+    onDialogClose(e, dialog) {
+        this.setState(toggleDialogOpen(dialog.props.componentId, false));
     }
 
-    onDialogClose(dialogName) {
-        this.setState(toggleDialogOpen(dialogName, false));
+    shouldShowOverlay() {
+        return this.state.dialog1IsOpen || this.state.dialog2IsOpen;
     }
 
     render() {
@@ -51,10 +54,11 @@ export default class Dialogs extends BaseComponent {
 
         return (
             <div style={style}>
-                <Button onClicked={this.onBtn1Clicked} text="toggle Dialog1" />
-                <Button onClicked={this.onBtn2Clicked} text="toggle Dialog2" />
-                <Dialog opened={this.state.dialog1Opened} title="dialog1" onClose={this.onDialogClose.bind(this, 'dialog1')} />
-                <Dialog opened={this.state.dialog2Opened} title="dialog2" repositionOnShow={false} onClose={this.onDialogClose.bind(this, 'dialog2')} />
+                <Button dialog="dialog1" onClicked={this.onButtonClicked} text="toggle Dialog1" />
+                <Button dialog="dialog2" onClicked={this.onButtonClicked} text="toggle Dialog2" />
+                <Dialog isOpen={this.state.dialog1IsOpen} componentId="dialog1" title="dialog1" onClose={this.onDialogClose} />
+                <Dialog isOpen={this.state.dialog2IsOpen} componentId="dialog2" title="dialog2" repositionOnShow={false} onClose={this.onDialogClose} />
+                <Overlay isOpen={this.shouldShowOverlay()} />
             </div>
         );
     }

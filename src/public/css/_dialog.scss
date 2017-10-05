@@ -11,4 +11,8 @@
     .e-dialog-header {
         cursor: move;
     }
+    .e-dialog-footer {
+        display: flex;
+        justify-content: flex-end;
+    }
 }

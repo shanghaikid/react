@@ -16,10 +16,10 @@ export default class Dialog extends BaseComponent {
         this.closeBtnClass = this.getLibPrefixedClass('dialog-btn-close');
         this.bodyClass = this.getLibPrefixedClass('dialog-body');
         this.footerClass = this.getLibPrefixedClass('dialog-footer');
-        this.denyBtnClass = this.getLibPrefixedClass('dialog-btn-deny');
+        this.cancelBtnClass = this.getLibPrefixedClass('dialog-btn-cancel');
         this.confirmBtnClass = this.getLibPrefixedClass('dialog-btn-confirm');
         // handlers
-        this.onDenyBtnClicked = this.onDenyBtnClicked.bind(this);
+        this.onCancelBtnClicked = this.onCancelBtnClicked.bind(this);
         this.onConfirmBtnClicked = this.onConfirmBtnClicked.bind(this);
         this.onCloseBtnClicked = this.onCloseBtnClicked.bind(this);
         this.mousemoveHandler = this.onMouseMove.bind(this);
@@ -28,7 +28,8 @@ export default class Dialog extends BaseComponent {
         this.state = {
             left: 0,
             top: 0,
-            zIndex: zIndex++
+            zIndex: zIndex++,
+            isOpen: false
         };
     }
 
@@ -42,29 +43,42 @@ export default class Dialog extends BaseComponent {
     }
 
     componentWillReceiveProps(props) {
-        const { onShow, onHide, repositionOnShow, opened} = this.props,
-            show = props.opened === true && opened === false,
-            hide = props.opened === false && opened === true;
+        const { onShow, onHide, repositionOnShow, isOpen} = this.props,
+            show = props.isOpen === true && isOpen === false,
+            hide = props.isOpen === false && isOpen === true;
 
         if (show === true)  {
             if (onShow) {
                 onShow(this);
             }
+
+            this.setState({
+                isOpen: true,
+                zIndex: zIndex++
+            });
+
             if (repositionOnShow) {
                 this.reposition();
             }
-            this.setState({zIndex: zIndex++})
         }
 
         if (hide === true) {
             if (onHide) {
                 onHide(this);
             }
+
+            this.setState({
+                isOpen: false
+            });
         }
     }
 
     onCloseBtnClicked(e) {
         const {onClose} = this.props;
+
+        this.setState({
+            isOpen: false
+        });
 
         if (onClose) {
             onClose(e, this);
@@ -73,11 +87,13 @@ export default class Dialog extends BaseComponent {
         e.stopPropagation();
     }
 
-    onDenyBtnClicked(e) {
-        const {onDeny} = this.props;
+    onCancelBtnClicked(e) {
+        const {onCancel} = this.props;
+        
+        this.onCloseBtnClicked(e);
 
-        if (onDeny) {
-            onDeny(e, this);
+        if (onCancel) {
+            onCancel(e, this);
         }
     }
 
@@ -85,7 +101,7 @@ export default class Dialog extends BaseComponent {
         const {onConfirm} = this.props;
 
         if (onConfirm) {
-            onConfirm(e);
+            onConfirm(e, this);
         }
     }
 
@@ -122,8 +138,8 @@ export default class Dialog extends BaseComponent {
     }
 
     render() {
-        const {mod, title, message, denyLabel, confirmLabel, closeBtnLabel, opened} = this.props,
-                cls = this.className + ' ' + mod + (!opened ? 'hidden' : ''),
+        const {mod, title, body, cancelLabel, confirmLabel, closeBtnLabel} = this.props,
+                cls = this.className + ' ' + mod + (!this.state.isOpen ? 'hidden' : ''),
                 style = {
                     position: 'fixed',
                     left: this.state.left,
@@ -138,10 +154,10 @@ export default class Dialog extends BaseComponent {
                     <Button title={closeBtnLabel} text={closeBtnLabel} onClicked={this.onCloseBtnClicked} className={this.closeBtnClass} />
                 </div>
                 <div className={this.bodyClass}>
-                    {message}
+                    {body}
                 </div>
                 <div className={this.footerClass}>
-                    <Button onClicked={this.onDenyBtnClicked} text={denyLabel} className={this.denyBtnClass} />
+                    <Button onClicked={this.onCancelBtnClicked} text={cancelLabel} className={this.cancelBtnClass} />
                     <Button onClicked={this.onConfirmBtnClicked} text={confirmLabel} className={this.confirmBtnClass} />
                 </div>
             </div>
@@ -152,28 +168,29 @@ export default class Dialog extends BaseComponent {
 Dialog.defaultProps = {
     mod: '',
     title: 'Dialog Title',
-    message: 'ANR1032829 This is a sample message. Ddlfkweroiu sdfr sdfjeriu dfererdfsf.',
+    body: 'ANR1032829 This is a sample message. Ddlfkweroiu sdfr sdfjeriu dfererdfsf.',
     helpLabel: 'Help',
-    denyLabel: 'Cancel',
+    cancelLabel: 'Cancel',
     confirmLabel: 'Confirm',
     closeBtnLabel: 'Close',
-    opened: false,
+    isOpen: false,
     repositionOnShow: true
 };
 
 Dialog.propTypes = {
     mod: PropTypes.string,
     title: PropTypes.string,
-    message: PropTypes.string,
+    body: PropTypes.string,
     helpLabel: PropTypes.string,
-    denyLabel: PropTypes.string,
+    cancelLabel: PropTypes.string,
     confirmLabel: PropTypes.string,
     closeBtnLabel: PropTypes.string,
-    onDeny: PropTypes.func,
+    onClose: PropTypes.func,
+    onCancel: PropTypes.func,
     onConfirm: PropTypes.func,
     onShow: PropTypes.func,
     onHide: PropTypes.func,
-    opened: PropTypes.bool,
+    isOpen: PropTypes.bool,
     zIndex: PropTypes.number,
     repositionOnShow: PropTypes.bool
 };

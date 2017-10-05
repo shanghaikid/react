@@ -11,7 +11,7 @@ export default class Button extends BaseComponent {
         const {onClicked} = this.props;
 
         if (onClicked) {
-            onClicked(e);
+            onClicked(e, this);
         }
     }
 
@@ -19,7 +19,7 @@ export default class Button extends BaseComponent {
         const {text, type, title} = this.props;
 
         return (
-            <button type={type} title={title} className={this.className} onClick={this.handleEvent}>{text}</button>
+            <button type={type} title={title || text} className={this.className} onClick={this.handleEvent}>{text}</button>
         );
     }
 }

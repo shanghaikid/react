@@ -95,3 +95,6 @@ body {
   z-index: 10; }
   .e-dialog .e-dialog-header {
     cursor: move; }
+  .e-dialog .e-dialog-footer {
+    display: flex;
+    justify-content: flex-end; }

@@ -26,7 +26,7 @@ Component.prototype.handleEvent = (function () {
     // one handleEvent to rule them all
     return function handleEvent(e) {
         var method = map[e.type] || capitalize(e.type);
-        // console.info(method, this.constructor.name);
+        console.info(method, this.constructor.name);
         if (method in this.props) this.props[method](e);
         if (method in this) this[method](e);
     };
@@ -34,6 +34,48 @@ Component.prototype.handleEvent = (function () {
 
 // use for componentId
 let registry = {};
+let popupManager = {
+    types: ['Dialog'],
+    eventType: 'keydown',
+    stack: [],
+    eventHandler: null,
+    add(id) {
+        this.stack.push(id);
+
+        if (this.stack.length > 0 && !this.eventHandler) {
+            this.eventHandler = document.addEventListener(this.eventType, this);
+        }
+    },
+    remove(id) {
+        this.stack = this.stack.filter(stackId => stackId !== id);
+
+        if (this.stack.length === 0) {
+            document.removeEventListener(this.eventType, this);
+            delete this.eventHandler;
+        }
+    },
+    has(id) {
+        return this.stack.includes(id);
+    },
+    handleEvent(e) {
+        console.log(e);
+    },
+    handle(component) {
+        let id = component.componentId,
+            name = component.constructor.name,
+            isOpen = component.state.isOpen;
+
+        if (!this.has(id) && isOpen === true) {
+            this.add(id);
+            return;
+        }
+
+        if (this.has(id) && isOpen === false) {
+            this.remove(id);
+            return;
+        }
+    }
+};
 
 export default class BaseComponent extends Component {
     constructor(...args) {
@@ -45,6 +87,7 @@ export default class BaseComponent extends Component {
 
         this.init();
         this.register();
+        this.postRegister();
     }
 
     // componentWillMount() {}
@@ -52,7 +95,11 @@ export default class BaseComponent extends Component {
     // componentWillReceiveProps() {}
     // shouldComponentUpdate() {}
     // componentWillUpdate() {}
-    // componentDidUpdate() {}
+    componentDidUpdate() {
+        if (popupManager.types.includes(this.constructor.name)) {
+            popupManager.handle(this);
+        }
+    }
     // componentWillUnmount() {}
     // forceUpdate() {}
 
@@ -71,7 +118,6 @@ export default class BaseComponent extends Component {
     }
 
     setState(obj) {
-        // console.log(obj, this.transformState(obj));
         super.setState(obj);
     }
 
@@ -83,6 +129,7 @@ export default class BaseComponent extends Component {
         return `${this.libClassPrefix}-${cls}`;
     }
 
-    // initialize stub
+    // stubs
     init() {}
+    postRegister() {}
 }

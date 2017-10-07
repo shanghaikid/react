@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseComponent from 'components/BaseComponent';
+import PopupComponent from '../../PopupComponent';
 import Button from '../../Form/Button';
 import PropTypes from 'prop-types';
 import { getCenterPosition } from '../../../utils';
@@ -8,7 +8,7 @@ import { zIndexs } from '../../../Constants';
 let zIndex = zIndexs.Dialog;
 
 // Dialog
-export default class Dialog extends BaseComponent {
+export default class Dialog extends PopupComponent {
     init() {
         // class
         this.baseClassName = `dialog`;

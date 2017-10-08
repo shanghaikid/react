@@ -43,47 +43,28 @@ export default class Dialog extends PopupComponent {
     }
 
     componentWillReceiveProps(props) {
-        const { onShow, onHide, repositionOnShow, isOpen} = this.props,
-            show = props.isOpen === true && isOpen === false,
-            hide = props.isOpen === false && isOpen === true;
+        const { onOpen, onClose, repositionOnOpen, isOpen} = this.props,
+            open = props.isOpen === true && isOpen === false,
+            close = props.isOpen === false && isOpen === true;
 
-        if (show === true)  {
-            if (onShow) {
-                onShow(this);
-            }
-
+        if (open === true)  {
+            this.open();
             this.setState({
-                isOpen: true,
                 zIndex: zIndex++
             });
 
-            if (repositionOnShow) {
+            if (repositionOnOpen) {
                 this.reposition();
             }
         }
 
-        if (hide === true) {
-            if (onHide) {
-                onHide(this);
-            }
-
-            this.setState({
-                isOpen: false
-            });
+        if (close === true) {
+            this.close();
         }
     }
 
     onCloseBtnClicked(e) {
-        const {onClose} = this.props;
-
-        this.setState({
-            isOpen: false
-        });
-
-        if (onClose) {
-            onClose(e, this);
-        }
-
+        this.close(e);
         e.stopPropagation();
     }
 
@@ -174,7 +155,7 @@ Dialog.defaultProps = {
     confirmLabel: 'Confirm',
     closeBtnLabel: 'Close',
     isOpen: false,
-    repositionOnShow: true
+    repositionOnOpen: true
 };
 
 Dialog.propTypes = {
@@ -188,9 +169,8 @@ Dialog.propTypes = {
     onClose: PropTypes.func,
     onCancel: PropTypes.func,
     onConfirm: PropTypes.func,
-    onShow: PropTypes.func,
-    onHide: PropTypes.func,
+    onOpen: PropTypes.func,
     isOpen: PropTypes.bool,
     zIndex: PropTypes.number,
-    repositionOnShow: PropTypes.bool
+    repositionOnOpen: PropTypes.bool
 };

@@ -27,6 +27,7 @@ let popupManager = {
         if (e.code === 'Escape') {
             let component = this.stack[this.stack.length - 1];
             this.remove(component);
+            // TODO: find a way to decouple
             component.props.close({}, component);
         }
     },

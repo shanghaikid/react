@@ -10,7 +10,7 @@ router.get('/*', serve('.'));
 // root
 router.get('/', async function (ctx, next) {
     ctx.startTime = process.hrtime();
-    ctx.title = `Feeling E`;
+    ctx.title = `E`;
     ctx.body = page(ctx);
 });
 

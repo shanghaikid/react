@@ -36,16 +36,16 @@ Component.prototype.handleEvent = (function () {
 let registry = {};
 
 export default class BaseComponent extends Component {
-    constructor(...args) {
-        super(...args);
+    constructor(props) {
+        super(props);
         // TODO: find a better way to save memory
         this.handleEvent = this.handleEvent.bind(this);
         this.libClassPrefix = 'e';
         this.baseClassName = 'component';
 
-        this.init();
-        this.register();
-        this.postRegister();
+        this.init(props);
+        this.register(props);
+        this.postRegister(props);
     }
 
     // componentWillMount() {}

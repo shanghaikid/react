@@ -28,8 +28,7 @@ export default class Dialog extends PopupComponent {
         this.state = {
             left: 0,
             top: 0,
-            zIndex: zIndex++,
-            isOpen: false
+            zIndex: zIndex++
         };
     }
 
@@ -43,12 +42,12 @@ export default class Dialog extends PopupComponent {
     }
 
     componentWillReceiveProps(props) {
-        const { onOpen, onClose, repositionOnOpen, isOpen} = this.props,
-            open = props.isOpen === true && isOpen === false,
-            close = props.isOpen === false && isOpen === true;
+        const { open, close, repositionOnOpen, isOpen} = this.props,
+            nextOpen = props.isOpen === true && isOpen === false,
+            nextClose = props.isOpen === false && isOpen === true;
 
-        if (open === true)  {
-            this.open();
+        if (nextOpen)  {
+            open({}, this);
             this.setState({
                 zIndex: zIndex++
             });
@@ -58,19 +57,19 @@ export default class Dialog extends PopupComponent {
             }
         }
 
-        if (close === true) {
-            this.close();
+        if (nextClose) {
+            close({}, this);
         }
     }
 
     onCloseBtnClicked(e) {
-        this.close(e);
+        this.props.close(e, this);
         e.stopPropagation();
     }
 
     onCancelBtnClicked(e) {
         const {onCancel} = this.props;
-        
+
         this.onCloseBtnClicked(e);
 
         if (onCancel) {
@@ -120,7 +119,7 @@ export default class Dialog extends PopupComponent {
 
     render() {
         const {mod, title, body, cancelLabel, confirmLabel, closeBtnLabel} = this.props,
-                cls = getClsName(this.className, mod, (!this.state.isOpen ? 'hidden' : '')),
+                cls = getClsName(this.className, mod, (!this.props.isOpen ? 'hidden' : '')),
                 style = {
                     position: 'fixed',
                     left: this.state.left,
@@ -155,7 +154,8 @@ Dialog.defaultProps = {
     confirmLabel: 'Confirm',
     closeBtnLabel: 'Close',
     isOpen: false,
-    repositionOnOpen: true
+    repositionOnOpen: true,
+    close: () => {}
 };
 
 Dialog.propTypes = {
@@ -169,7 +169,8 @@ Dialog.propTypes = {
     onClose: PropTypes.func,
     onCancel: PropTypes.func,
     onConfirm: PropTypes.func,
-    onOpen: PropTypes.func,
+    open: PropTypes.func,
+    close: PropTypes.func.isRequired,
     isOpen: PropTypes.bool,
     zIndex: PropTypes.number,
     repositionOnOpen: PropTypes.bool

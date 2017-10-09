@@ -10,7 +10,9 @@ const navDef = [
     {id: 'widgets', label: 'Widgets', expand: true, children: [
         {id: 'dialogs', label: 'Dialogs', url: '/#widgets/dialogs', component: <Dialogs />},
         {id: 'wizard', label: 'Wizard', url: '/#widgets/wizard', component: <Header text="Wiard" />},
-        {id: 'tooltip', label: 'Tooltip', url: '/#widgets/tooltip', component: <Header text="Tooltips" />}
+        {id: 'tooltip', label: 'Tooltip', url: '/#widgets/tooltip', component: <Header text="Tooltips" />},
+        {id: 'bars', label: 'Bars', url: '/#widgets/bars', component: <Header text="Bars" />},
+        {id: 'alerts', label: 'Alerts', url: '/#widgets/alerts', component: <Header text="Alerts" />}
     ]}
 ];
 

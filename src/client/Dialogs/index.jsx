@@ -11,7 +11,8 @@ import { zIndexs } from '../../Constants';
 export default class Dialogs extends BaseComponent {
     init() {
         this.onButtonClicked = this.onButtonClicked.bind(this);
-        this.onDialogClose = this.onDialogClose.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
+        this.openDialog = this.openDialog.bind(this);
 
         this.state = this.transformState({
             dialog1: {
@@ -38,8 +39,14 @@ export default class Dialogs extends BaseComponent {
         this.setState(toggleDialogOpen(button.props.dialog));
     }
 
-    onDialogClose(e, dialog) {
+    // this is required to sync internal state
+    closeDialog(e, dialog) {
         this.setState(toggleDialogOpen(dialog.props.componentId, false));
+    }
+
+    // this is required to sync internal state
+    openDialog(e, dialog) {
+        this.setState(toggleDialogOpen(dialog.props.componentId, true));
     }
 
     shouldShowOverlay() {
@@ -56,8 +63,8 @@ export default class Dialogs extends BaseComponent {
             <div style={style}>
                 <Button dialog="dialog1" onClicked={this.onButtonClicked} text="toggle Dialog1" />
                 <Button dialog="dialog2" onClicked={this.onButtonClicked} text="toggle Dialog2" />
-                <Dialog isOpen={this.state.dialog1IsOpen} componentId="dialog1" title="dialog1" onClose={this.onDialogClose} />
-                <Dialog isOpen={this.state.dialog2IsOpen} componentId="dialog2" title="dialog2" repositionOnOpen={false} onClose={this.onDialogClose} />
+                <Dialog isOpen={this.state.dialog1IsOpen} componentId="dialog1" title="dialog1" open={this.openDialog} close={this.closeDialog} />
+                <Dialog isOpen={this.state.dialog2IsOpen} componentId="dialog2" title="dialog2" open={this.openDialog} close={this.closeDialog} repositionOnOpen={false} />
             </div>
         );
     }

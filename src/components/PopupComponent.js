@@ -27,12 +27,12 @@ let popupManager = {
         if (e.code === 'Escape') {
             let component = this.stack[this.stack.length - 1];
             this.remove(component);
-            component.close();
+            component.props.close({}, component);
         }
     },
     handle(component) {
         let name = component.constructor.name,
-            isOpen = component.state.isOpen;
+            isOpen = component.props.isOpen;
 
         if (!this.has(component) && isOpen === true) {
             this.add(component);
@@ -46,7 +46,7 @@ let popupManager = {
     },
     // a popup must implement close and open
     isPopup(component) {
-        return this.types.includes(component.constructor.name) && typeof component.close === 'function';
+        return this.types.includes(component.constructor.name);
     }
 };
 
@@ -58,34 +58,9 @@ export default class PopupComponent extends BaseComponent {
     // componentWillUpdate() {}
     componentDidUpdate() {
         super.componentDidUpdate && super.componentDidUpdate();
-        if (popupManager.types.includes(this.constructor.name)) {
-            popupManager.handle(this);
-        }
+        popupManager.handle(this);
     }
 
-    open(e = {}, t = this) {
-        const {onOpen} = this.props;
-
-        this.setState({
-            isOpen: true
-        });
-
-        if (onOpen) {
-            onOpen(e, this);
-        }
-    }
-
-    close(e = {}, t = this) {
-        const {onClose} = this.props;
-
-        this.setState({
-            isOpen: false
-        });
-
-        if (onClose) {
-            onClose(e, t);
-        }
-    }
     // componentWillUnmount() {}
     // forceUpdate() {}
 

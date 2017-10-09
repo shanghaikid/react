@@ -36,6 +36,9 @@ Component.prototype.handleEvent = (function () {
 let registry = {};
 
 export default class BaseComponent extends Component {
+    static get type() {
+        return this.name;
+    }
     constructor(props) {
         super(props);
         // TODO: find a better way to save memory

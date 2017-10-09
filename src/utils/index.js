@@ -3,7 +3,8 @@ export function isObj(obj) {
     return Object.prototype.toString.call(obj) === "[object Object]";
 }
 
-// clone: clone the given object
+// clone: simple clone the given object
+// not support function and circular reference
 export function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
 }

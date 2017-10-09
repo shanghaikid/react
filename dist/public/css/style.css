@@ -98,3 +98,12 @@ body {
   .e-dialog .e-dialog-footer {
     display: flex;
     justify-content: flex-end; }
+
+.e-windowMemoryViewer span.label {
+  font-weight: 700;
+  font-size: 12px;
+  margin-right: 5px; }
+
+.e-windowMemoryViewer span {
+  display: inline-block;
+  margin-right: 10px; }

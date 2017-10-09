@@ -5,20 +5,38 @@ import Splitter from 'components/Layout/Splitter';
 import TreeView from 'components/Layout/TreeView';
 import Switch from 'components/Layout/Switch';
 import BaseComponent from 'components/BaseComponent';
+import WindowMemoryViewer from 'components/Widgets/WindowMemoryViewer';
 
 export default class App extends BaseComponent {
     init() {
         this.state = {
-            activeId: 'mon'
+            activeId: 'mon',
+            jsHeapSizeLimit: 0,
+            totalJSHeapSize: 0,
+            usedJSHeapSize: 0
         };
     }
 
     componentDidMount() {
         let hash = window.location.hash.split('/'),
             activeId = hash[hash.length - 1].replace('#', '');
+        
+        window.setInterval(() => {
+            this.getMemoryStat();
+        }, 2000);
 
         this.setState({
             activeId
+        });
+
+        this.getMemoryStat();
+    }
+
+    getMemoryStat() {
+        let {jsHeapSizeLimit, totalJSHeapSize, usedJSHeapSize} = window.performance.memory;
+
+        this.setState({
+                jsHeapSizeLimit, totalJSHeapSize, usedJSHeapSize
         });
     }
 
@@ -42,7 +60,9 @@ export default class App extends BaseComponent {
                     <Pane splitter="horizontal" size={75} maxSize={80}>
                         <Switch def={this.props.pages} activeId={this.state.activeId} />
                     </Pane>
-                    <Pane />
+                    <Pane>
+                        <WindowMemoryViewer jsHeapSizeLimit={this.state.jsHeapSizeLimit} totalJSHeapSize={this.state.totalJSHeapSize} usedJSHeapSize={this.state.usedJSHeapSize} />
+                    </Pane>
                 </Pane>
             </BorderContainer>
         );

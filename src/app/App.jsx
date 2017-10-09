@@ -33,11 +33,12 @@ export default class App extends BaseComponent {
     }
 
     getMemoryStat() {
-        let {jsHeapSizeLimit, totalJSHeapSize, usedJSHeapSize} = window.performance.memory;
-
-        this.setState({
+        if (window.performance.memory) {
+            const {jsHeapSizeLimit, totalJSHeapSize, usedJSHeapSize} = window.performance.memory;
+            this.setState({
                 jsHeapSizeLimit, totalJSHeapSize, usedJSHeapSize
-        });
+            });
+        }
     }
 
     onTreeNodeClick(node, state) {

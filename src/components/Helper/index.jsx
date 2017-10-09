@@ -57,6 +57,8 @@ let popupManager = {
 export function popupable(Component) {
     let zIndex = zIndexs[Component.type] || 0;
 
+    console.assert(typeof Component.propTypes.styleObj !== 'undefined', 'The component should have an styleObj as prop');
+
     class PopupComponent extends Component {
         init(props) {
             super.init(props);
@@ -131,8 +133,10 @@ export function draggable(Component) {
         }
 
         reposition() {
-            let {left, top} = getCenterPosition(window, this.domNode);
-            this.setState({left, top});
+            if (this.domNode) {
+                let {left, top} = getCenterPosition(window, this.domNode);
+                this.setState({left, top});
+            }
         }
 
         onMouseUp(e) {
@@ -159,8 +163,6 @@ export function draggable(Component) {
         }
 
         onMouseDown(e) {
-            // only click on the header , we start draging the dialog
-            if (e.currentTarget !== e.target) return;
             this.lastMouseX = e.clientX;
             this.lastMouseY = e.clientY;
             document.addEventListener('mousemove', this.mousemoveHandler);
@@ -174,21 +176,24 @@ export function draggable(Component) {
                 top: this.state.top
             });
 
-            return (<Component 
+            return (
+                <div style={style} onMouseDown={this.handleEvent} onMouseUp={this.handleEvent}>
+                    <Component 
                         {...this.props} 
                         ref={this.processRef.bind(this)}
-                        styleObj={style} 
-                        onMouseDown={this.mousedownHandler}
-                        onMouseUp={this.mouseupHandler} />);
+                         />
+                </div>);
         }
     }
 
     DraggableComponent.defaultProps = Object.assign({
-        repositionOnOpen: true
+        repositionOnOpen: true,
+        styleObj: {}
     }, Component.defaultProps);
 
     DraggableComponent.propTypes = Object.assign({
-        repositionOnOpen: PropTypes.bool
+        repositionOnOpen: PropTypes.bool,
+        styleObj: PropTypes.object
     });
 
     return DraggableComponent;

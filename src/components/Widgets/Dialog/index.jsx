@@ -66,13 +66,12 @@ export class DialogView extends BaseComponent {
     }
 
     render() {
-        const {mod, title, body, cancelLabel, confirmLabel, closeBtnLabel, styleObj, onMouseDown, onMouseUp} = this.props,
-                cls = getClsName(this.className, mod, (!this.props.isOpen ? 'hidden' : '')),
-                css = styleObj;
+        const {mod, title, body, cancelLabel, confirmLabel, closeBtnLabel} = this.props,
+                cls = getClsName(this.className, mod, (!this.props.isOpen ? 'hidden' : ''));
 
         return (
-            <div style={styleObj} className={cls} >
-                <div className={this.headerClass} onMouseDown={onMouseDown} onMouseUp={onMouseUp} >
+            <div className={cls} >
+                <div className={this.headerClass} >
                     {title}
                     <Button title={closeBtnLabel} text={closeBtnLabel} onClicked={this.onCloseBtnClicked} className={this.closeBtnClass} />
                 </div>
@@ -114,9 +113,8 @@ DialogView.propTypes = {
     onConfirm: PropTypes.func,
     open: PropTypes.func.isRequired,
     close: PropTypes.func.isRequired,
-    isOpen: PropTypes.bool,
-    styleObj: PropTypes.object
+    isOpen: PropTypes.bool
 };
 
-const Dialog = draggable(popupable(DialogView));
+const Dialog = popupable(draggable(DialogView));
 export default Dialog;

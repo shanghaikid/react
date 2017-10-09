@@ -2,6 +2,7 @@ import React from 'react'
 import BaseComponent from '../../BaseComponent';
 import Splitter from '../Splitter';
 import PropTypes from 'prop-types';
+import { getClsName } from '../../../utils';
 
 // TODO: keyboard event
 export default class Pane extends BaseComponent {
@@ -77,7 +78,7 @@ export default class Pane extends BaseComponent {
 
     render() {
         const {className, children, splitter, direction, display, splitterSize} = this.props,
-            cls = this.className + (`${splitter === 'vertical' ? ` verticalPane` : ''}`),
+            cls = getClsName(this.className, `${splitter === 'vertical' ? ` verticalPane` : ''}`),
             style = {
                 display: display,
                 flexDirection: direction

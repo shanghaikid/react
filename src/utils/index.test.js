@@ -1,4 +1,4 @@
-import {isObj, e, clone, getCenterPosition} from './';
+import {isObj, e, clone, getCenterPosition, getClsName} from './';
 
 describe('Utils', () => {
     test('isObj', () => {
@@ -60,5 +60,16 @@ describe('Utils', () => {
 
         expect(pos.left).toBe(500);
         expect(pos.top).toBe(350);
+    });
+
+    test('className', () => {
+        let a = 'a',
+            b = 'abcde',
+            c = 'sadf',
+            d = '',
+            e = undefined,
+            clsName = getClsName(a, b, c, d, e);
+
+            expect(clsName).toBe(a + ' ' + b + ' ' + c);
     });
 });

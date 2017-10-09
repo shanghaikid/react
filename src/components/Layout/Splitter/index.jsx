@@ -1,6 +1,7 @@
 import React from 'react'
 import BaseComponent from '../../BaseComponent';
 import PropTypes from 'prop-types';
+import { getClsName } from '../../../utils';
 
 export default class Splitter extends BaseComponent {
     init() {
@@ -10,7 +11,7 @@ export default class Splitter extends BaseComponent {
 
     render() {
         let {className, children, isVertical} = this.props,
-            cls = this.className + (`${isVertical ? ` vertical` : ' horizontal'}`);
+            cls = getClsName(this.className, `${isVertical ? ` vertical` : ' horizontal'}`);
 
         return (
             <div 

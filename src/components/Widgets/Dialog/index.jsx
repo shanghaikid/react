@@ -2,7 +2,7 @@ import React from 'react';
 import PopupComponent from '../../PopupComponent';
 import Button from '../../Form/Button';
 import PropTypes from 'prop-types';
-import { getCenterPosition } from '../../../utils';
+import { getCenterPosition , getClsName} from '../../../utils';
 import { zIndexs } from '../../../Constants';
 
 let zIndex = zIndexs.Dialog;
@@ -120,7 +120,7 @@ export default class Dialog extends PopupComponent {
 
     render() {
         const {mod, title, body, cancelLabel, confirmLabel, closeBtnLabel} = this.props,
-                cls = this.className + ' ' + mod + (!this.state.isOpen ? 'hidden' : ''),
+                cls = getClsName(this.className, mod, (!this.state.isOpen ? 'hidden' : '')),
                 style = {
                     position: 'fixed',
                     left: this.state.left,

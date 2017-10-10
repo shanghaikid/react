@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BaseComponent from 'components/BaseComponent';
+import BaseComponent from '../../BaseComponent';
+import { validatable } from '../../Helper';
 
-export default class TextInput extends BaseComponent {
+export class TextInputView extends BaseComponent {
     init() {
         this.baseClassName = `textInput`;
     }
@@ -29,15 +30,18 @@ export default class TextInput extends BaseComponent {
     }
 }
 
-TextInput.defaultProps = {
+TextInputView.defaultProps = {
     placeholder: '',
     type: 'text',
     disabled: false
 };
 
-TextInput.propTypes = {
+TextInputView.propTypes = {
     placeholder: PropTypes.string,
     type: PropTypes.string,
     disabled: PropTypes.bool,
     name: PropTypes.name
 };
+
+const TextInput = validatable(TextInputView);
+export default TextInput;

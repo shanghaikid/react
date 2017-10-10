@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseComponent from 'components/BaseComponent';
+import BaseComponent from '../../BaseComponent';
 import PropTypes from 'prop-types';
 
 export default class Button extends BaseComponent {

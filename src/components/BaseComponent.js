@@ -27,8 +27,8 @@ Component.prototype.handleEvent = (function () {
     return function handleEvent(e) {
         var method = map[e.type] || capitalize(e.type);
         console.info(method, this.constructor.name);
-        if (method in this.props) this.props[method](e);
-        if (method in this) this[method](e);
+        if (method in this.props) this.props[method](e, this);
+        if (method in this) this[method](e, this);
     };
 }());
 
@@ -39,16 +39,16 @@ export default class BaseComponent extends Component {
     static get type() {
         return this.name;
     }
-    constructor(props) {
-        super(props);
+    constructor(...args) {
+        super(...args);
         // TODO: find a better way to save memory
         this.handleEvent = this.handleEvent.bind(this);
         this.libClassPrefix = 'e';
         this.baseClassName = 'component';
 
-        this.init(props);
-        this.register(props);
-        this.postRegister(props);
+        this.init(...args);
+        this.register(...args);
+        this.postRegister(...args);
     }
 
     // componentWillMount() {}
@@ -74,8 +74,8 @@ export default class BaseComponent extends Component {
         this.componentId = name.charAt(0).toLowerCase() + name.slice(1) + registry[name];
     }
 
-    setState(obj) {
-        super.setState(obj);
+    setState(...args) {
+        super.setState(...args);
     }
 
     transformState(stateObj) {

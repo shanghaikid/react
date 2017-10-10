@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { getCenterPosition } from '../../utils';
 
 // draggable
-export default function draggable(Component) {
+export default function draggable(Component, classProperty = '-1') {
     class DraggableComponent extends Component {
         init(props) {
             super.init(props);
@@ -68,6 +68,7 @@ export default function draggable(Component) {
         }
 
         onMouseDown(e) {
+            if (!e.target.classList.contains(this[classProperty])) return;
             this.lastMouseX = e.clientX;
             this.lastMouseY = e.clientY;
             document.addEventListener('mousemove', this.mousemoveHandler);

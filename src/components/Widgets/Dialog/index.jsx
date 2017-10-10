@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 import BaseComponent from '../../BaseComponent';
 import { draggable, popupable } from '../../Helper';
 import Button from '../../Form/Button';
-import PropTypes from 'prop-types';
 import { getClsName } from '../../../utils';
 
 // Dialog
@@ -116,5 +116,5 @@ DialogView.propTypes = {
     isOpen: PropTypes.bool
 };
 
-const Dialog = popupable(draggable(DialogView));
+const Dialog = popupable(draggable(DialogView, 'headerClass'));
 export default Dialog;

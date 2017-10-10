@@ -5,7 +5,6 @@ import Overlay from 'components/Widgets/Overlay';
 import Button from 'components/Form/Button';
 
 import { toggleDialogOpen } from './DialogsAction';
-import { zIndexs } from '../../Constants';
 
 // Dialogs page
 export default class Dialogs extends BaseComponent {

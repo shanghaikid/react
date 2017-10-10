@@ -1,30 +1,33 @@
 import React from 'react';
 import BaseComponent from 'components/BaseComponent';
 import Button from 'components/Form/Button';
+import TextInput from 'components/Form/TextInput';
 import Header from 'components/BasicUI/Header';
+
+import { toggleDisable } from './FormsAction';
 
 // Dialogs page
 export default class Forms extends BaseComponent {
     init() {
         this.state = this.transformState({
-            dialog1: {
-                isOpen: false
+            nameField: {
+                disbled: false
             },
-            dialog2: {
-                isOpen: false
-            },
-            grid: {
-                button: {
-                    hidden: true
-                },
-                layout: {
-                    menu: {
-                        expand: true
-                    }
-                },
-                hidden: false
+            pwdField: {
+                disabled: false
             }
         });
+    }
+
+    toggleDisableNameField(e, button) {
+        this.setState(toggleDisable('nameField'), ()=>{
+            this.nameField.domNode.focus();
+        });
+    }
+
+    toggleDisablePwdField(e, button) {
+        this.setState(toggleDisable('pwdField'));
+        setTimeout(()=>{this.pwdField.domNode.focus()});
     }
 
     render() {
@@ -34,12 +37,16 @@ export default class Forms extends BaseComponent {
         };
 
         return (
-            <div style={style}>
-                <Header text="Buttons" />
-                <Button dialog="dialog1" onClicked={this.onButtonClicked} text="I am a Button" />
-                <Header text="ValidationTextBox" />
-                <Header text="Toggle Button" />
-                <Header text="DropDowns" />
+            <div style={style} className="forms">
+                <form>
+                    <Header text="Buttons" />
+                    <Button onClicked={this.toggleDisableNameField.bind(this)} text="Toggle Disable Name Field" />
+                    <Button onClicked={this.toggleDisablePwdField.bind(this)} text="Toggle Disable Password Field" />
+                    <Header text="ValidationTextBox" />
+                    <div><TextInput ref={name => this.nameField = name} disabled={this.state.nameFieldDisabled} name="name" placeholder="Name" /></div>
+                    <div><TextInput ref={name => this.pwdField = name} disabled={this.state.pwdFieldDisabled} type="password" name="pwd" placeholder="Password" /></div>
+                    <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
+                </form>
             </div>
         );
     }

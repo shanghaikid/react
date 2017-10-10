@@ -1,0 +1,14 @@
+.e-textInput {
+    width: 200px;
+    height: 22px;
+    line-height: 22px;
+    padding: 5px;
+    border: 1px #CCC solid;
+    &:focus {
+        border: 1px #06C solid;
+        outline: none;
+    }
+    &::placeholder {
+        color: #999;
+    }
+}

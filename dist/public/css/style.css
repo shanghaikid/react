@@ -98,6 +98,10 @@ body {
     outline: none; }
   .e-textInput::placeholder {
     color: #999; }
+  .e-textInput.error {
+    border: 1px #C30 solid; }
+  .e-textInput.missing {
+    border: 1px #e7e706 solid; }
 
 .e-dialog {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);

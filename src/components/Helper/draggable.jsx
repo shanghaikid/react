@@ -4,8 +4,8 @@ import { getCenterPosition } from '../../utils';
 // draggable
 export default function draggable(Component, classProperty) {
     class DraggableComponent extends Component {
-        init(props) {
-            super.init(props);
+        init(...props) {
+            super.init(...props);
             // handler
             this.mouseupHandler = this.onMouseUp.bind(this);
             this.mousemoveHandler = this.onMouseMove.bind(this);

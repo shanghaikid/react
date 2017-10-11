@@ -42,3 +42,8 @@ export function getCenterPosition({innerWidth = 1000, innerHeight=800}, {width =
 export function getClsName() {
     return Array.from(arguments).filter(s => s !=='' && typeof s !== 'undefined').join(' ');
 }
+
+// isEmpty: check if the string is empty
+export function isEmpty(value, trim=true) {
+    return (trim ? /^\s*$/ : /^$/).test(value); // Boolean
+}

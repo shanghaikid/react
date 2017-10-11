@@ -6,17 +6,23 @@ import Header from 'components/BasicUI/Header';
 
 import { toggleDisable } from './FormsAction';
 
+const initState = {
+    nameField: {
+        disabled: false,
+        value: '',
+        placeHolder: 'Name'
+    },
+    pwdField: {
+        disabled: false,
+        value: '',
+        placeHolder: 'Password'
+    }
+};
+
 // Dialogs page
 export default class Forms extends BaseComponent {
     init() {
-        this.state = this.transformState({
-            nameField: {
-                disbled: false
-            },
-            pwdField: {
-                disabled: false
-            }
-        });
+        this.state = this.transformState(initState);
     }
 
     toggleDisableNameField(e, button) {
@@ -33,6 +39,23 @@ export default class Forms extends BaseComponent {
         });
     }
 
+    resetAll() {
+        this.setState(this.transformState(initState), ()=> {
+            this.nameField.reset();
+            this.pwdField.reset();
+        });
+    }
+
+    validator(v) {
+        return v.includes('s');
+    }
+
+    onChange(e) {
+        this.setState({
+            [e.target.name + 'Value']: e.target.value
+        });
+    }
+
     render() {
         const style= {
             width: '100%',
@@ -41,13 +64,14 @@ export default class Forms extends BaseComponent {
 
         return (
             <div style={style} className="forms">
-                <form>
+                <form onChange={this.handleEvent}>
                     <Header text="Buttons" />
                     <Button onClicked={this.toggleDisableNameField.bind(this)} text="Toggle Disable Name Field" />
                     <Button onClicked={this.toggleDisablePwdField.bind(this)} text="Toggle Disable Password Field" />
+                    <Button onClicked={this.resetAll.bind(this)} text="Reset All" />
                     <Header text="ValidationTextBox" />
-                    <div><TextInput ref={name => this.nameField = name} disabled={this.state.nameFieldDisabled} name="name" placeholder="Name" /></div>
-                    <div><TextInput ref={name => this.pwdField = name} disabled={this.state.pwdFieldDisabled} type="password" name="pwd" placeholder="Password" /></div>
+                    <div><TextInput inputValue={this.state.nameFieldValue} validator={this.validator} required={true} ref={name => this.nameField = name} disabled={this.state.nameFieldDisabled} name="nameField" placeholder={this.state.nameFieldPlaceHolder} /></div>
+                    <div><TextInput inputValue={this.state.pwdFieldValue} ref={name => this.pwdField = name} disabled={this.state.pwdFieldDisabled} type="password" name="pwdField" placeholder={this.state.pwdFieldPlaceHolder} /></div>
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
                 </form>
             </div>

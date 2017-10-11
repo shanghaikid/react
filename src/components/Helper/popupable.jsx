@@ -9,8 +9,8 @@ export default function popupable(Component) {
     console.assert(typeof Component.propTypes.styleObj !== 'undefined', 'The component should have an styleObj as prop');
 
     class PopupComponent extends Component {
-        init(props) {
-            super.init(props);
+        init(...props) {
+            super.init(...props);
             // state
             this.state = {
                 zIndex: zIndex++

@@ -20,14 +20,17 @@ export default class Forms extends BaseComponent {
     }
 
     toggleDisableNameField(e, button) {
-        this.setState(toggleDisable('nameField'), ()=>{
-            this.nameField.domNode.focus();
-        });
+        this.toggleFieldDisable('nameField');
     }
 
     toggleDisablePwdField(e, button) {
-        this.setState(toggleDisable('pwdField'));
-        setTimeout(()=>{this.pwdField.domNode.focus()});
+        this.toggleFieldDisable('pwdField');
+    }
+
+    toggleFieldDisable(name) {
+        this.setState(toggleDisable(name), ()=> {
+            this[name].domNode.focus();
+        });
     }
 
     render() {

@@ -55,6 +55,11 @@ export default class Forms extends BaseComponent {
         });
     }
 
+    onValidated({message, mod, ok}) {
+        console.info(message, mod, ok);
+        // TODO: update tooltip or some message box
+    }
+
     render() {
         const style= {
             width: '100%',
@@ -64,6 +69,7 @@ export default class Forms extends BaseComponent {
 
         i1.validator = this.validator;
         i2.validator = this.validator;
+        i1.onValidated = this.onValidated.bind(this);
 
         return (
             <div style={style} className="forms">

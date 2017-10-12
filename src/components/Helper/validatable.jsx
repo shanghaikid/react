@@ -90,13 +90,15 @@ export default function validatable(Component) {
         }
 
         validate(inputValue = this.props.inputValue) {
-            const { required, validatable} = this.props,
+            const { required, onValidated } = this.props,
                 isValueEmpty = isEmpty(inputValue),
                 notValid = !this.isValid(inputValue),
                 mod = (isValueEmpty && required) ? 'missing' : notValid ? 'error' : '',
                 message = this.getMessage(mod);
 
-            this.setState({ mod, message });
+            this.setState({ mod, message }, () => {
+                onValidated && onValidated({mod, message, ok: mod === ''}, this);
+            });
         }
 
         render() {
@@ -119,8 +121,7 @@ export default function validatable(Component) {
         required: false,
         promptMessage: '',
         invalidMessage: 'This field is not valid',
-        missingMessage: 'This field is required.',
-        validatable: false
+        missingMessage: 'This field is required.'
     });
 
     ValidatableComponent.propTypes = Object.assign({}, Component.propTypes, {
@@ -130,7 +131,7 @@ export default function validatable(Component) {
         missingMessage: PropTypes.string,
         regExp: PropTypes.regExp,
         validator: PropTypes.func,
-        validatable: PropTypes.bool
+        onValidated: PropTypes.func
     });
 
     return ValidatableComponent;

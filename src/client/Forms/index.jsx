@@ -9,14 +9,19 @@ import { toggleDisable } from './FormsAction';
 const initState = {
     nameField: {
         disabled: false,
-        value: '',
-        placeHolder: 'Name'
+        inputValue: '',
+        placeholder: 'Name',
+        name: 'nameField',
+        required: true
     },
     pwdField: {
         disabled: false,
-        value: '',
-        placeHolder: 'Password'
-    }
+        inputValue: '',
+        placeholder: 'Password',
+        type: 'password',
+        name: 'pwdField'
+    },
+    hidden: true
 };
 
 // Dialogs page
@@ -25,17 +30,11 @@ export default class Forms extends BaseComponent {
         this.state = this.transformState(initState);
     }
 
-    toggleDisableNameField(e, button) {
-        this.toggleFieldDisable('nameField');
-    }
-
-    toggleDisablePwdField(e, button) {
-        this.toggleFieldDisable('pwdField');
-    }
-
     toggleFieldDisable(name) {
-        this.setState(toggleDisable(name), ()=> {
-            this[name].domNode.focus();
+        this.setState({
+            [name]: {
+                disabled: !this.getState(name, 'disabled')
+            }
         });
     }
 
@@ -52,15 +51,10 @@ export default class Forms extends BaseComponent {
 
     onChange(e) {
         this.setState({
-            [e.target.name + '$value']: e.target.value
+            [e.target.name]: {
+                inputValue: e.target.value
+            }
         });
-    }
-
-    f(component, name, key, value) {
-        for(const key in component.defaultProps) {
-            
-            console.log(key, component.defaultProps[key])
-        }
     }
 
     render() {
@@ -68,36 +62,21 @@ export default class Forms extends BaseComponent {
             width: '100%',
             height: '100%'
         },
-        inputProps1= {
-            inputValue: this.state.nameField$value,
-            validator: this.validator,
-            required: true,
-            disabled:this.state.nameField$disabled,
-            placeholder: this.state.nameField$placeHolder,
-            name:"nameField"
-        },
-        inputProps2= {
-            inputValue: this.state.pwdField$value,
-            validator: this.validator,
-            required: true,
-            disabled:this.state.pwdField$disabled,
-            placeholder: this.state.pwdField$placeHolder,
-            name:"pwdField",
-            type: "password"
-        };
+        [i1, i2] = this.getStates(['nameField', 'pwdField']);
 
-        this.f(TextInput);
+        i1.validator = this.validator;
+        i2.validator = this.validator;
 
         return (
             <div style={style} className="forms">
                 <form onChange={this.handleEvent}>
                     <Header text="Buttons" />
-                    <Button onClicked={this.toggleDisableNameField.bind(this)} text="Toggle Disable Name Field" />
-                    <Button onClicked={this.toggleDisablePwdField.bind(this)} text="Toggle Disable Password Field" />
+                    <Button onClicked={this.toggleFieldDisable.bind(this, 'nameField')} text="Toggle Disable Name Field" />
+                    <Button onClicked={this.toggleFieldDisable.bind(this, 'pwdField')} text="Toggle Disable Password Field" />
                     <Button onClicked={this.resetAll.bind(this)} text="Reset All" />
                     <Header text="ValidationTextBox" />
-                    <div><TextInput {...inputProps1}  ref={name => this.nameField = name} /></div>
-                    <div><TextInput {...inputProps2} ref={name => this.pwdField = name} /></div>
+                    <div><TextInput {...i1}  ref={name => this.nameField = name} /></div>
+                    <div><TextInput {...i2} ref={name => this.pwdField = name} /></div>
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
                 </form>
             </div>

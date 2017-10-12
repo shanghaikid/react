@@ -77,7 +77,51 @@ export default class BaseComponent extends Component {
     }
 
     setState(...args) {
+        if (isObj(args[0])) {
+            args[0] = this.transformState(args[0])
+        }
+
         super.setState(...args);
+    }
+
+    // get state by name
+    // if key is provided, return specified value
+    // if key is ignored, return whole state object
+    getState(name, key, delmiter = '$') {
+        if (typeof key !== 'undefined') {
+            return this.state[name + delmiter + key];
+        }
+
+        let result = {},
+            found = false;
+
+        for (let key in this.state) {
+            if (key.startsWith(`${name}${delmiter}`)) {
+                result[key.split(`${delmiter}`).splice(-1)] = this.state[key];
+                found = true;
+            }
+        }
+
+        return found ? result : this.state[name];
+    }
+
+    // get mulitple children stat
+    getStates(names = [], delmiter= '$') {
+        let result = [];
+
+        for (let key in this.state) {
+            names.some((name, i) => {
+                if (key.startsWith(`${name}${delmiter}`)) {
+                    result[i] = result[i] || {};
+                    result[i][key.split(`${delmiter}`).splice(-1)] = this.state[key];
+                    return true;
+                }
+            });
+        }
+
+        console.log(result);
+
+        return result;
     }
 
     transformState(stateObj) {

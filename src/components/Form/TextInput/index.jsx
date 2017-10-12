@@ -20,7 +20,7 @@ export class TextInputView extends BaseComponent {
     render() {
         const { placeholder, type, disabled, name, mod, message, inputValue} = this.props,
             cls = getClsName(this.className, mod);
-
+        console.log(this.props);
         return (
             <input ref={input => this.domNode = input}
                 className={cls}

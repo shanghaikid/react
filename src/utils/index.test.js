@@ -46,10 +46,10 @@ describe('Utils', () => {
 
         let result = e(stateObj);
         let result2 = e(stateObj, '/');
-        expect(result['dialog-dialogOpened']).toBe(false);
-        expect(result['grid-button-hidden']).toBe(true);
-        expect(result['grid-layout-menu-expand']).toBe(true);
-        expect(result['grid-hidden']).toBe(false);
+        expect(result['dialog$dialogOpened']).toBe(false);
+        expect(result['grid$button$hidden']).toBe(true);
+        expect(result['grid$layout$menu$expand']).toBe(true);
+        expect(result['grid$hidden']).toBe(false);
         expect(result['hidden']).toBe(false);
 
         expect(result2['dialog/dialogOpened']).toBe(false);

@@ -19,17 +19,6 @@ export default class Dialogs extends BaseComponent {
             },
             dialog2: {
                 isOpen: false
-            },
-            grid: {
-                button: {
-                    hidden: true
-                },
-                layout: {
-                    menu: {
-                        expand: true
-                    }
-                },
-                hidden: false
             }
         });
     }
@@ -49,7 +38,7 @@ export default class Dialogs extends BaseComponent {
     }
 
     shouldShowOverlay() {
-        return this.state.dialog1IsOpen || this.state.dialog2IsOpen;
+        return this.state.dialog1$isOpen || this.state.dialog2$isOpen;
     }
 
     render() {
@@ -62,8 +51,8 @@ export default class Dialogs extends BaseComponent {
             <div style={style}>
                 <Button dialog="dialog1" onClicked={this.onButtonClicked} text="toggle Dialog1" />
                 <Button dialog="dialog2" onClicked={this.onButtonClicked} text="toggle Dialog2" />
-                <Dialog isOpen={this.state.dialog1IsOpen} componentId="dialog1" title="dialog1" open={this.openDialog} close={this.closeDialog} />
-                <Dialog isOpen={this.state.dialog2IsOpen} componentId="dialog2" title="dialog2" open={this.openDialog} close={this.closeDialog} repositionOnOpen={false} />
+                <Dialog isOpen={this.state.dialog1$isOpen} componentId="dialog1" title="dialog1" open={this.openDialog} close={this.closeDialog} />
+                <Dialog isOpen={this.state.dialog2$isOpen} componentId="dialog2" title="dialog2" open={this.openDialog} close={this.closeDialog} repositionOnOpen={false} />
             </div>
         );
     }

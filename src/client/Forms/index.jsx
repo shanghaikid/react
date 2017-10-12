@@ -52,7 +52,7 @@ export default class Forms extends BaseComponent {
 
     onChange(e) {
         this.setState({
-            [e.target.name + 'Value']: e.target.value
+            [e.target.name + '$value']: e.target.value
         });
     }
 
@@ -68,13 +68,22 @@ export default class Forms extends BaseComponent {
             width: '100%',
             height: '100%'
         },
-        inputProps= {
-            inputValue: this.state.nameFieldValue,
+        inputProps1= {
+            inputValue: this.state.nameField$value,
             validator: this.validator,
             required: true,
-            disabled:this.state.nameFieldDisabled,
-            placeholder: this.state.nameFieldPlaceHolder,
+            disabled:this.state.nameField$disabled,
+            placeholder: this.state.nameField$placeHolder,
             name:"nameField"
+        },
+        inputProps2= {
+            inputValue: this.state.pwdField$value,
+            validator: this.validator,
+            required: true,
+            disabled:this.state.pwdField$disabled,
+            placeholder: this.state.pwdField$placeHolder,
+            name:"pwdField",
+            type: "password"
         };
 
         this.f(TextInput);
@@ -87,8 +96,8 @@ export default class Forms extends BaseComponent {
                     <Button onClicked={this.toggleDisablePwdField.bind(this)} text="Toggle Disable Password Field" />
                     <Button onClicked={this.resetAll.bind(this)} text="Reset All" />
                     <Header text="ValidationTextBox" />
-                    <div><TextInput {...inputProps}  ref={name => this.nameField = name} /></div>
-                    <div><TextInput inputValue={this.state.pwdFieldValue} ref={name => this.pwdField = name} disabled={this.state.pwdFieldDisabled} type="password" name="pwdField" placeholder={this.state.pwdFieldPlaceHolder} /></div>
+                    <div><TextInput {...inputProps1}  ref={name => this.nameField = name} /></div>
+                    <div><TextInput {...inputProps2} ref={name => this.pwdField = name} /></div>
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
                 </form>
             </div>

@@ -8,8 +8,6 @@ const initState = {
 
 // validatable
 export default function validatable(Component) {
-    if (!Component.prototype.getTargetValue) return Component;
-
     class ValidatableComponent extends Component {
         get messageDef() {
             return {

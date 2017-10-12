@@ -9,14 +9,6 @@ export class TextInputView extends BaseComponent {
         this.baseClassName = `textInput`;
     }
 
-    // return object 
-    // pass result into the setState
-    getTargetValue(target) {
-        return {
-            value: target.value
-        };
-    }
-
     render() {
         const { placeholder, type, disabled, name, mod, message, inputValue} = this.props,
             cls = getClsName(this.className, mod);

@@ -105,7 +105,7 @@ export default class BaseComponent extends Component {
         return found ? result : this.state[name];
     }
 
-    // get mulitple children stat
+    // get mulitple children state
     getStates(names = [], delmiter= '$') {
         let result = [];
 
@@ -118,8 +118,6 @@ export default class BaseComponent extends Component {
                 }
             });
         }
-
-        console.log(result);
 
         return result;
     }

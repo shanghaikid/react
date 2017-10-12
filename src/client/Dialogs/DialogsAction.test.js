@@ -8,7 +8,6 @@ describe('DialogAction state generator', () => {
         let state = true;
         let state3 = toggleDialogOpen(dialogName, state)(state2);
 
-        console.log(state3)
         expect(state1[dialogName + '$isOpen']).toBe(true);
         expect(state2[dialogName + '$isOpen']).toBe(false);
         expect(state3[dialogName + '$isOpen']).toBe(true);

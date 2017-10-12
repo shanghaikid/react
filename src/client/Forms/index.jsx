@@ -24,7 +24,7 @@ const initState = {
     hidden: true
 };
 
-// Dialogs page
+// Form page
 export default class Forms extends BaseComponent {
     init() {
         this.state = this.transformState(initState);
@@ -75,7 +75,7 @@ export default class Forms extends BaseComponent {
                     <Button onClicked={this.toggleFieldDisable.bind(this, 'pwdField')} text="Toggle Disable Password Field" />
                     <Button onClicked={this.resetAll.bind(this)} text="Reset All" />
                     <Header text="ValidationTextBox" />
-                    <div><TextInput {...i1}  ref={name => this.nameField = name} /></div>
+                    <div><TextInput {...i1} ref={name => this.nameField = name} /></div>
                     <div><TextInput {...i2} ref={name => this.pwdField = name} /></div>
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
                 </form>

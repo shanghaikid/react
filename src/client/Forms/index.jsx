@@ -56,11 +56,28 @@ export default class Forms extends BaseComponent {
         });
     }
 
+    f(component, name, key, value) {
+        for(const key in component.defaultProps) {
+            
+            console.log(key, component.defaultProps[key])
+        }
+    }
+
     render() {
         const style= {
             width: '100%',
             height: '100%'
+        },
+        inputProps= {
+            inputValue: this.state.nameFieldValue,
+            validator: this.validator,
+            required: true,
+            disabled:this.state.nameFieldDisabled,
+            placeholder: this.state.nameFieldPlaceHolder,
+            name:"nameField"
         };
+
+        this.f(TextInput);
 
         return (
             <div style={style} className="forms">
@@ -70,7 +87,7 @@ export default class Forms extends BaseComponent {
                     <Button onClicked={this.toggleDisablePwdField.bind(this)} text="Toggle Disable Password Field" />
                     <Button onClicked={this.resetAll.bind(this)} text="Reset All" />
                     <Header text="ValidationTextBox" />
-                    <div><TextInput inputValue={this.state.nameFieldValue} validator={this.validator} required={true} ref={name => this.nameField = name} disabled={this.state.nameFieldDisabled} name="nameField" placeholder={this.state.nameFieldPlaceHolder} /></div>
+                    <div><TextInput {...inputProps}  ref={name => this.nameField = name} /></div>
                     <div><TextInput inputValue={this.state.pwdFieldValue} ref={name => this.pwdField = name} disabled={this.state.pwdFieldDisabled} type="password" name="pwdField" placeholder={this.state.pwdFieldPlaceHolder} /></div>
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
                 </form>

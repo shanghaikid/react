@@ -10,12 +10,12 @@ export function clone(obj) {
 }
 
 // flatten state object
-// grid:{layout:{menu:{expand:true}}}} => gridLayoutMenuExpand:true
-export function e(stateObject) {
+// grid:{layout:{menu:{expand:true}}}} => grid-layout-menu-expand:true
+export function e(stateObject, delmiter = '-') {
     function _f(stateObject, root, result) {
         for (const [key, value] of Object.entries(stateObject)) {
             let valueIsObj = isObj(value),
-                r = `${root}${root === '' ? key : key.charAt(0).toUpperCase() + key.slice(1)}`;
+                r = `${root ? root + delmiter + key : key}`;
 
             if (valueIsObj) {
                 _f(value, r, result);

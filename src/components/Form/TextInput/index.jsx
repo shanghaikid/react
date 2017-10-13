@@ -14,7 +14,7 @@ export class TextInputView extends BaseComponent {
             cls = getClsName(this.className, mod);
 
         return (
-            <input ref={input => this.domNode = input}
+            <input data-tooltip="test" ref={input => this.domNode = input}
                 className={cls}
                 placeholder={placeholder}
                 disabled={disabled}

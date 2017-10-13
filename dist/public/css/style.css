@@ -1,6 +1,3 @@
-.loading {
-  background: url(data:image/svg+xml;charset=utf-8;base64,bW9kdWxlLmV4cG9ydHMgPSAiL3B1YmxpYy9pbWFnZXMvbG9hZGluZy5zdmciOw==) no-repeat center; }
-
 .hidden {
   display: none !important; }
 
@@ -92,7 +89,8 @@ body {
   height: 22px;
   line-height: 22px;
   padding: 5px;
-  border: 1px #CCC solid; }
+  border: 1px #CCC solid;
+  position: relative; }
   .e-textInput:focus {
     border: 1px #06C solid;
     outline: none; }
@@ -102,6 +100,11 @@ body {
     border: 1px #C30 solid; }
   .e-textInput.missing {
     border: 1px #e7e706 solid; }
+  .e-textInput:after {
+    content: '1';
+    position: absolute;
+    left: 0;
+    top: 0; }
 
 .e-dialog {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);

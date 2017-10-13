@@ -17,4 +17,11 @@
     &.missing {
         border: 1px rgb(231, 231, 6) solid;
     }
+    position: relative;
+    &:after {
+        content: '1';
+        position: absolute;
+        left: 0;
+        top:0
+    }
 }

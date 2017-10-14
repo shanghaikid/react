@@ -11,21 +11,28 @@ export class TextInputView extends BaseComponent {
 
     render() {
         const { placeholder, type, disabled, name, mod, message, inputValue} = this.props,
-            cls = getClsName(this.className, mod);
+            cls = getClsName(this.className, mod),
+            tooltip = message === '' ? {} : {
+                ['data-tooltip']: message
+            };
 
+        // make sure the outter is a block container
+        // so that we can use ::after or ::before
         return (
-            <input data-tooltip="test" ref={input => this.domNode = input}
-                className={cls}
-                placeholder={placeholder}
-                disabled={disabled}
-                name={name}
-                type={type}
-                title={message}
-                value={inputValue}
-                onChange={this.handleEvent}
-                onFocus={this.handleEvent}
-                onBlur={this.handleEvent}
-                />
+            <div className={cls} {...tooltip} >
+                <input data-tooltip="test" ref={input => this.domNode = input}
+                    className={cls}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    name={name}
+                    type={type}
+                    title={message}
+                    value={inputValue}
+                    onChange={this.handleEvent}
+                    onFocus={this.handleEvent}
+                    onBlur={this.handleEvent}
+                    />
+            </div>
         );
     }
 }

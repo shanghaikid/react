@@ -12,8 +12,9 @@ export class TextInputView extends BaseComponent {
     render() {
         const { placeholder, type, disabled, name, mod, message, inputValue} = this.props,
             cls = getClsName(this.className, mod),
-            tooltip = message === '' ? {} : {
-                ['data-tooltip']: message
+            tooltip = {
+                ['data-tooltip']: message,
+                ['data-tooltip-show']: message === '' ? 'no' : 'yes'
             };
 
         // make sure the outter is a block container

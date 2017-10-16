@@ -105,14 +105,15 @@ export default function validatable(Component) {
             const newProps = {
                 mod: this.state.mod,
                 onBlur: this.onBlur,
-                onFocus: this.onFocus
+                onFocus: this.onFocus,
+                message: this.state.message,
+                tooltip: this.state.message
             };
 
             return (<Component
                     {...this.props}
                     {...newProps}
                     ref={this.processRef.bind(this)}
-                    message={this.state.message}
                     />);
         }
     }

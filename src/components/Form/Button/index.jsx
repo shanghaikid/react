@@ -1,8 +1,9 @@
 import React from 'react';
 import BaseComponent from '../../BaseComponent';
+import { withTooltip } from '../../Helper';
 import PropTypes from 'prop-types';
 
-export default class Button extends BaseComponent {
+export class ButtonView extends BaseComponent {
     init() {
         this.baseClassName = `button`;
     }
@@ -24,16 +25,19 @@ export default class Button extends BaseComponent {
     }
 }
 
-Button.defaultProps = {
+ButtonView.defaultProps = {
     text: 'Button',
     type: 'button',
     title: ''
 };
 
-Button.propTypes = {
+ButtonView.propTypes = {
     className: PropTypes.string,
     text: PropTypes.string,
     type: PropTypes.string,
     title: PropTypes.string,
     onClicked: PropTypes.func
 };
+
+const Button = withTooltip(ButtonView);
+export default Button;

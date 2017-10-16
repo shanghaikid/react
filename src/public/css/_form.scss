@@ -1,25 +1,22 @@
 .e-textInput {
-    input {
-        width: 200px;
-        height: 22px;
-        line-height: 22px;
-        padding: 5px;
-        border: 1px #CCC solid;
-        &:focus {
-            border: 1px #06C solid;
-            outline: none;
-        }
-        &::placeholder {
-            color: #999;
-        }
-        &.error {
-            border: 1px #C30 solid;
-        }
-        &.missing {
-            border: 1px rgb(231, 231, 6) solid;
-        }
+    width: 200px;
+    height: 22px;
+    line-height: 22px;
+    padding: 5px;
+    border: 1px #CCC solid;
+    &:focus {
+        border: 1px #06C solid;
+        outline: none;
     }
-    display: inline-block;
+    &::placeholder {
+        color: #999;
+    }
+    &.error {
+        border: 1px #C30 solid;
+    }
+    &.missing {
+        border: 1px rgb(231, 231, 6) solid;
+    }
 }
 
 [data-tooltip] {
@@ -39,6 +36,12 @@
     &[data-tooltip-show="yes"] {
         &::after {
             opacity: 1;
+        }
+    }
+
+    &[data-tooltip-show="no"] {
+        &::after {
+            opacity: 0;
         }
     }
 }

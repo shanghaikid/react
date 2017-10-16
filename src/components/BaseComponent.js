@@ -78,7 +78,7 @@ export default class BaseComponent extends Component {
 
     setState(...args) {
         if (isObj(args[0])) {
-            args[0] = this.transformState(args[0])
+            args[0] = this.transformState(args[0]);
         }
 
         super.setState(...args);

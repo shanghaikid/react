@@ -74,6 +74,9 @@ export default function validatable(Component) {
                 mod: '',
                 message: ''
             });
+            if (this.props.onFocus) {
+                this.props.onFocus(e);
+            }
         }
 
         reset() {
@@ -107,7 +110,8 @@ export default function validatable(Component) {
                 onBlur: this.onBlur,
                 onFocus: this.onFocus,
                 message: this.state.message,
-                tooltip: this.state.message
+                tooltip: this.state.message,
+                showTooltip: this.state.message !== ''
             };
 
             return (<Component

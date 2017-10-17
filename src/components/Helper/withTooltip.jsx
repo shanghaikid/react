@@ -33,30 +33,36 @@ export default function withTooltip(Component) {
         componentWillReceiveProps(nextProps) {
             super.componentWillReceiveProps && super.componentWillReceiveProps(nextProps);
 
-            const { showTooltip, tooltip} = nextProps;
+            const {tooltip} = nextProps,
+                isActiveElement = this.domNode.contains(document.activeElement),
+                showTooltip = isActiveElement;
 
             if (tooltip !== '' && showTooltip) {
                 this.showTooltip(tooltip);
             }
+
+            if (tooltip === '') {
+                this.setState({ showTooltip: false, tooltip: ''});
+            }
         }
 
-        showTooltip(tooltip) {
+        showTooltip(tooltip, hideAfterShown=true) {
             if (this.showTooltipTimeout) {
                 window.clearTimeout(this.showTooltipTimeout);
                 this.showTooltipTimeout = null;
             }
             this.showTooltipTimeout = window.setTimeout(() => {
-                this.setState({ showTooltip: true, tooltip}, this.hideTooltip.bind(this));
+                this.setState({ showTooltip: true, tooltip}, hideAfterShown ? this.hideTooltip.bind(this) : () =>{});
             }, this.props.showTooltipTimeout);
         }
 
-        hideTooltip() {
+        hideTooltip(clearTooltip) {
             if (this.hideTooltipTimeout) {
                 window.clearTimeout(this.hideTooltipTimeout);
                 this.hideTooltipTimeout = null;
             }
             this.hideTooltipTimeout = window.setTimeout(() => {
-                this.setState({ showTooltip: false});
+                this.setState({ showTooltip: false, tooltip: clearTooltip ? '' : this.state.tooltip});
             }, this.props.hideTooltipTimeout);
         }
 
@@ -65,23 +71,11 @@ export default function withTooltip(Component) {
         }
 
         onMouseEnter(e) {
-            if (this.tooltipTimeout) {
-                window.clearTimeout(this.tooltipTimeout);
-                this.tooltipTimeout = null;
-            }
-
-            let isActive = this.domNode.contains(document.activeElement);
-            this.tooltipTimeout = window.setTimeout(() => {
-                this.setState({
-                    showTooltip: !isActive
-                });
-            }, this.props.tooltipTimeout);
+            this.showTooltip(this.state.tooltip || this.props.tooltip, false);
         }
 
         onMouseLeave(e) {
-            this.setState({
-                showTooltip: false
-            });
+            this.setState({ showTooltip: false });
         }
 
         onFocus(e) {
@@ -96,15 +90,12 @@ export default function withTooltip(Component) {
         render() {
             const {tooltip, showTooltip} = this.state,
                 newProps = {
+                    ['data-tooltip']: tooltip,
                     ['data-tooltip-show']: showTooltip ? 'yes' : 'no'
                 },
                 style = {
                     display: this.state.containerDisplay
                 };
-
-            if (tooltip) {
-                newProps['data-tooltip'] = tooltip;
-            }
 
             // make sure the outter is a block container
             // so that we can use ::after or ::before as tooltip element
@@ -127,7 +118,7 @@ export default function withTooltip(Component) {
         showTooltip: false,
         showTooltipOnLoad: false,
         showTooltipTimeout: 20,
-        hideTooltipTimeout: 500
+        hideTooltipTimeout: 1000
     }, Component.defaultProps);
 
     ComponentWithTooltip.propTypes = Object.assign({

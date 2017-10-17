@@ -110,8 +110,7 @@ export default function validatable(Component) {
                 onBlur: this.onBlur,
                 onFocus: this.onFocus,
                 message: this.state.message,
-                tooltip: this.state.message,
-                showTooltip: this.state.message !== ''
+                tooltip: this.state.message
             };
 
             return (<Component

@@ -75,14 +75,14 @@ export default class Forms extends BaseComponent {
             <div style={style} className="forms">
                 <form onChange={this.handleEvent}>
                     <Header text="Buttons" />
-                    <Button tooltipText="abce" showTooltipOnLoad={false} onClicked={this.toggleFieldDisable.bind(this, 'nameField')} text="Toggle Disable Name Field" />
+                    <Button showTooltipOnLoad={false} onClicked={this.toggleFieldDisable.bind(this, 'nameField')} text="Toggle Disable Name Field" />
                     <Button onClicked={this.toggleFieldDisable.bind(this, 'pwdField')} text="Toggle Disable Password Field" />
                     <Button onClicked={this.resetAll.bind(this)} text="Reset All" />
                     <Button disabled={true} tooltip="I am disabled" text="Disabled" />
                     <Header text="ValidationTextBox" />
                     <div><TextInput {...i1} ref={name => this.nameField = name} /></div>
                     <div><TextInput tooltipText={"abcde"} {...i2} ref={name => this.pwdField = name} /></div>
-                    <div><TextInput tooltipText={"abcde"} inputValue="I am disabled" /></div>
+                    <div><TextInput disabled={true} tooltipText={"abcde"} inputValue="I am disabled" /></div>
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
                 </form>
             </div>

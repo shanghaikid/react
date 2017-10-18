@@ -18,7 +18,7 @@ export default class Switch extends BaseComponent {
             <div style={style} data-active-id={this.props.activeId} className={this.className}>
                 {this.props.def.map(c => (
                     <ContentPane className={c.id === this.props.activeId ? this.props.activeId : 'hidden'}>
-                        {c.component}
+                        {React.cloneElement(c.component, {active: c.id === this.props.activeId})}
                     </ContentPane>)
                 )}
             </div>

@@ -59,10 +59,6 @@ export default function validatable(Component) {
             }
         }
 
-        processRef(component) {
-            this.domNode = ReactDOM.findDOMNode(component);
-        }
-
         onBlur(e) {
             // set blur flag
             this._hasBeenBlurred = true;

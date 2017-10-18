@@ -24,9 +24,11 @@ const PopupManager = {
     handleEvent(e) {
         if (e.code === 'Escape') {
             let component = this.stack[this.stack.length - 1];
-            this.remove(component);
-            // TODO: find a way to decouple
-            component.props.close({}, component);
+            if (component && component.domNode && component.domNode.offsetHeight !== 0) {
+                this.remove(component);
+                // TODO: find a way to decouple
+                component.props.close({}, component);
+            }
         }
     },
     handle(component) {

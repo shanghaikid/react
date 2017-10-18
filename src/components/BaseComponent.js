@@ -45,6 +45,7 @@ export default class BaseComponent extends Component {
         super(...args);
         // TODO: find a better way to save memory
         this.handleEvent = this.handleEvent.bind(this);
+        this.processRef = this.processRef.bind(this);
         this.libClassPrefix = 'e';
         this.baseClassName = 'component';
 
@@ -64,6 +65,10 @@ export default class BaseComponent extends Component {
 
     get className() {
         return `${this.libClassPrefix}-${this.baseClassName} ${this.props.className || ''}`;
+    }
+
+    processRef(component) {
+        this.domNode = ReactDOM.findDOMNode(component);
     }
 
     register() {

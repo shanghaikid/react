@@ -17,10 +17,6 @@ export default function draggable(Component, classProperty) {
             };
         }
 
-        processRef(component) {
-            this.domNode = ReactDOM.findDOMNode(component);
-        }
-
         componentWillReceiveProps(nextProps) {
             super.componentWillReceiveProps && super.componentWillReceiveProps(nextProps);
 

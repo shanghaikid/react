@@ -66,10 +66,6 @@ export default function withTooltip(Component) {
             }, this.props.hideTooltipTimeout);
         }
 
-        processRef(component) {
-            this.domNode = ReactDOM.findDOMNode(component);
-        }
-
         onMouseEnter(e) {
             this.showTooltip(this.state.tooltip || this.props.tooltip, false);
         }
@@ -107,7 +103,7 @@ export default function withTooltip(Component) {
                     onFocus={this.onFocus} >
                     <Component
                     {...this.props}
-                    ref={this.processRef.bind(this)}
+                    ref={this.processRef}
                     />
                 </div>);
         }

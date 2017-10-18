@@ -39,7 +39,7 @@ export default function popupable(Component) {
             const styleObj = Object.assign({}, this.props.styleObj, {
                 zIndex: this.state.zIndex
             });
-            return (<Component {...this.props} styleObj={styleObj} />);
+            return (<Component {...this.props} ref={this.processRef.bind(this)} styleObj={styleObj} />);
         }
     }
 

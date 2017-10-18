@@ -25,24 +25,29 @@ export default function withTooltip(Component) {
             // copy children display value
             this.setState({containerDisplay: window.getComputedStyle(this.domNode, null).getPropertyValue('display')});
 
+            // init value
+            this.setState({tooltip: this.props.tooltipText || this.props.tooltip});
+
             if (this.props.showTooltipOnLoad && this.props.tooltip !== '') {
-                this.setState({ showTooltip: true, tooltip: this.props.tooltip}, this.hideTooltip.bind(this));
+                this.setState({ showTooltip: true }, this.hideTooltip.bind(this));
             }
         }
 
         componentWillReceiveProps(nextProps) {
             super.componentWillReceiveProps && super.componentWillReceiveProps(nextProps);
 
-            const {tooltip} = nextProps,
+            const {tooltip, tooltipText} = nextProps,
+                hasTooltip = tooltip !== '' || tooltipText !== '',
+                tooltipData = tooltip || tooltipText,
                 isActiveElement = this.domNode.contains(document.activeElement),
                 showTooltip = isActiveElement;
 
-            if (tooltip !== '' && showTooltip) {
-                this.showTooltip(tooltip);
+            if (hasTooltip && showTooltip) {
+                this.showTooltip(tooltipData);
             }
 
-            if (tooltip === '') {
-                this.setState({ showTooltip: false, tooltip: ''});
+            if (!hasTooltip) {
+                this.setState({ showTooltip: false });
             }
         }
 
@@ -56,7 +61,7 @@ export default function withTooltip(Component) {
             }, this.props.showTooltipTimeout);
         }
 
-        hideTooltip(clearTooltip) {
+        hideTooltip(clearTooltip=false) {
             if (this.hideTooltipTimeout) {
                 window.clearTimeout(this.hideTooltipTimeout);
                 this.hideTooltipTimeout = null;
@@ -67,7 +72,7 @@ export default function withTooltip(Component) {
         }
 
         onMouseEnter(e) {
-            this.showTooltip(this.state.tooltip || this.props.tooltip, false);
+            this.showTooltip(this.props.tooltip || this.state.tooltip, false);
         }
 
         onMouseLeave(e) {
@@ -111,6 +116,7 @@ export default function withTooltip(Component) {
 
     ComponentWithTooltip.defaultProps = Object.assign({
         tooltip: '',
+        tooltipText: '',
         showTooltip: false,
         showTooltipOnLoad: false,
         showTooltipTimeout: 20,
@@ -119,6 +125,7 @@ export default function withTooltip(Component) {
 
     ComponentWithTooltip.propTypes = Object.assign({
         tooltip: PropTypes.string,
+        tooltipText: PropTypes.string, // initial tooltip
         showTooltip: PropTypes.bool,
         showTooltipOnLoad: PropTypes.bool,
         showTooltipTimeout: PropTypes.number,

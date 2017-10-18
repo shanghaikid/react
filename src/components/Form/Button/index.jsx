@@ -17,10 +17,10 @@ export class ButtonView extends BaseComponent {
     }
 
     render() {
-        const {text, type, title} = this.props;
+        const {text, type, title, disabled} = this.props;
 
         return (
-            <button type={type} title={title || text} className={this.className} onClick={this.handleEvent}>{text}</button>
+            <button disabled={disabled} type={type} title={title || text} className={this.className} onClick={this.handleEvent}>{text}</button>
         );
     }
 }
@@ -28,7 +28,8 @@ export class ButtonView extends BaseComponent {
 ButtonView.defaultProps = {
     text: 'Button',
     type: 'button',
-    title: ''
+    title: '',
+    disabled: false
 };
 
 ButtonView.propTypes = {
@@ -36,7 +37,8 @@ ButtonView.propTypes = {
     text: PropTypes.string,
     type: PropTypes.string,
     title: PropTypes.string,
-    onClicked: PropTypes.func
+    onClicked: PropTypes.func,
+    disabled: PropTypes.bool
 };
 
 const Button = withTooltip(ButtonView);

@@ -88,8 +88,8 @@ body {
 
 .e-textInput {
   width: 200px;
-  height: 22px;
-  line-height: 22px;
+  height: 20px;
+  line-height: 20px;
   padding: 5px;
   border: 1px #585858 solid; }
   .e-textInput:focus {
@@ -103,6 +103,22 @@ body {
   .e-textInput[disabled] {
     color: #CCC;
     border: 1px #CCC solid; }
+
+.e-dropdown {
+  position: relative;
+  width: 200px; }
+  .e-dropdown .e-dropdownItem {
+    border: 1px #585858 solid;
+    height: 20px;
+    line-height: 20px;
+    padding: 5px;
+    width: 200px; }
+  .e-dropdown .e-placeholder {
+    color: #999; }
+  .e-dropdown .e-dropdownWrapper {
+    position: absolute;
+    top: 0;
+    left: 0; }
 
 [data-tooltip] {
   position: relative; }

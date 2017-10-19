@@ -91,6 +91,7 @@ export default class Forms extends BaseComponent {
                         <DropdownItem>Dropdown item1</DropdownItem>
                         <DropdownItem><Button text="Dropdown item2" /></DropdownItem>
                     </Dropdown>
+                    <Header text="Combo Box" />
                 </form>
             </div>
         );

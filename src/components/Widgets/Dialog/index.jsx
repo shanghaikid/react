@@ -25,7 +25,6 @@ export class DialogView extends BaseComponent {
         this.onCancelBtnClicked = this.onCancelBtnClicked.bind(this);
         this.onConfirmBtnClicked = this.onConfirmBtnClicked.bind(this);
         this.onCloseBtnClicked = this.onCloseBtnClicked.bind(this);
-        
     }
 
     componentWillReceiveProps(nextProps) {

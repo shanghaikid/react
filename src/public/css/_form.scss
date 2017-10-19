@@ -1,9 +1,9 @@
 .e-textInput {
     width: 200px;
-    height: 20px;
-    line-height: 20px;
-    padding: 5px;
+    height: 28px;
+    line-height: 28px;
     border: 1px #585858 solid;
+    padding: 1px 2px;
     &:focus {
         outline: 1px #585858 solid;
     }
@@ -24,20 +24,27 @@
 
 .e-dropdown {
     position: relative;
-    width: 200px;
+    width: 205px;
     .e-dropdownItem {
         border: 1px #585858 solid;
-        height: 20px;
-        line-height: 20px;
-        padding: 5px;
-        width: 200px;
+        background: #FFF;
+        height: 28px;
+        line-height: 28px;
+        width: 205px;
+        &.none {
+            border: none;
+            height: inherit;
+            line-height: inherit;
+        }
+        &:hover {
+            background:#CCC;
+        }
     }
     .e-placeholder {
         color: #999;
     }
     .e-dropdownWrapper {
         position: absolute;
-        top: 0;
         left: 0;
     }
 }

@@ -2,6 +2,12 @@ import PropTypes from 'prop-types';
 import { isEmpty } from '../../utils';
 
 // withTooltip
+// currently I used css peseudo-element as tooltip
+// but I feel we may need a better solution
+// because it has some limitation:
+// for example, peseduo-element only support pure text
+// so no HTML is can be shown
+// TODO: better solution, maybe another helper to support HTML
 export default function withTooltip(Component) {
     class ComponentWithTooltip extends Component {
         init(...props) {

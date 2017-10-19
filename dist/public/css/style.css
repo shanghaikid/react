@@ -4,9 +4,11 @@
 body {
   margin: 0;
   padding: 0;
-  font-size: 16px;
+  font-size: 12px;
   font-family: Helvetica Neue, HelveticaNeue, Helvetica, sans-serif;
-  color: #343434; }
+  color: #585858; }
+  body a {
+    color: #585858; }
   body footer {
     display: none; }
   body input {
@@ -89,21 +91,23 @@ body {
   height: 22px;
   line-height: 22px;
   padding: 5px;
-  border: 1px #CCC solid; }
+  border: 1px #585858 solid; }
   .e-textInput:focus {
-    border: 1px #06C solid;
-    outline: none; }
+    outline: 1px #585858 solid; }
   .e-textInput::placeholder {
     color: #999; }
   .e-textInput.error {
     border: 1px #C30 solid; }
   .e-textInput.missing {
     border: 1px #e7e706 solid; }
+  .e-textInput[disabled] {
+    color: #CCC;
+    border: 1px #CCC solid; }
 
 [data-tooltip] {
   position: relative; }
   [data-tooltip]::after {
-    content: "" attr(data-tooltip);
+    content: attr(data-tooltip);
     position: absolute;
     left: 0;
     top: 0;

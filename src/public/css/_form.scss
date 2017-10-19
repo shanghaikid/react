@@ -3,10 +3,9 @@
     height: 22px;
     line-height: 22px;
     padding: 5px;
-    border: 1px #CCC solid;
+    border: 1px #585858 solid;
     &:focus {
-        border: 1px #06C solid;
-        outline: none;
+        outline: 1px #585858 solid;
     }
     &::placeholder {
         color: #999;
@@ -17,13 +16,17 @@
     &.missing {
         border: 1px rgb(231, 231, 6) solid;
     }
+    &[disabled] {
+        color: #CCC;
+        border: 1px #CCC solid;
+    }
 }
 
 [data-tooltip] {
     position: relative;
 
     &::after {
-        content: ''attr(data-tooltip);
+        content: attr(data-tooltip);
         position: absolute;
         left: 0;
         top:0;

@@ -3,6 +3,7 @@ import BaseComponent from 'components/BaseComponent';
 import Button from 'components/Form/Button';
 import TextInput from 'components/Form/TextInput';
 import Header from 'components/BasicUI/Header';
+import {Dropdown, DropdownItem} from 'components/Form/Dropdown';
 
 const initState = {
     nameField: {
@@ -84,6 +85,12 @@ export default class Forms extends BaseComponent {
                     <div><TextInput tooltipText={"normal tooltip"} {...i2} ref={name => this.pwdField = name} /></div>
                     <div><TextInput disabled={true} tooltipText={"Disabled tooltip"} inputValue="I am disabled" /></div>
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
+
+                    <Header text="Dropdown" />
+                    <Dropdown>
+                        <DropdownItem>Dropdown item1</DropdownItem>
+                        <DropdownItem><Button text="Dropdown item2" /></DropdownItem>
+                    </Dropdown>
                 </form>
             </div>
         );

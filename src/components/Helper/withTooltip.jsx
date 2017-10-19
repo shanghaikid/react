@@ -10,19 +10,20 @@ import { isEmpty } from '../../utils';
 // TODO: better solution, maybe another helper to support HTML
 export default function withTooltip(Component) {
     class ComponentWithTooltip extends Component {
+        get focused() {
+            return this.domNode.contains(document.activeElement);
+        }
         init(...props) {
             super.init(...props);
             // handler
-            this.onFocus = this.onFocus.bind(this);
             this.onMouseEnter = this.onMouseEnter.bind(this);
             this.onMouseLeave = this.onMouseLeave.bind(this);
             // state
-            this.state = {
+            this.state = Object.assign({}, this.state, {
                 showTooltip: false,
                 tooltip: '',
-                tooltipText: '',
                 containerDisplay: ''
-            };
+            });
             // local variable
             this.showTooltipTimeout = null;
         }
@@ -32,30 +33,18 @@ export default function withTooltip(Component) {
             // copy children display value
             this.setState({containerDisplay: window.getComputedStyle(this.domNode, null).getPropertyValue('display')});
 
-            // init value
-            this.setState({tooltipText: this.props.tooltipText || this.props.tooltip});
-
             if (this.props.showTooltipOnLoad && this.props.tooltip !== '') {
-                this.setState({ showTooltip: true, tooltip: this.props.tooltip}, this.hideTooltip.bind(this));
+                this.setState({ showTooltip: true, tooltip: this.props.tooltip }, this.hideTooltip.bind(this));
             }
         }
 
         componentWillReceiveProps(nextProps) {
             super.componentWillReceiveProps && super.componentWillReceiveProps(nextProps);
 
-            const {tooltip, tooltipText} = nextProps,
-                hasTooltip = tooltip !== '' || tooltipText !== '',
-                tooltipData = tooltip || tooltipText,
-                isActiveElement = this.domNode.contains(document.activeElement),
-                showTooltip = isActiveElement;
-
-            if (hasTooltip && showTooltip) {
-                this.showTooltip(tooltipData);
-            }
-
-            if (!hasTooltip) {
-                this.setState({ showTooltip: false, tooltip: ''});
-            }
+            const {tooltip, tooltipText} = nextProps;
+            this.setState({
+                tooltip: typeof tooltip !== 'undefined' ? tooltip : tooltipText
+            });
         }
 
         showTooltip(tooltip, hideAfterShown=true) {
@@ -69,36 +58,21 @@ export default function withTooltip(Component) {
         }
 
         hideTooltip(clearTooltip=false) {
-            if (this.hideTooltipTimeout) {
-                window.clearTimeout(this.hideTooltipTimeout);
-                this.hideTooltipTimeout = null;
-            }
-            this.hideTooltipTimeout = window.setTimeout(() => {
-                this.setState({ showTooltip: false, tooltip: clearTooltip ? '' : this.state.tooltip});
-            }, this.props.hideTooltipTimeout);
+            this.setState({ showTooltip: false});
         }
 
         onMouseEnter(e) {
-            this.showTooltip(this.props.tooltip || this.state.tooltip, false);
+            this.showTooltip(this.props.tooltip || this.props.tooltipText, false);
         }
 
         onMouseLeave(e) {
             this.setState({ showTooltip: false });
         }
 
-        onFocus(e) {
-            this.setState({
-                showTooltip: false
-            });
-            if (this.props.onFocus) {
-                this.props.onFocus(e);
-            }
-        }
-
         render() {
-            const {tooltip, tooltipText, showTooltip} = this.state,
+            const {tooltip, showTooltip} = this.state,
                 newProps = {
-                    ['data-tooltip']: tooltip || tooltipText,
+                    ['data-tooltip']: tooltip,
                     ['data-tooltip-show']: showTooltip ? 'yes' : 'no'
                 },
                 style = {
@@ -112,7 +86,8 @@ export default function withTooltip(Component) {
                     style={style}
                     onMouseEnter={this.onMouseEnter} 
                     onMouseLeave={this.onMouseLeave}
-                    onFocus={this.onFocus} >
+                    onFocus={this.onFocus}
+                     >
                     <Component
                     {...this.props}
                     ref={this.processRef}
@@ -122,7 +97,6 @@ export default function withTooltip(Component) {
     }
 
     ComponentWithTooltip.defaultProps = Object.assign({
-        tooltip: '',
         tooltipText: '',
         showTooltip: false,
         showTooltipOnLoad: false,

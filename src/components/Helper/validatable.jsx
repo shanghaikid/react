@@ -105,9 +105,12 @@ export default function validatable(Component) {
                 mod: this.state.mod,
                 onBlur: this.onBlur,
                 onFocus: this.onFocus,
-                message: this.state.message,
-                tooltip: this.state.message
+                message: this.state.message
             };
+
+            if (this.state.mod !== '') {
+                newProps.tooltip = this.state.message;
+            }
 
             return (<Component
                     {...this.props}

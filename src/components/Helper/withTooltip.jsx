@@ -14,6 +14,7 @@ export default function withTooltip(Component) {
             this.state = {
                 showTooltip: false,
                 tooltip: '',
+                tooltipText: '',
                 containerDisplay: ''
             };
             // local variable
@@ -26,10 +27,10 @@ export default function withTooltip(Component) {
             this.setState({containerDisplay: window.getComputedStyle(this.domNode, null).getPropertyValue('display')});
 
             // init value
-            this.setState({tooltip: this.props.tooltipText || this.props.tooltip});
+            this.setState({tooltipText: this.props.tooltipText || this.props.tooltip});
 
             if (this.props.showTooltipOnLoad && this.props.tooltip !== '') {
-                this.setState({ showTooltip: true }, this.hideTooltip.bind(this));
+                this.setState({ showTooltip: true, tooltip: this.props.tooltip}, this.hideTooltip.bind(this));
             }
         }
 
@@ -47,7 +48,7 @@ export default function withTooltip(Component) {
             }
 
             if (!hasTooltip) {
-                this.setState({ showTooltip: false });
+                this.setState({ showTooltip: false, tooltip: ''});
             }
         }
 
@@ -89,9 +90,9 @@ export default function withTooltip(Component) {
         }
 
         render() {
-            const {tooltip, showTooltip} = this.state,
+            const {tooltip, tooltipText, showTooltip} = this.state,
                 newProps = {
-                    ['data-tooltip']: tooltip,
+                    ['data-tooltip']: tooltip || tooltipText,
                     ['data-tooltip-show']: showTooltip ? 'yes' : 'no'
                 },
                 style = {

@@ -76,7 +76,7 @@ export default function validatable(Component) {
         }
 
         reset() {
-            this.setState(Object.assign({}, this.state, initState));
+            this.setState(Object.assign({}, initState));
             this._hasBeenBlurred = false;
         }
 

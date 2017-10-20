@@ -39,6 +39,9 @@
         &:hover {
             background:#CCC;
         }
+        &[data-selected="true"] {
+            background: #CCC;
+        }
     }
     .e-placeholder {
         color: #999;

@@ -119,6 +119,8 @@ body {
       line-height: inherit; }
     .e-dropdown .e-dropdownItem:hover {
       background: #CCC; }
+    .e-dropdown .e-dropdownItem[data-selected="true"] {
+      background: #CCC; }
   .e-dropdown .e-placeholder {
     color: #999; }
   .e-dropdown .e-dropdownWrapper {

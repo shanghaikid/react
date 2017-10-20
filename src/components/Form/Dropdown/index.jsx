@@ -14,13 +14,22 @@ export class Dropdown extends BaseComponent {
         // handlers
         this.close = this.close.bind(this);
         // state
-        this.state = {
-            isOpen: false
-        };
+        this.state = this.transformState({
+            isOpen: false,
+            selectedIndex: -1,
+            items: []
+        });
     }
 
     componentDidMount() {
         document.addEventListener('click', (this._clickOrFocusAnywhereHandler = e => this._clickOrFocusAnywhere(e)));
+        const {items} = this.props;
+
+        this.setState({items});
+    }
+
+    componentWillReceiveProps(nextProps) {
+        super.componentWillReceiveProps && super.componentWillReceiveProps(nextProps);
     }
 
     _clickOrFocusAnywhere(e) {
@@ -34,7 +43,13 @@ export class Dropdown extends BaseComponent {
         this.setState({
             isOpen: !this.state.isOpen
         });
-        console.log(e.target);
+        console.log(e.target.dataset);
+        const { index, selected} = e.target.dataset
+        if (selected === 'false') {
+            this.setState({
+                selectedIndex: Number(index)
+            });
+        }
     }
 
     close() {
@@ -43,19 +58,36 @@ export class Dropdown extends BaseComponent {
         });
     }
 
+    renderPlaceHolder() {
+        const { placeholder } = this.props;
+        return (<DropdownItem className={this.placeholderClass + ' none'}>
+                <TextInput placeholder={placeholder} />
+            </DropdownItem>);
+    }
+
     render() {
-        const { children, placeholder } = this.props;
+        const { placeholder } = this.props,
+            {items, selectedIndex} = this.state,
+            selectedItem = items[selectedIndex];
 
         return (
             <div className={this.className} ref={this.processRef} onClick={this.handleEvent}>
-                <DropdownItem className={this.placeholderClass + ' none'}>
-                    <TextInput placeholder={placeholder} />
-                </DropdownItem>
-                <DropdownWrapper isOpen={this.state.isOpen} close={this.close} >{children}</DropdownWrapper>
+                {selectedItem ? <DropdownItem label={selectedItem.label} value={selectedItem.value} /> : this.renderPlaceHolder()}
+                <DropdownWrapper isOpen={this.state.isOpen} close={this.close}>
+                    {items.map((item, i) => <DropdownItem index={i} label={item.label} value={item.value} selected={selectedIndex === i} /> )}
+                </DropdownWrapper>
             </div>
         );
     }
 }
+
+Dropdown.defaultProps = {
+    placeholder: 'Please Select...'
+};
+
+Dropdown.propTypes = {
+    placeholder: PropTypes.string
+};
 
 export class DropdownWrapperView extends BaseComponent {
     static get type() {
@@ -94,20 +126,25 @@ export class DropdownItem extends BaseComponent {
     }
 
     render() {
-        const {children, className} = this.props;
+        const {children, className, value, label, index, selected} = this.props;
 
         return (
-            <div className={this.className}>{children}</div>
+            <div data-index={index} data-selected={selected} data-label={label} data-value={value} className={this.className}>{children || label}</div>
         );
     }
 }
 
-Dropdown.defaultProps = {
-    placeholder: 'Please Select...'
+DropdownItem.defaultProps = {
+    string: 'Please Select...',
+    value: '',
+    selected: false
 };
 
-Dropdown.propTypes = {
-    placeholder: PropTypes.string
+DropdownItem.propTypes = {
+    value: PropTypes.any,
+    label: PropTypes.string,
+    index: PropTypes.number,
+    selected: PropTypes.bool
 };
 
 export default Dropdown;

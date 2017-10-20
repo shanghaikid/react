@@ -27,6 +27,11 @@ const initState = {
 export default class Forms extends BaseComponent {
     init() {
         this.state = this.transformState(initState);
+        this.dropdownItem = [
+            { label: 'Item 1', value: 'i1'},
+            { label: 'Item 2', value: 'i2'},
+            { label: 'Item 3', value: 'i3'}
+        ];
     }
 
     toggleFieldDisable(name) {
@@ -87,10 +92,7 @@ export default class Forms extends BaseComponent {
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
 
                     <Header text="Dropdown" />
-                    <Dropdown>
-                        <DropdownItem>Dropdown item1</DropdownItem>
-                        <DropdownItem><Button text="Dropdown item2" /></DropdownItem>
-                    </Dropdown>
+                    <Dropdown items={this.dropdownItem} />
                     <Header text="Combo Box" />
                 </form>
             </div>

@@ -112,14 +112,15 @@ body {
     background: #FFF;
     height: 28px;
     line-height: 28px;
-    width: 205px; }
+    width: 204px;
+    cursor: default; }
     .e-dropdown .e-dropdownItem.none {
       border: none;
       height: inherit;
       line-height: inherit; }
-    .e-dropdown .e-dropdownItem:hover {
+    .e-dropdown .e-dropdownItem:hover:not(.current) {
       background: #CCC; }
-    .e-dropdown .e-dropdownItem[data-selected="true"] {
+    .e-dropdown .e-dropdownItem[data-selected="true"]:not(.current) {
       background: #CCC; }
   .e-dropdown .e-placeholder {
     color: #999; }

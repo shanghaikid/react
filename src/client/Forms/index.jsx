@@ -66,6 +66,10 @@ export default class Forms extends BaseComponent {
         // TODO: update tooltip or some message box
     }
 
+    onDropdownChange(e) {
+        console.log(e);
+    }
+
     render() {
         const style= {
             width: '100%',
@@ -92,7 +96,7 @@ export default class Forms extends BaseComponent {
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
 
                     <Header text="Dropdown" />
-                    <Dropdown items={this.dropdownItem} />
+                    <Dropdown items={this.dropdownItem} onChange={this.onDropdownChange.bind(this)}/>
                     <Header text="Combo Box" />
                 </form>
             </div>

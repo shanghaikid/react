@@ -13,11 +13,16 @@ export class Dropdown extends BaseComponent {
         this.placeholderClass = this.getLibPrefixedClass('placeholder');
         // handlers
         this.close = this.close.bind(this);
+        this.onInputChange = this.onInputChange.bind(this);
         // state
         this.state = this.transformState({
             isOpen: false,
             selectedIndex: -1,
-            items: []
+            items: [],
+            textInput: {
+                inputValue: '',
+                name: 'textInput'
+            }
         });
     }
 
@@ -43,13 +48,24 @@ export class Dropdown extends BaseComponent {
         this.setState({
             isOpen: !this.state.isOpen
         });
-        console.log(e.target.dataset);
         const { index, selected} = e.target.dataset
         if (selected === 'false') {
             this.setState({
                 selectedIndex: Number(index)
-            });
+            }, this.onChange.bind(this));
         }
+    }
+
+    onChange() {
+        this.props.onChange(Object.assign({}, this.state, {target: this.domNode}));
+    }
+
+    onInputChange(e) {
+        this.setState({
+            textInput: {
+                inputValue: e.target.value
+            }
+        });
     }
 
     close() {
@@ -58,21 +74,17 @@ export class Dropdown extends BaseComponent {
         });
     }
 
-    renderPlaceHolder() {
-        const { placeholder } = this.props;
-        return (<DropdownItem className={this.placeholderClass + ' none'}>
-                <TextInput placeholder={placeholder} />
-            </DropdownItem>);
-    }
-
     render() {
         const { placeholder } = this.props,
             {items, selectedIndex} = this.state,
-            selectedItem = items[selectedIndex];
+            selectedItem = items[selectedIndex],
+            [inputProps] = this.getStates(['textInput']);
 
         return (
             <div className={this.className} ref={this.processRef} onClick={this.handleEvent}>
-                {selectedItem ? <DropdownItem label={selectedItem.label} value={selectedItem.value} /> : this.renderPlaceHolder()}
+                <DropdownItem selected={!!selectedItem} value={selectedItem ? selectedItem.value : ''} className={this.placeholderClass + ' none current'}>
+                    <TextInput onChange={this.onInputChange} {...inputProps} placeholder={selectedItem ? selectedItem.label : placeholder} />
+                </DropdownItem>
                 <DropdownWrapper isOpen={this.state.isOpen} close={this.close}>
                     {items.map((item, i) => <DropdownItem index={i} label={item.label} value={item.value} selected={selectedIndex === i} /> )}
                 </DropdownWrapper>
@@ -82,11 +94,13 @@ export class Dropdown extends BaseComponent {
 }
 
 Dropdown.defaultProps = {
-    placeholder: 'Please Select...'
+    placeholder: 'Please Select...',
+    onChange: () => {}
 };
 
 Dropdown.propTypes = {
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    onChange: PropTypes.func
 };
 
 export class DropdownWrapperView extends BaseComponent {

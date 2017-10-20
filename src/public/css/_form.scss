@@ -30,16 +30,17 @@
         background: #FFF;
         height: 28px;
         line-height: 28px;
-        width: 205px;
+        width: 204px;
+        cursor: default;
         &.none {
             border: none;
             height: inherit;
             line-height: inherit;
         }
-        &:hover {
+        &:hover:not(.current) {
             background:#CCC;
         }
-        &[data-selected="true"] {
+        &[data-selected="true"]:not(.current) {
             background: #CCC;
         }
     }

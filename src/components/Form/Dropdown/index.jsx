@@ -7,6 +7,9 @@ import { validatable , withTooltip, popupable } from '../../Helper';
 import { getClsName } from '../../../utils';
 
 export class Dropdown extends BaseComponent {
+    get selectedItem() {
+        return this.state.items.filter(item => item.id === this.state.selectedId)[0];
+    }
     init() {
         // class
         this.baseClassName = `dropdown`;
@@ -15,14 +18,16 @@ export class Dropdown extends BaseComponent {
         this.close = this.close.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
         // state
+        this.initFilter = () => true;
         this.state = this.transformState({
             isOpen: false,
-            selectedIndex: -1,
+            selectedId: '-1',
             items: [],
             textInput: {
                 inputValue: '',
                 name: 'textInput'
-            }
+            },
+            filter: this.initFilter
         });
     }
 
@@ -30,7 +35,7 @@ export class Dropdown extends BaseComponent {
         document.addEventListener('click', (this._clickOrFocusAnywhereHandler = e => this._clickOrFocusAnywhere(e)));
         const {items} = this.props;
 
-        this.setState({items});
+        this.setState({items: items.map((item, i) => Object.assign(item, {id: 'item' + i}))});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -46,12 +51,20 @@ export class Dropdown extends BaseComponent {
 
     onClick(e) {
         this.setState({
-            isOpen: !this.state.isOpen
+            isOpen: !this.state.isOpen,
+            filter: this.initFilter
         });
-        const { index, selected} = e.target.dataset
+
+        const { id, selected } = e.target.dataset;
+
+        console.log(id, selected)
+
         if (selected === 'false') {
             this.setState({
-                selectedIndex: Number(index)
+                selectedId: id,
+                textInput: {
+                    inputValue: ''
+                }
             }, this.onChange.bind(this));
         }
     }
@@ -61,33 +74,45 @@ export class Dropdown extends BaseComponent {
     }
 
     onInputChange(e) {
+        const inputValue = e.target.value;
+
         this.setState({
-            textInput: {
-                inputValue: e.target.value
-            }
+            textInput: { inputValue },
+            filter: this.getFilter(inputValue)
         });
+    }
+
+    getFilter(inputValue) {
+        return item => {
+            let chars = inputValue.split(''),
+                regGrp = chars.map(c => `[${(c + '').toUpperCase()}${(c + '').toLowerCase()}]`);
+
+            return (new RegExp(regGrp.join(''))).test(item.label)
+        };
     }
 
     close() {
         this.setState({
-            isOpen: false
+            textInput: {
+                inputValue: this.selectedItem ? this.selectedItem.label : ''
+            },
+            isOpen: false,
+            filter: this.initFilter
         });
     }
 
     render() {
         const { placeholder } = this.props,
-            {items, selectedIndex} = this.state,
-            selectedItem = items[selectedIndex],
+            {items, selectedId} = this.state,
+            selectedItem = items.filter(item => item.id == selectedId)[0],
             [inputProps] = this.getStates(['textInput']);
 
         return (
             <div className={this.className} ref={this.processRef} onClick={this.handleEvent}>
                 <DropdownItem selected={!!selectedItem} value={selectedItem ? selectedItem.value : ''} className={this.placeholderClass + ' none current'}>
-                    <TextInput onChange={this.onInputChange} {...inputProps} placeholder={selectedItem ? selectedItem.label : placeholder} />
+                    <TextInput autocomplete="off" onChange={this.onInputChange} {...inputProps} placeholder={selectedItem ? selectedItem.label : placeholder} />
                 </DropdownItem>
-                <DropdownWrapper isOpen={this.state.isOpen} close={this.close}>
-                    {items.map((item, i) => <DropdownItem index={i} label={item.label} value={item.value} selected={selectedIndex === i} /> )}
-                </DropdownWrapper>
+                <DropdownList isOpen={this.state.isOpen} filter={this.state.filter} close={this.close} items={items} selectedId={selectedId} />
             </div>
         );
     }
@@ -103,7 +128,7 @@ Dropdown.propTypes = {
     onChange: PropTypes.func
 };
 
-export class DropdownWrapperView extends BaseComponent {
+export class DropdownListView extends BaseComponent {
     static get type() {
         return 'Dropdown';
     }
@@ -113,26 +138,34 @@ export class DropdownWrapperView extends BaseComponent {
     }
 
     render() {
-        const {children, className, styleObj} = this.props,
-            cls = getClsName(this.className, (!this.props.isOpen ? 'hidden' : ''));
+        const {items, className, styleObj, selectedId, filter, noItemMessage} = this.props,
+            cls = getClsName(this.className, (!this.props.isOpen ? 'hidden' : '')),
+            newItems = items.filter(filter),
+            hasItem = newItems.length > 0;
 
         return (
-            <div className={cls} style={styleObj}>{children}</div>
+            <div className={cls} style={styleObj}>
+                {hasItem ? newItems.map(item => <DropdownItem key={item.id} id={item.id} label={item.label} value={item.value} selected={selectedId === item.id} /> ) : <DropdownItem>{noItemMessage}</DropdownItem>}
+            </div>
         );
     }
 }
 
-DropdownWrapperView.defaultProps = {
+DropdownListView.defaultProps = {
     styleObj: {},
-    close: () => {}
+    close: () => {},
+    filter: () => true,
+    noItemMessage: 'No Item Found'
 }
 
-DropdownWrapperView.propTypes = {
+DropdownListView.propTypes = {
     styleObj: PropTypes.object,
-    close: PropTypes.func.isRequired
+    close: PropTypes.func.isRequired,
+    filter: PropTypes.func,
+    noItemMessage: PropTypes.string
 }
 
-export const DropdownWrapper = popupable(DropdownWrapperView);
+export const DropdownList = popupable(DropdownListView);
 
 export class DropdownItem extends BaseComponent {
     init() {
@@ -140,10 +173,10 @@ export class DropdownItem extends BaseComponent {
     }
 
     render() {
-        const {children, className, value, label, index, selected} = this.props;
+        const {children, className, value, label, id, selected} = this.props;
 
         return (
-            <div data-index={index} data-selected={selected} data-label={label} data-value={value} className={this.className}>{children || label}</div>
+            <div data-id={id} data-selected={selected} data-label={label} data-value={value} className={this.className}>{children || label}</div>
         );
     }
 }
@@ -157,7 +190,7 @@ DropdownItem.defaultProps = {
 DropdownItem.propTypes = {
     value: PropTypes.any,
     label: PropTypes.string,
-    index: PropTypes.number,
+    id: PropTypes.string,
     selected: PropTypes.bool
 };
 

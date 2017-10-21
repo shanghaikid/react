@@ -124,7 +124,7 @@ export default function validatable(Component) {
         required: false,
         promptMessage: '',
         invalidMessage: 'This field is not valid',
-        missingMessage: 'This field is required.'
+        missingMessage: 'This field is required.',
     });
 
     ValidatableComponent.propTypes = Object.assign({}, Component.propTypes, {

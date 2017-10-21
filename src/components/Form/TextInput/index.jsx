@@ -10,7 +10,7 @@ export class TextInputView extends BaseComponent {
     }
 
     render() {
-        const { placeholder, type, disabled, name, mod, inputValue} = this.props,
+        const { placeholder, type, disabled, name, mod, inputValue, autocomplete} = this.props,
             cls = getClsName(this.className, mod)
 
         return (
@@ -21,6 +21,7 @@ export class TextInputView extends BaseComponent {
                 name={name}
                 type={type}
                 value={inputValue}
+                autocomplete={autocomplete}
                 onChange={this.handleEvent}
                 onFocus={this.handleEvent}
                 onBlur={this.handleEvent}
@@ -33,7 +34,8 @@ TextInputView.defaultProps = {
     placeholder: '',
     type: 'text',
     disabled: false,
-    inputValue: ''
+    inputValue: '',
+    autocomplete: 'on'
 };
 
 TextInputView.propTypes = {
@@ -42,7 +44,8 @@ TextInputView.propTypes = {
     type: PropTypes.string,
     disabled: PropTypes.bool,
     name: PropTypes.name,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    autocomplete: PropTypes.string
 };
 
 const TextInput = validatable(withTooltip(TextInputView));

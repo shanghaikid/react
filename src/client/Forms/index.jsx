@@ -97,7 +97,7 @@ export default class Forms extends BaseComponent {
 
                     <Header text="Dropdown" />
                     <Dropdown items={this.dropdownItem} onChange={this.onDropdownChange.bind(this)}/>
-                    <Header text="Combo Box" />
+                    <Header text="Comming Soon..." />
                 </form>
             </div>
         );

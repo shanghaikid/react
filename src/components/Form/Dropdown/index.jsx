@@ -55,7 +55,7 @@ export class Dropdown extends BaseComponent {
             filter: this.initFilter
         });
 
-        const { id, selected } = e.target.dataset;
+        const { id, selected, label} = e.target.dataset;
 
         console.log(id, selected)
 
@@ -63,7 +63,7 @@ export class Dropdown extends BaseComponent {
             this.setState({
                 selectedId: id,
                 textInput: {
-                    inputValue: ''
+                    inputValue: label
                 }
             }, this.onChange.bind(this));
         }
@@ -105,12 +105,17 @@ export class Dropdown extends BaseComponent {
         const { placeholder } = this.props,
             {items, selectedId} = this.state,
             selectedItem = items.filter(item => item.id == selectedId)[0],
-            [inputProps] = this.getStates(['textInput']);
+            [inputProps] = this.getStates(['textInput']),
+            newInputProps = Object.assign({}, inputProps, {
+                autocomplete: "off",
+                onChange: this.onInputChange,
+                placeholder: selectedItem ? selectedItem.label : placeholder
+            });
 
         return (
             <div className={this.className} ref={this.processRef} onClick={this.handleEvent}>
                 <DropdownItem selected={!!selectedItem} value={selectedItem ? selectedItem.value : ''} className={this.placeholderClass + ' none current'}>
-                    <TextInput autocomplete="off" onChange={this.onInputChange} {...inputProps} placeholder={selectedItem ? selectedItem.label : placeholder} />
+                    <TextInput {...newInputProps} />
                 </DropdownItem>
                 <DropdownList isOpen={this.state.isOpen} filter={this.state.filter} close={this.close} items={items} selectedId={selectedId} />
             </div>

@@ -57,8 +57,6 @@ export class Dropdown extends BaseComponent {
 
         const { id, selected, label} = e.target.dataset;
 
-        console.log(id, selected)
-
         if (selected === 'false') {
             this.setState({
                 selectedId: id,
@@ -77,6 +75,7 @@ export class Dropdown extends BaseComponent {
         const inputValue = e.target.value;
 
         this.setState({
+            isOpen: true,
             textInput: { inputValue },
             filter: this.getFilter(inputValue)
         });

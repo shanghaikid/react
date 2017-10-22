@@ -64,7 +64,7 @@ export default class BaseComponent extends Component {
     // forceUpdate() {}
 
     get className() {
-        return `${this.libClassPrefix}-${this.baseClassName} ${this.props.className || ''}`;
+        return `${this.libClassPrefix}-${this.baseClassName}${this.props.className ? ` ${this.props.className}` : ''}`;
     }
 
     processRef(component) {

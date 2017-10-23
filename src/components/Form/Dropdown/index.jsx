@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import BaseComponent from '../../BaseComponent';
 import TextInput from '../TextInput';
 
-import { validatable , withTooltip, popupable } from '../../Helper';
+import { popupable } from '../../Helper';
 import { getClsName } from '../../../utils';
 
 export class Dropdown extends BaseComponent {

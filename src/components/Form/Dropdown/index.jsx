@@ -35,7 +35,7 @@ export class Dropdown extends BaseComponent {
             isOpen: false,
             selectedId: '-1',
             items: [],
-            cursor: null,
+            cursor: '-1',
             textInput: {
                 inputValue: '',
                 name: 'textInput'
@@ -62,18 +62,18 @@ export class Dropdown extends BaseComponent {
         }
     }
 
-    next(item = null) {
-        if (item === null) return this.first;
-        let indexOfItem = this.state.items.findIndex(e => e.id === item.id);
-        if (indexOfItem === this.length - 1) return this.first;
-        return this.state.items[indexOfItem + 1];
+    next(id = -1) {
+        if (id === -1) return this.first.id;
+        let indexOfItem = this.state.items.findIndex(e => e.id === id);
+        if (indexOfItem === this.length - 1) return this.first.id;
+        return this.state.items[indexOfItem + 1].id;
     }
 
-    prev(item = null) {
-        if (item === null) return this.last;
-        let indexOfItem = this.state.items.findIndex(e => e.id === item.id);
-        if (indexOfItem === 0) return this.last;
-        return this.state.items[indexOfItem - 1];
+    prev(id = -1) {
+        if (id === -1) return this.last.id;
+        let indexOfItem = this.state.items.findIndex(e => e.id === id);
+        if (indexOfItem === 0) return this.last.id;
+        return this.state.items[indexOfItem - 1].id;
     }
 
     onKeyDown(e) {
@@ -86,14 +86,14 @@ export class Dropdown extends BaseComponent {
 
         if (e.key === 'ArrowUp') {
             this.setState({
-                cursor: this.prev(this.state.cursor || this.selectedItem),
+                cursor: this.prev(this.state.cursor || this.state.selectedId),
                 isOpen: true
             });
         }
 
         if (e.key === 'Enter') {
             this.setState({
-                selectedId: this.state.cursor ? this.state.cursor.id : (this.state.selectedId || -1),
+                selectedId: this.state.cursor ? this.state.cursor : (this.state.selectedId || -1),
                 cursor: null,
                 isOpen: !this.state.isOpen,
                 filter: this.initFilter
@@ -170,7 +170,7 @@ export class Dropdown extends BaseComponent {
                 <DropdownItem selected={!!selectedItem} value={selectedItem ? selectedItem.value : ''} className={this.placeholderClass + ' none current'}>
                     <TextInput {...newInputProps} />
                 </DropdownItem>
-                <DropdownList isOpen={this.state.isOpen} filter={this.state.filter} close={this.close} items={items} selectedId={cursor ? cursor.id : selectedId} />
+                <DropdownList isOpen={this.state.isOpen} filter={this.state.filter} close={this.close} items={items} selectedId={cursor ? cursor: selectedId} />
             </div>
         );
     }

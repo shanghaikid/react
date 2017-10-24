@@ -17,15 +17,10 @@ export function e(stateObject, delmiter = '$', compareObj = null) {
             let valueIsObj = isObj(value),
                 r = `${root ? root + delmiter + key : key}`;
                 // r = `${root}${root === '' ? key : key.charAt(0).toUpperCase() + key.slice(1)}`;
-
-            if (compareObj !== null && !compareObj.hasOwnProperty(r)) {
+            if (valueIsObj && compareObj !== null && typeof compareObj[r] !== 'undefined') {
                 result[r] = value;
             } else {
-                if (valueIsObj) {
-                    _f(value, r, result);
-                } else {
-                    result[r] = value;
-                }
+                valueIsObj ? _f(value, r, result) : result[r] = value;
             }
         }
     }

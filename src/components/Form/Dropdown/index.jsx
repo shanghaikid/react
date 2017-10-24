@@ -79,7 +79,7 @@ export class Dropdown extends BaseComponent {
     onKeyDown(e) {
         if (e.key === 'ArrowDown') {
             this.setState({
-                cursor: this.next(this.state.cursor),
+                cursor: this.next(this.state.cursor || this.state.selectedId),
                 isOpen: true
             });
         }
@@ -93,8 +93,8 @@ export class Dropdown extends BaseComponent {
 
         if (e.key === 'Enter') {
             this.setState({
-                selectedId: this.state.cursor ? this.state.cursor : (this.state.selectedId || -1),
-                cursor: null,
+                selectedId: this.state.cursor !== -1 ? this.state.cursor : (this.state.selectedId || -1),
+                cursor: !this.state.isOpen ? this.state.selectedId : -1,
                 isOpen: !this.state.isOpen,
                 filter: this.initFilter
             });
@@ -105,7 +105,7 @@ export class Dropdown extends BaseComponent {
         this.setState({
             isOpen: !this.state.isOpen,
             filter: this.initFilter,
-            cursor: null
+            cursor: -1
         });
 
         const { id, selected, label} = e.target.dataset;
@@ -149,7 +149,7 @@ export class Dropdown extends BaseComponent {
                 inputValue: this.selectedItem ? this.selectedItem.label : ''
             },
             isOpen: false,
-            cursor: null,
+            cursor: -1,
             filter: this.initFilter
         });
     }

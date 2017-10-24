@@ -15,7 +15,8 @@ Component.prototype.handleEvent = (function () {
         mouseup: 'onMouseUp',
         mousemove: 'onMouseMove',
         focus: 'onFocus',
-        blur: 'onBlur'
+        blur: 'onBlur',
+        keydown: 'onKeyDown'
     };
 
     // fallback helper
@@ -83,7 +84,7 @@ export default class BaseComponent extends Component {
 
     setState(...args) {
         if (isObj(args[0])) {
-            args[0] = this.transformState(args[0]);
+            args[0] = this.transformState(args[0], '$', this.state);
         }
 
         super.setState(...args);
@@ -127,8 +128,8 @@ export default class BaseComponent extends Component {
         return result;
     }
 
-    transformState(stateObj) {
-        return e(stateObj);
+    transformState(stateObj, compareObj) {
+        return e(stateObj, '$', compareObj);
     }
 
     getLibPrefixedClass(cls) {

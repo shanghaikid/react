@@ -10,6 +10,18 @@ export class Dropdown extends BaseComponent {
     get selectedItem() {
         return this.state.items.filter(item => item.id === this.state.selectedId)[0];
     }
+    get first() {
+        return this.state.items[0] || {};
+    }
+    get last() {
+        return this.state.items[this.state.items.length - 1] || {};
+    }
+    get selectedIndex() {
+        return this.selectedItem ? this.state.items.findIndex(e => e.id === this.selectedItem.id) : 0;
+    }
+    get length() {
+        return this.state.items.length;
+    }
     init() {
         // class
         this.baseClassName = `dropdown`;
@@ -23,6 +35,7 @@ export class Dropdown extends BaseComponent {
             isOpen: false,
             selectedId: '-1',
             items: [],
+            cursor: null,
             textInput: {
                 inputValue: '',
                 name: 'textInput'
@@ -49,10 +62,50 @@ export class Dropdown extends BaseComponent {
         }
     }
 
+    next(item = null) {
+        if (item === null) return this.first;
+        let indexOfItem = this.state.items.findIndex(e => e.id === item.id);
+        if (indexOfItem === this.length - 1) return this.first;
+        return this.state.items[indexOfItem + 1];
+    }
+
+    prev(item = null) {
+        if (item === null) return this.last;
+        let indexOfItem = this.state.items.findIndex(e => e.id === item.id);
+        if (indexOfItem === 0) return this.last;
+        return this.state.items[indexOfItem - 1];
+    }
+
+    onKeyDown(e) {
+        if (e.key === 'ArrowDown') {
+            this.setState({
+                cursor: this.next(this.state.cursor),
+                isOpen: true
+            });
+        }
+
+        if (e.key === 'ArrowUp') {
+            this.setState({
+                cursor: this.prev(this.state.cursor || this.selectedItem),
+                isOpen: true
+            });
+        }
+
+        if (e.key === 'Enter') {
+            this.setState({
+                selectedId: this.state.cursor ? this.state.cursor.id : (this.state.selectedId || -1),
+                cursor: null,
+                isOpen: !this.state.isOpen,
+                filter: this.initFilter
+            });
+        }
+    }
+
     onClick(e) {
         this.setState({
             isOpen: !this.state.isOpen,
-            filter: this.initFilter
+            filter: this.initFilter,
+            cursor: null
         });
 
         const { id, selected, label} = e.target.dataset;
@@ -96,14 +149,15 @@ export class Dropdown extends BaseComponent {
                 inputValue: this.selectedItem ? this.selectedItem.label : ''
             },
             isOpen: false,
+            cursor: null,
             filter: this.initFilter
         });
     }
 
     render() {
         const { placeholder } = this.props,
-            {items, selectedId} = this.state,
-            selectedItem = items.filter(item => item.id == selectedId)[0],
+            {items, selectedId, cursor} = this.state,
+            selectedItem = this.selectedItem,
             [inputProps] = this.getStates(['textInput']),
             newInputProps = Object.assign({}, inputProps, {
                 autocomplete: "off",
@@ -112,11 +166,11 @@ export class Dropdown extends BaseComponent {
             });
 
         return (
-            <div className={this.className} ref={this.processRef} onClick={this.handleEvent}>
+            <div className={this.className} ref={this.processRef} onClick={this.handleEvent} onKeyDown={this.handleEvent}>
                 <DropdownItem selected={!!selectedItem} value={selectedItem ? selectedItem.value : ''} className={this.placeholderClass + ' none current'}>
                     <TextInput {...newInputProps} />
                 </DropdownItem>
-                <DropdownList isOpen={this.state.isOpen} filter={this.state.filter} close={this.close} items={items} selectedId={selectedId} />
+                <DropdownList isOpen={this.state.isOpen} filter={this.state.filter} close={this.close} items={items} selectedId={cursor ? cursor.id : selectedId} />
             </div>
         );
     }

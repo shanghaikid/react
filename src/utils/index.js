@@ -11,17 +11,21 @@ export function clone(obj) {
 
 // flatten state object
 // grid:{layout:{menu:{expand:true}}}} => grid-layout-menu-expand:true
-export function e(stateObject, delmiter = '$') {
+export function e(stateObject, delmiter = '$', compareObj = null) {
     function _f(stateObject, root, result) {
         for (const [key, value] of Object.entries(stateObject)) {
             let valueIsObj = isObj(value),
                 r = `${root ? root + delmiter + key : key}`;
                 // r = `${root}${root === '' ? key : key.charAt(0).toUpperCase() + key.slice(1)}`;
 
-            if (valueIsObj) {
-                _f(value, r, result);
-            } else {
+            if (compareObj !== null && !compareObj.hasOwnProperty(r)) {
                 result[r] = value;
+            } else {
+                if (valueIsObj) {
+                    _f(value, r, result);
+                } else {
+                    result[r] = value;
+                }
             }
         }
     }

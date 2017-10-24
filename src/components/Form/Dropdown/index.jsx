@@ -79,14 +79,14 @@ export class Dropdown extends BaseComponent {
     onKeyDown(e) {
         if (e.key === 'ArrowDown') {
             this.setState({
-                cursor: this.next(this.state.cursor || this.state.selectedId),
+                cursor: this.next(this.state.cursor !== -1 ? this.state.cursor : this.state.selectedId),
                 isOpen: true
             });
         }
 
         if (e.key === 'ArrowUp') {
             this.setState({
-                cursor: this.prev(this.state.cursor || this.state.selectedId),
+                cursor: this.prev(this.state.cursor !== -1 ? this.state.cursor : this.state.selectedId),
                 isOpen: true
             });
         }

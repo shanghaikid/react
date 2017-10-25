@@ -6,8 +6,6 @@ import PopupManager from './PopupManager';
 export default function popupable(Component) {
     let zIndex = zIndexs[Component.type] || 0;
 
-    console.assert(typeof Component.propTypes.styleObj !== 'undefined', 'The component should have an styleObj as prop');
-
     class PopupComponent extends Component {
         init(...props) {
             super.init(...props);
@@ -36,10 +34,7 @@ export default function popupable(Component) {
         }
 
         render() {
-            const styleObj = Object.assign({}, this.props.styleObj, {
-                zIndex: this.state.zIndex
-            });
-            return (<Component {...this.props} ref={this.processRef.bind(this)} styleObj={styleObj} />);
+            return (<Component {...this.props} zIndex={this.state.zIndex} ref={this.processRef.bind(this)} />);
         }
     }
 

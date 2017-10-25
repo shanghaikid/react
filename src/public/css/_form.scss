@@ -51,6 +51,11 @@
         position: absolute;
         left: 0;
     }
+    &[disabled] {
+        color: #CCC;
+        border: 1px #CCC solid;
+        pointer-events: 'none';
+    }
 }
 
 [data-tooltip] {

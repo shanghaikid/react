@@ -127,6 +127,10 @@ body {
   .e-dropdown .e-dropdownWrapper {
     position: absolute;
     left: 0; }
+  .e-dropdown[disabled] {
+    color: #CCC;
+    border: 1px #CCC solid;
+    pointer-events: 'none'; }
 
 [data-tooltip] {
   position: relative; }

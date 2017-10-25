@@ -113,6 +113,8 @@ export class Dropdown extends BaseComponent {
     }
 
     onClick(e) {
+        if (this.props.disabled) return;
+
         this.setState({
             isOpen: !this.state.isOpen,
             filter: this.initFilter,
@@ -166,7 +168,7 @@ export class Dropdown extends BaseComponent {
     }
 
     render() {
-        const { placeholder } = this.props,
+        const { placeholder, disabled } = this.props,
             {items, selectedId, cursor} = this.state,
             selectedItem = this.selectedItem,
             [inputProps] = this.getStates(['textInput']),
@@ -179,7 +181,7 @@ export class Dropdown extends BaseComponent {
         return (
             <div className={this.className} ref={this.processRef} onClick={this.handleEvent} onKeyDown={this.handleEvent}>
                 <DropdownItem selected={!!selectedItem} value={selectedItem ? selectedItem.value : ''} className={this.placeholderClass + ' none current'}>
-                    <TextInput {...newInputProps} />
+                    <TextInput {...this.props} {...newInputProps} />
                 </DropdownItem>
                 <DropdownList isOpen={this.state.isOpen} filter={this.state.filter} close={this.close} items={items} selectedId={cursor !== -1 ? cursor: selectedId} />
             </div>
@@ -189,12 +191,14 @@ export class Dropdown extends BaseComponent {
 
 Dropdown.defaultProps = {
     placeholder: 'Please Select...',
-    onChange: () => {}
+    onChange: () => {},
+    disabled: false
 };
 
 Dropdown.propTypes = {
     placeholder: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    disabled: PropTypes.bool
 };
 
 export class DropdownListView extends BaseComponent {
@@ -207,13 +211,14 @@ export class DropdownListView extends BaseComponent {
     }
 
     render() {
-        const {items, className, styleObj, selectedId, filter, noItemMessage} = this.props,
+        const {items, className, zIndex, selectedId, filter, noItemMessage} = this.props,
             cls = getClsName(this.className, (!this.props.isOpen ? 'hidden' : '')),
             newItems = items.filter(filter),
-            hasItem = newItems.length > 0;
+            hasItem = newItems.length > 0,
+            style = {zIndex};
 
         return (
-            <div className={cls} style={styleObj}>
+            <div className={cls} style={style}>
                 {hasItem ? newItems.map(item => <DropdownItem key={item.id} id={item.id} label={item.label} value={item.value} selected={selectedId === item.id} /> ) : <DropdownItem>{noItemMessage}</DropdownItem>}
             </div>
         );
@@ -221,14 +226,14 @@ export class DropdownListView extends BaseComponent {
 }
 
 DropdownListView.defaultProps = {
-    styleObj: {},
+    zIndex: 0,
     close: () => {},
     filter: () => true,
     noItemMessage: 'No Item Found'
 }
 
 DropdownListView.propTypes = {
-    styleObj: PropTypes.object,
+    zIndex: PropTypes.number,
     close: PropTypes.func.isRequired,
     filter: PropTypes.func,
     noItemMessage: PropTypes.string

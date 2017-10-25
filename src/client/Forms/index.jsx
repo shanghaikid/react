@@ -7,12 +7,16 @@ import Checkbox from 'components/Form/Checkbox';
 import Header from 'components/BasicUI/Header';
 import {Dropdown, DropdownItem} from 'components/Form/Dropdown';
 
+const validator = function(v) {
+        return v.includes('s');
+}
 const initState = {
     nameField: {
         disabled: false,
         inputValue: '',
         placeholder: 'Name',
         name: 'nameField',
+        validator: validator,
         required: true
     },
     pwdField: {
@@ -20,14 +24,15 @@ const initState = {
         inputValue: '',
         placeholder: 'Password',
         type: 'password',
+        validator: validator,
         name: 'pwdField'
+    },
+    dropdown: {
+        disabled: false,
+        tooltip: 'disabled dropdown'
     },
     disableCheckbox: {
         name: 'disableCheckbox',
-        checked: false
-    },
-    enableCheckbox: {
-        name: 'enableCheckbox',
         checked: false
     },
     hidden: true
@@ -59,9 +64,7 @@ export default class Forms extends BaseComponent {
         });
     }
 
-    validator(v) {
-        return v.includes('s');
-    }
+    
 
     onChange(e) {
         this.setState({
@@ -70,6 +73,14 @@ export default class Forms extends BaseComponent {
                 checked: e.target.checked
             }
         });
+
+        if (e.target.name === 'disableCheckbox') {
+            this.setState({
+                dropdown: {
+                    disabled: !this.getState('dropdown',  'disabled')
+                }
+            });
+        }
     }
 
     onValidated({message, mod, ok}) {
@@ -86,10 +97,8 @@ export default class Forms extends BaseComponent {
             width: '100%',
             height: '100%'
         },
-        [i1, i2, i3, i4] = this.getStates(['nameField', 'pwdField', 'enableCheckbox', 'disableCheckbox']);
+        [i1, i2, i3, dropdownProps] = this.getStates(['nameField', 'pwdField', 'disableCheckbox', 'dropdown']);
 
-        i1.validator = this.validator;
-        i2.validator = this.validator;
         i1.onValidated = this.onValidated.bind(this);
 
         return (
@@ -107,9 +116,9 @@ export default class Forms extends BaseComponent {
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
 
                     <Header text="Dropdown" />
-                    <Dropdown items={this.dropdownItem} onChange={this.onDropdownChange.bind(this)}/>
+                    <Dropdown items={this.dropdownItem} onChange={this.onDropdownChange.bind(this)} {...dropdownProps} />
                     <Header text="Checkbox" />
-                    <Checkbox label="Disable drop down" {...i3} /> <Checkbox {...i4} label="Enable drop down" />
+                    <Checkbox label="Disable drop down" {...i3} />
                 </form>
             </div>
         );

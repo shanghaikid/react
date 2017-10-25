@@ -28,8 +28,7 @@ const initState = {
         name: 'pwdField'
     },
     dropdown: {
-        disabled: false,
-        tooltip: 'disabled dropdown'
+        disabled: false
     },
     disableCheckbox: {
         name: 'disableCheckbox',
@@ -75,9 +74,11 @@ export default class Forms extends BaseComponent {
         });
 
         if (e.target.name === 'disableCheckbox') {
+            const disabled = !this.getState('dropdown',  'disabled');
             this.setState({
                 dropdown: {
-                    disabled: !this.getState('dropdown',  'disabled')
+                    tooltip: disabled ? 'disabled tooltip' : '',
+                    disabled: disabled
                 }
             });
         }
@@ -108,10 +109,10 @@ export default class Forms extends BaseComponent {
                     <Button showTooltipOnLoad={false} onClicked={this.toggleFieldDisable.bind(this, 'nameField')} text="Toggle Disable Name Field" />
                     <Button onClicked={this.toggleFieldDisable.bind(this, 'pwdField')} text="Toggle Disable Password Field" />
                     <Button onClicked={this.resetAll.bind(this)} text="Reset All" />
-                    <Button disabled={true} tooltip="Disabled tooltip" text="Disabled" />
+                    <Button disabled={true} tooltipText="Disabled tooltip" text="Disabled" />
                     <Header text="ValidationTextBox" />
                     <div><TextInput {...i1} ref={name => this.nameField = name} /></div>
-                    <div><TextInput tooltipText={"normal tooltip"} {...i2} ref={name => this.pwdField = name} /></div>
+                    <div><TextInput {...i2} ref={name => this.pwdField = name} /></div>
                     <div><TextInput disabled={true} tooltipText={"Disabled tooltip"} inputValue="I am disabled" /></div>
                     <small>Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.</small>
 

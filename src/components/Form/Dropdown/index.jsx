@@ -76,27 +76,38 @@ export class Dropdown extends BaseComponent {
         return this.state.items[indexOfItem - 1].id;
     }
 
+    getItem(id = -1) {
+        if (id === -1) return null;
+        return this.state.items.filter(item => item.id === id)[0];
+    }
+
     onKeyDown(e) {
+        let cursorId = this.state.cursor !== -1 ? this.state.cursor : this.state.selectedId;
         if (e.key === 'ArrowDown') {
             this.setState({
-                cursor: this.next(this.state.cursor !== -1 ? this.state.cursor : this.state.selectedId),
+                cursor: this.next(cursorId),
                 isOpen: true
             });
         }
 
         if (e.key === 'ArrowUp') {
             this.setState({
-                cursor: this.prev(this.state.cursor !== -1 ? this.state.cursor : this.state.selectedId),
+                cursor: this.prev(cursorId),
                 isOpen: true
             });
         }
 
         if (e.key === 'Enter') {
+            let item = this.getItem(cursorId);
+
             this.setState({
-                selectedId: this.state.cursor !== -1 ? this.state.cursor : (this.state.selectedId || -1),
+                selectedId: cursorId,
                 cursor: !this.state.isOpen ? this.state.selectedId : -1,
                 isOpen: !this.state.isOpen,
-                filter: this.initFilter
+                filter: this.initFilter,
+                textInput: {
+                    inputValue: item ? item.label : ''
+                }
             });
         }
     }
@@ -170,7 +181,7 @@ export class Dropdown extends BaseComponent {
                 <DropdownItem selected={!!selectedItem} value={selectedItem ? selectedItem.value : ''} className={this.placeholderClass + ' none current'}>
                     <TextInput {...newInputProps} />
                 </DropdownItem>
-                <DropdownList isOpen={this.state.isOpen} filter={this.state.filter} close={this.close} items={items} selectedId={cursor ? cursor: selectedId} />
+                <DropdownList isOpen={this.state.isOpen} filter={this.state.filter} close={this.close} items={items} selectedId={cursor !== -1 ? cursor: selectedId} />
             </div>
         );
     }

@@ -2,6 +2,8 @@ import React from 'react';
 import BaseComponent from 'components/BaseComponent';
 import Button from 'components/Form/Button';
 import TextInput from 'components/Form/TextInput';
+import Checkbox from 'components/Form/Checkbox';
+
 import Header from 'components/BasicUI/Header';
 import {Dropdown, DropdownItem} from 'components/Form/Dropdown';
 
@@ -19,6 +21,14 @@ const initState = {
         placeholder: 'Password',
         type: 'password',
         name: 'pwdField'
+    },
+    disableCheckbox: {
+        name: 'disableCheckbox',
+        checked: false
+    },
+    enableCheckbox: {
+        name: 'enableCheckbox',
+        checked: false
     },
     hidden: true
 };
@@ -56,7 +66,8 @@ export default class Forms extends BaseComponent {
     onChange(e) {
         this.setState({
             [e.target.name]: {
-                inputValue: e.target.value
+                inputValue: e.target.value,
+                checked: e.target.checked
             }
         });
     }
@@ -75,7 +86,7 @@ export default class Forms extends BaseComponent {
             width: '100%',
             height: '100%'
         },
-        [i1, i2] = this.getStates(['nameField', 'pwdField']);
+        [i1, i2, i3, i4] = this.getStates(['nameField', 'pwdField', 'enableCheckbox', 'disableCheckbox']);
 
         i1.validator = this.validator;
         i2.validator = this.validator;
@@ -97,7 +108,8 @@ export default class Forms extends BaseComponent {
 
                     <Header text="Dropdown" />
                     <Dropdown items={this.dropdownItem} onChange={this.onDropdownChange.bind(this)}/>
-                    <Header text="Comming Soon..." />
+                    <Header text="Checkbox" />
+                    <Checkbox label="Disable drop down" {...i3} /> <Checkbox {...i4} label="Enable drop down" />
                 </form>
             </div>
         );

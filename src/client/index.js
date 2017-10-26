@@ -4,6 +4,8 @@ import Header from 'components/BasicUI/Header';
 import App from '../app/App';
 import Dialogs from './Dialogs';
 import Forms from './Forms';
+import Tooltips from './Tooltips';
+
 
 const navDef = [
     {id: 'mon', label: 'Monitoring', url: '/#mon', component: <Header text="Monitoring" />},
@@ -11,6 +13,7 @@ const navDef = [
     {id: 'widgets', label: 'Widgets', expand: true, children: [
         {id: 'dialogs', label: 'Dialogs', url: '/#widgets/dialogs', component: <Dialogs />},
         {id: 'wizard', label: 'Wizard', url: '/#widgets/wizard', component: <Header text="Wiard" />},
+        {id: 'tooltips', label: 'tooltips', url: '/#widgets/tooltips', component: <Tooltips />},
     ]},
     {id: 'speical', label: 'Special', expand: true, children: [
         {id: 'infinite', label: 'Infinite Scroll', url: '/#widgets/infiniteScroll', component: <Header text="Infinite Scroll" />}

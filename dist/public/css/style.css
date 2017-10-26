@@ -172,3 +172,9 @@ body {
 .e-windowMemoryViewer span {
   display: inline-block;
   margin-right: 10px; }
+
+.tooltips {
+  padding: 40px; }
+  .tooltips button {
+    display: block;
+    margin-bottom: 20px; }

@@ -8,18 +8,32 @@ export default class ToolTip extends BaseComponent {
     }
 
     render() {
-        const {isOpen} = this.props,
-            cls = this.className + ' ' + (!isOpen ? 'hidden' : '');
-        
-        return (<div className={cls}></div>)
+        const {isOpen, tooltipPositions, tooltipPosition} = this.props,
+            cls = this.className + ' ' + tooltipPositions[tooltipPosition];
+
+        return (<div className={cls}>{tooltip}</div>)
     }
 }
 
 ToolTip.defaultProps = {
-    opacity: .5
+    opacity: .5,
+    tooltipPositions: {
+        after: 'after',
+        before: 'before',
+        above: 'above',
+        below: 'below',
+        'below-centered': 'below-centered',
+        'above-centered': 'above-centered'
+    },
+    tooltipPosition: '',
+    tooltipState: 'NORMAL'
 };
 
 ToolTip.propTypes = {
     opacity: PropTypes.number,
-    isOpen: PropTypes.bool
+    isOpen: PropTypes.bool,
+    tooltip: PropTypes.string,
+    tooltipPosition: PropTypes.string,
+    tooltipPositions: PropTypes.object,
+    tooltipState: PropTypes.string
 };

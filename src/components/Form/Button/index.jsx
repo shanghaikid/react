@@ -20,7 +20,7 @@ export class ButtonView extends BaseComponent {
         const {text, type, title, disabled} = this.props;
 
         return (
-            <button disabled={disabled} type={type} title={title || text} className={this.className} onClick={this.handleEvent}>{text}</button>
+            <button disabled={disabled} type={type} title={title} className={this.className} onClick={this.handleEvent}>{text}</button>
         );
     }
 }

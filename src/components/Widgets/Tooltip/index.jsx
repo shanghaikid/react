@@ -8,7 +8,7 @@ export default class ToolTip extends BaseComponent {
     }
 
     render() {
-        const {isOpen, tooltipPositions, tooltipPosition} = this.props,
+        const {isOpen, tooltip, tooltipPositions, tooltipPosition} = this.props,
             cls = this.className + ' ' + tooltipPositions[tooltipPosition];
 
         return (<div className={cls}>{tooltip}</div>)
@@ -25,6 +25,7 @@ ToolTip.defaultProps = {
         'below-centered': 'below-centered',
         'above-centered': 'above-centered'
     },
+    tooltip: '',
     tooltipPosition: '',
     tooltipState: 'NORMAL'
 };

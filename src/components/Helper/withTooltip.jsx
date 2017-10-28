@@ -1,6 +1,8 @@
+import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import { isEmpty } from '../../utils';
 import Tooltip from '../Widgets/Tooltip';
+
 
 // withTooltip
 // currently I used css peseudo-element as tooltip
@@ -14,106 +16,74 @@ export default function withTooltip(Component) {
         get focused() {
             return this.domNode.contains(document.activeElement);
         }
+
         init(...props) {
             super.init(...props);
-            // handler
-            this.onMouseEnter = this.onMouseEnter.bind(this);
-            this.onMouseLeave = this.onMouseLeave.bind(this);
-            // state
-            this.state = Object.assign({}, this.state, {
-                showTooltip: false,
-                tooltip: '',
-                containerDisplay: ''
-            });
-            // local variable
-            this.showTooltipTimeout = null;
+            this.state = {
+                showTooltip: true
+            };
         }
 
         componentDidMount(...args) {
             super.componentDidMount && super.componentDidMount(...args);
-            // copy children display value
-            this.setState({containerDisplay: window.getComputedStyle(this.domNode, null).getPropertyValue('display')});
 
-            if (this.props.showTooltipOnLoad && this.props.tooltip !== '') {
-                this.setState({ showTooltip: true, tooltip: this.props.tooltip }, this.hideTooltip.bind(this));
+            // get tooltip container
+            let tooltipContainer = document.body.querySelector('div.tooltip');
+            // if not exist, create once
+            if (!tooltipContainer) {
+                tooltipContainer = document.createElement('div');
+                tooltipContainer.className = 'tooltip';
+
+                document.body.appendChild(tooltipContainer);
             }
+            // assign it to component local prop
+            this.tooltipContainer = tooltipContainer;
+
+            // bind events
+            this.bindEvents();
         }
 
-        componentWillReceiveProps(nextProps) {
-            super.componentWillReceiveProps && super.componentWillReceiveProps(nextProps);
-
-            const {tooltip, tooltipText} = nextProps;
-            this.setState({
-                tooltip: typeof tooltip !== 'undefined' ? tooltip : tooltipText
-            });
+        bindEvents() {
+            this.domNode.addEventListener('mouseenter', this);
+            this.domNode.addEventListener('mouseleave', this);
         }
 
-        showTooltip(tooltip, hideAfterShown=true) {
-            if (this.showTooltipTimeout) {
-                window.clearTimeout(this.showTooltipTimeout);
-                this.showTooltipTimeout = null;
-            }
-            this.showTooltipTimeout = window.setTimeout(() => {
-                this.setState({ showTooltip: true, tooltip}, hideAfterShown ? this.hideTooltip.bind(this) : () =>{});
-            }, this.props.showTooltipTimeout);
+        componentWillUnmount(...args) {
+            super.componentWillUnmount && super.componentWillUnmount(...args);
+            document.body.removeChild(this.tooltipContainer);
+            this.domNode.removeEventListener('mouseenter', this);
+            this.domNode.removeEventListener('mouseleave', this);
         }
 
-        hideTooltip(clearTooltip=false) {
-            this.setState({ showTooltip: false});
+        componentDidUpdate(...args) {
+            super.componentDidUpdate && super.componentDidUpdate(...args);
+
+            const { tooltip } = this.props;
+
+            ReactDom.render(<Tooltip tooltip={tooltip} />, this.tooltipContainer);
         }
 
         onMouseEnter(e) {
-            this.showTooltip(this.props.tooltip || this.props.tooltipText, false);
+            console.log(e);
         }
 
         onMouseLeave(e) {
-            this.setState({ showTooltip: false });
+            console.log(e);
         }
 
         render() {
-            const {tooltip, showTooltip} = this.state,
-                newProps = {
-                    ['data-tooltip']: tooltip,
-                    ['data-tooltip-show']: showTooltip ? 'yes' : 'no'
-                },
-                style = {
-                    display: this.state.containerDisplay
-                };
-
-            // make sure the outter is a block container
-            // so that we can use ::after or ::before as tooltip element
             return (
-                <div {...newProps}
-                    style={style}
-                    onMouseEnter={this.onMouseEnter} 
-                    onMouseLeave={this.onMouseLeave}
-                    onFocus={this.onFocus}
-                     >
-                    <Component
+                    <Component showTooltip={this.state.showTooltip}
                     {...this.props}
                     ref={this.processRef}
                     />
-                </div>);
+            );
         }
     }
 
-    ComponentWithTooltip.defaultProps = Object.assign({
-        tooltipText: '',
-        showTooltip: false,
-        showTooltipOnLoad: false,
-        showTooltipTimeout: 20,
-        hideTooltipTimeout: 1000
-    }, Component.defaultProps);
+    ComponentWithTooltip.defaultProps = Object.assign({}, Tooltip.defaultProps, Component.defaultProps);
 
-    ComponentWithTooltip.propTypes = Object.assign({
-        tooltip: PropTypes.string,
-        tooltipText: PropTypes.string, // initial tooltip
-        showTooltip: PropTypes.bool,
-        showTooltipOnLoad: PropTypes.bool,
-        showTooltipTimeout: PropTypes.number,
-        hideTooltipTimeout: PropTypes.number
-    });
-
+    ComponentWithTooltip.propTypes = Object.assign({}, Tooltip.propTypes);
 
     return ComponentWithTooltip;
 }

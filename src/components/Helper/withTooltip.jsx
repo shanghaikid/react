@@ -3,14 +3,7 @@ import PropTypes from 'prop-types';
 import { isEmpty } from '../../utils';
 import Tooltip from '../Widgets/Tooltip';
 
-
 // withTooltip
-// currently I used css peseudo-element as tooltip
-// but I feel we may need a better solution
-// because it has some limitation:
-// for example, peseduo-element only support pure text
-// so no HTML is can be shown
-// TODO: better solution, maybe another helper to support HTML
 export default function withTooltip(Component) {
     class ComponentWithTooltip extends Component {
         get focused() {
@@ -19,19 +12,16 @@ export default function withTooltip(Component) {
 
         init(...props) {
             super.init(...props);
-            this.state = {
-                showTooltip: true
-            };
         }
 
         componentDidMount(...args) {
             super.componentDidMount && super.componentDidMount(...args);
 
             // get tooltip container
-            let tooltipContainer = document.body.querySelector('div.tooltip');
+            let tooltipContainer = document.body.querySelector('tooltip');
             // if not exist, create once
             if (!tooltipContainer) {
-                tooltipContainer = document.createElement('div');
+                tooltipContainer = document.createElement('tooltip');
                 tooltipContainer.className = 'tooltip';
 
                 document.body.appendChild(tooltipContainer);
@@ -55,25 +45,17 @@ export default function withTooltip(Component) {
             this.domNode.removeEventListener('mouseleave', this);
         }
 
-        componentDidUpdate(...args) {
-            super.componentDidUpdate && super.componentDidUpdate(...args);
-
-            const { tooltip } = this.props;
-
-            ReactDom.render(<Tooltip tooltip={tooltip} />, this.tooltipContainer);
-        }
-
         onMouseEnter(e) {
-            console.log(e);
+            ReactDom.render(<Tooltip {...this.props} />, this.tooltipContainer);
         }
 
         onMouseLeave(e) {
-            console.log(e);
+            ReactDom.render(<Tooltip {...this.props} tooltip="" />, this.tooltipContainer);
         }
 
         render() {
             return (
-                    <Component showTooltip={this.state.showTooltip}
+                    <Component
                     {...this.props}
                     ref={this.processRef}
                     />

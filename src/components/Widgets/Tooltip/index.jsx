@@ -1,6 +1,8 @@
 import React from 'react';
 import BaseComponent from '../../BaseComponent';
 import PropTypes from 'prop-types';
+import { States } from '../../../Constants';
+import { getClsName } from '../../../utils';
 
 export default class ToolTip extends BaseComponent {
     init() {
@@ -8,8 +10,8 @@ export default class ToolTip extends BaseComponent {
     }
 
     render() {
-        const {isOpen, tooltip, tooltipPositions, tooltipPosition} = this.props,
-            cls = this.className + ' ' + tooltipPositions[tooltipPosition];
+        const {isOpen, tooltip, tooltipPositions, tooltipPosition, tooltipState} = this.props,
+            cls = getClsName(this.className, tooltipPositions[tooltipPosition], tooltipState);
 
         return (<div className={cls}>{tooltip}</div>)
     }
@@ -18,16 +20,16 @@ export default class ToolTip extends BaseComponent {
 ToolTip.defaultProps = {
     opacity: .5,
     tooltipPositions: {
-        after: 'after',
-        before: 'before',
-        above: 'above',
-        below: 'below',
+        'after': 'after',
+        'before': 'before',
+        'above': 'above',
+        'below': 'below',
         'below-centered': 'below-centered',
         'above-centered': 'above-centered'
     },
     tooltip: '',
-    tooltipPosition: '',
-    tooltipState: 'NORMAL'
+    tooltipPosition: 'above',
+    tooltipState: States['NORMAL']
 };
 
 ToolTip.propTypes = {

@@ -32,10 +32,10 @@ export default class Tooltips extends BaseComponent {
                 <Button text="Tooltip position: below" tooltip={tooltip} tooltipPosition="below"/>
                 <Button text="Tooltip position: below-centered" tooltip={tooltip} tooltipPosition="below-centered"/>
                 <Button text="Tooltip position: above-centered" tooltip={tooltip} tooltipPosition="above-centered" />
-                <Button text="Tooltip can be enterred" tooltip={tooltip}/>
+                <Button text="Tooltip can be enterred" tooltipCanBeEntered={true} tooltip={tooltip}/>
                 <Button text="Tooltip state is always WARNING" tooltip={tooltip} tooltipState="WARNING" />
                 <Button text="Help Tips" />
-                <Button text="Really Long tooltip" tooltip={longTooltip} />
+                <Button text="Really Long tooltip" tooltip={longTooltip} tooltipCanBeEntered={true} />
                 <Button text="One-liner with inline markup" tooltip={oneLineWithInlineMarkup} />
             </div>
         );

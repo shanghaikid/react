@@ -158,8 +158,10 @@ body {
   margin-right: 10px; }
 
 .e-tooltip {
-  background: #06c;
-  color: #FFF;
+  background: #ffffca;
+  color: #000023;
+  padding: 5px;
+  font-size: 12px;
   overflow-y: auto; }
 
 [data-tooltip] {

@@ -10,52 +10,42 @@ export default class ToolTip extends BaseComponent {
     }
 
     render() {
-        const {isOpen, tooltip, tooltipPositions, tooltipPosition, tooltipState, left, top, width, height, maxHeight} = this.props,
-            cls = getClsName(this.className, tooltipPositions[tooltipPosition], States[tooltipState]),
+        const {isOpen, tooltip, state, left, top, width, height, maxHeight, opacity, zIndex} = this.props,
+            cls = getClsName(this.className, state),
             style = {
                 position: 'absolute',
                 left: left,
                 top: top,
-                zIndex: zIndexs.Tooltip,
+                zIndex: zIndex,
                 width: width + 'px',
                 minHeight: height + 'px',
-                maxHeight: maxHeight + 'px'
+                maxHeight: maxHeight + 'px',
+                opacity
             };
 
-        return (<div className={cls} style={tooltip ? style : {}} dangerouslySetInnerHTML={{__html: tooltip}} />)
+        return (<div onMouseEnter={this.handleEvent} onMouseOver={this.handleEvent} onMouseLeave={this.handleEvent} className={cls} style={tooltip ? style : {}} dangerouslySetInnerHTML={{__html: tooltip}} />)
     }
 }
 
 ToolTip.defaultProps = {
-    opacity: .5,
-    tooltipPositions: {
-        'after': 'after',
-        'before': 'before',
-        'above': 'above',
-        'below': 'below',
-        'below-centered': 'below-centered',
-        'above-centered': 'above-centered'
-    },
+    opacity: 1,
     tooltip: '',
-    tooltipPosition: 'after',
-    tooltipState: 'NORMAL',
     left: -99999,
     top: -99999,
     width: 200,
-    height: 22,
-    maxHeight: 100
+    height: 14,
+    maxHeight: 100,
+    state: 'normal',
+    zIndexs: zIndexs.Tooltip
 };
 
 ToolTip.propTypes = {
     opacity: PropTypes.number,
-    isOpen: PropTypes.bool,
     tooltip: PropTypes.string,
-    tooltipPosition: PropTypes.string,
-    tooltipPositions: PropTypes.object,
-    tooltipState: PropTypes.string,
     left: PropTypes.number,
     top: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
-    maxHeight: PropTypes.number
+    maxHeight: PropTypes.number,
+    state: PropTypes.string
 };

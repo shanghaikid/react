@@ -2,6 +2,7 @@ import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import { isEmpty } from '../../utils';
 import Tooltip from '../Widgets/Tooltip';
+import { States } from '../../Constants';
 
 // withTooltip
 export default function withTooltip(Component) {
@@ -12,6 +13,8 @@ export default function withTooltip(Component) {
 
         init(...props) {
             super.init(...props);
+            this.onTooltipMouseEnter = this.onTooltipMouseEnter.bind(this);
+            this.tooltipOnMouseLeave = this.tooltipOnMouseLeave.bind(this);
         }
 
         componentDidMount(...args) {
@@ -88,12 +91,30 @@ export default function withTooltip(Component) {
         }
 
         onMouseEnter(e) {
-            const pos = this.getTooltipPos();
+            const pos = this.getTooltipPos(),
+                newProps = {
+                    state: States[this.props.state],
+                    onMouseEnter: this.onTooltipMouseEnter,
+                    onMouseLeave: this.tooltipOnMouseLeave
+                };
 
-            ReactDom.render(<Tooltip {...this.props} {...pos} />, this.tooltipContainer);
+            ReactDom.render(<Tooltip {...this.props} {...newProps} {...pos}/>, this.tooltipContainer);
+        }
+
+        onTooltipMouseEnter(e) {
+            this._tooltipShowing = this.props.tooltipCanBeEntered;
         }
 
         onMouseLeave(e) {
+            if (!this._tooltipShowing) {
+                this._leaveTimeout = setTimeout(() => {
+                    ReactDom.render(<Tooltip {...this.props} tooltip="" />, this.tooltipContainer);
+                    this._tooltipShowing = false;
+                }, this.props.tooltipCanBeEntered ? 500: 1);
+            }
+        }
+
+        tooltipOnMouseLeave(e) {
             ReactDom.render(<Tooltip {...this.props} tooltip="" />, this.tooltipContainer);
         }
 
@@ -107,9 +128,26 @@ export default function withTooltip(Component) {
         }
     }
 
-    ComponentWithTooltip.defaultProps = Object.assign({}, Tooltip.defaultProps, Component.defaultProps);
+    ComponentWithTooltip.defaultProps = Object.assign({
+        tooltipPositions: {
+            'after': 'after',
+            'before': 'before',
+            'above': 'above',
+            'below': 'below',
+            'below-centered': 'below-centered',
+            'above-centered': 'above-centered'
+        },
+        tooltipCanBeEntered: false,
+        tooltipPosition: 'after',
+        state: 'NORMAL'
+    }, Tooltip.defaultProps, Component.defaultProps);
 
-    ComponentWithTooltip.propTypes = Object.assign({}, Tooltip.propTypes);
+    ComponentWithTooltip.propTypes = Object.assign({
+        tooltipPosition: PropTypes.string,
+        tooltipPositions: PropTypes.object,
+        tooltipCanBeEntered: PropTypes.bool,
+        state: PropTypes.string,
+    }, Tooltip.propTypes);
 
     return ComponentWithTooltip;
 }

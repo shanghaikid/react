@@ -49,8 +49,8 @@ export default function withTooltip(Component) {
         }
 
         getTooltipPos() {
-            const {x, y, width, height} = this.domNode.getBoundingClientRect(),
-                {tooltipPosition, tooltipPositions, width:tooltipWidth, height:tooltipHeight} = this.props;
+            const {x, y, width, height, offsetHeight} = this.domNode.getBoundingClientRect(),
+                {tooltipPosition, tooltipPositions, minWidth:tooltipWidth, minHeight:tooltipHeight, padding} = this.props;
 
             let left = -9999,
                 top = -9999;
@@ -62,13 +62,13 @@ export default function withTooltip(Component) {
                     break;
 
                 case 'before':
-                    left = x - tooltipWidth;
+                    left = x - tooltipWidth - padding * 2;
                     top = y;
                     break;
 
                 case 'above':
                     left = x;
-                    top = y - tooltipHeight;
+                    top = y - tooltipHeight - padding * 2;
                     break;
 
                 case 'below':
@@ -77,15 +77,16 @@ export default function withTooltip(Component) {
                     break;
 
                 case 'below-centered': 
-                    left = x + ((width - tooltipWidth) / 2);
+                    left = x + ((width - tooltipWidth - padding * 2) / 2);
                     top = y + height;
                     break;
 
                 case 'above-centered': 
-                    left = x + ((width - tooltipWidth) / 2);
-                    top = y - tooltipHeight;
+                    left = x + ((width - tooltipWidth - padding * 2) / 2);
+                    top = y - tooltipHeight - padding * 2;
                     break;
             }
+
 
             return {left, top};
         }

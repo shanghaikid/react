@@ -10,20 +10,26 @@ export default class ToolTip extends BaseComponent {
     }
 
     render() {
-        const {isOpen, tooltip, state, left, top, width, height, maxHeight, opacity, zIndex} = this.props,
+        const {isOpen, tooltip, state, left, top, minWidth, maxWidth, minHeight, maxHeight, opacity, zIndex, padding} = this.props,
             cls = getClsName(this.className, state),
-            style = {
+            defaultStyle = {
+                display: 'none'
+            },
+            style = Object.assign({}, defaultStyle, {
+                display: 'block',
                 position: 'absolute',
                 left: left,
                 top: top,
                 zIndex: zIndex,
-                width: width + 'px',
-                minHeight: height + 'px',
+                minWidth: minWidth + 'px',
+                maxWidth: maxWidth + 'px',
+                padding: padding + 'px',
+                minHeight: minHeight + 'px',
                 maxHeight: maxHeight + 'px',
                 opacity
-            };
+            });
 
-        return (<div onMouseEnter={this.handleEvent} onMouseOver={this.handleEvent} onMouseLeave={this.handleEvent} className={cls} style={tooltip ? style : {}} dangerouslySetInnerHTML={{__html: tooltip}} />)
+        return (<div onMouseEnter={this.handleEvent} onMouseOver={this.handleEvent} onMouseLeave={this.handleEvent} className={cls} style={tooltip ? style : defaultStyle} dangerouslySetInnerHTML={{__html: tooltip}} />)
     }
 }
 
@@ -32,11 +38,13 @@ ToolTip.defaultProps = {
     tooltip: '',
     left: -99999,
     top: -99999,
-    width: 200,
-    height: 14,
+    minWidth: 200,
+    maxWidth: 200,
+    minHeight: 20,
     maxHeight: 100,
     state: 'normal',
-    zIndexs: zIndexs.Tooltip
+    padding: 5,
+    zIndex: zIndexs.Tooltip
 };
 
 ToolTip.propTypes = {
@@ -44,8 +52,10 @@ ToolTip.propTypes = {
     tooltip: PropTypes.string,
     left: PropTypes.number,
     top: PropTypes.number,
-    width: PropTypes.number,
-    height: PropTypes.number,
+    minWidth: PropTypes.number,
+    maxWidth: PropTypes.number,
+    minHeight: PropTypes.number,
     maxHeight: PropTypes.number,
+    padding: PropTypes.number,
     state: PropTypes.string
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from '../../BaseComponent';
 import PropTypes from 'prop-types';
-import { States } from '../../../Constants';
+import { States, zIndexs} from '../../../Constants';
 import { getClsName } from '../../../utils';
 
 export default class ToolTip extends BaseComponent {
@@ -10,10 +10,19 @@ export default class ToolTip extends BaseComponent {
     }
 
     render() {
-        const {isOpen, tooltip, tooltipPositions, tooltipPosition, tooltipState} = this.props,
-            cls = getClsName(this.className, tooltipPositions[tooltipPosition], States[tooltipState]);
+        const {isOpen, tooltip, tooltipPositions, tooltipPosition, tooltipState, left, top, width, height, maxHeight} = this.props,
+            cls = getClsName(this.className, tooltipPositions[tooltipPosition], States[tooltipState]),
+            style = {
+                position: 'absolute',
+                left: left,
+                top: top,
+                zIndex: zIndexs.Tooltip,
+                width: width + 'px',
+                minHeight: height + 'px',
+                maxHeight: maxHeight + 'px'
+            };
 
-        return (<div className={cls}>{tooltip}</div>)
+        return (<div className={cls} style={tooltip ? style : {}} dangerouslySetInnerHTML={{__html: tooltip}} />)
     }
 }
 
@@ -28,8 +37,13 @@ ToolTip.defaultProps = {
         'above-centered': 'above-centered'
     },
     tooltip: '',
-    tooltipPosition: 'above',
-    tooltipState: 'NORMAL'
+    tooltipPosition: 'after',
+    tooltipState: 'NORMAL',
+    left: -99999,
+    top: -99999,
+    width: 200,
+    height: 22,
+    maxHeight: 100
 };
 
 ToolTip.propTypes = {
@@ -38,5 +52,10 @@ ToolTip.propTypes = {
     tooltip: PropTypes.string,
     tooltipPosition: PropTypes.string,
     tooltipPositions: PropTypes.object,
-    tooltipState: PropTypes.string
+    tooltipState: PropTypes.string,
+    left: PropTypes.number,
+    top: PropTypes.number,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    maxHeight: PropTypes.number
 };

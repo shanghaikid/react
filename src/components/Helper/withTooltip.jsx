@@ -45,8 +45,52 @@ export default function withTooltip(Component) {
             this.domNode.removeEventListener('mouseleave', this);
         }
 
+        getTooltipPos() {
+            const {x, y, width, height} = this.domNode.getBoundingClientRect(),
+                {tooltipPosition, tooltipPositions, width:tooltipWidth, height:tooltipHeight} = this.props;
+
+            let left = -9999,
+                top = -9999;
+
+            switch(tooltipPositions[tooltipPosition]) {
+                case 'after':
+                    left = x + width;
+                    top = y;
+                    break;
+
+                case 'before':
+                    left = x - tooltipWidth;
+                    top = y;
+                    break;
+
+                case 'above':
+                    left = x;
+                    top = y - tooltipHeight;
+                    break;
+
+                case 'below':
+                    left = x;
+                    top = y + height;
+                    break;
+
+                case 'below-centered': 
+                    left = x + ((width - tooltipWidth) / 2);
+                    top = y + height;
+                    break;
+
+                case 'above-centered': 
+                    left = x + ((width - tooltipWidth) / 2);
+                    top = y - tooltipHeight;
+                    break;
+            }
+
+            return {left, top};
+        }
+
         onMouseEnter(e) {
-            ReactDom.render(<Tooltip {...this.props} />, this.tooltipContainer);
+            const pos = this.getTooltipPos();
+
+            ReactDom.render(<Tooltip {...this.props} {...pos} />, this.tooltipContainer);
         }
 
         onMouseLeave(e) {

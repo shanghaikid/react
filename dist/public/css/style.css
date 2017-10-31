@@ -132,22 +132,6 @@ body {
     border: 1px #CCC solid;
     pointer-events: 'none'; }
 
-[data-tooltip] {
-  position: relative; }
-  [data-tooltip]::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    left: 0;
-    top: 0;
-    background: #fff;
-    border: 1px solid #CCC;
-    opacity: 0;
-    transition: opacity 0.5s ease-in; }
-  [data-tooltip][data-tooltip-show="yes"]::after {
-    opacity: 1; }
-  [data-tooltip][data-tooltip-show="no"]::after {
-    opacity: 0; }
-
 .e-dialog {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -172,6 +156,27 @@ body {
 .e-windowMemoryViewer span {
   display: inline-block;
   margin-right: 10px; }
+
+.e-tooltip {
+  background: #06c;
+  color: #FFF;
+  overflow-y: auto; }
+
+[data-tooltip] {
+  position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #fff;
+    border: 1px solid #CCC;
+    opacity: 0;
+    transition: opacity 0.5s ease-in; }
+  [data-tooltip][data-tooltip-show="yes"]::after {
+    opacity: 1; }
+  [data-tooltip][data-tooltip-show="no"]::after {
+    opacity: 0; }
 
 .tooltips {
   padding: 40px; }

@@ -180,7 +180,8 @@ body {
     opacity: 0; }
 
 .tooltips {
-  padding: 40px; }
+  padding: 40px;
+  box-sizing: border-box; }
   .tooltips button {
-    display: block;
+    display: inline-block;
     margin-bottom: 20px; }

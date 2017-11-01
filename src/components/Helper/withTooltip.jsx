@@ -4,6 +4,9 @@ import { isEmpty } from '../../utils';
 import Tooltip from '../Widgets/Tooltip';
 import { States } from '../../Constants';
 
+// shared tooltip state
+let tooltipTimeout = null;
+
 // withTooltip
 export default function withTooltip(Component) {
     class ComponentWithTooltip extends Component {
@@ -14,7 +17,7 @@ export default function withTooltip(Component) {
         init(...props) {
             super.init(...props);
             this.onTooltipMouseEnter = this.onTooltipMouseEnter.bind(this);
-            this.tooltipOnMouseLeave = this.tooltipOnMouseLeave.bind(this);
+            this.onTooltipMouseLeave = this.onTooltipMouseLeave.bind(this);
         }
 
         componentDidMount(...args) {
@@ -39,6 +42,7 @@ export default function withTooltip(Component) {
         bindEvents() {
             this.domNode.addEventListener('mouseenter', this);
             this.domNode.addEventListener('mouseleave', this);
+
         }
 
         componentWillUnmount(...args) {
@@ -49,11 +53,16 @@ export default function withTooltip(Component) {
         }
 
         getTooltipPos() {
-            const {x, y, width, height, offsetHeight} = this.domNode.getBoundingClientRect(),
+            let {x, y, width, height} = this.domNode.getBoundingClientRect(),
+                {scrollTop, scrollLeft} = document.documentElement,
                 {tooltipPosition, tooltipPositions, minWidth:tooltipWidth, minHeight:tooltipHeight, padding} = this.props;
 
             let left = -9999,
                 top = -9999;
+
+            // correct the scrolling value
+            x = x + scrollLeft;
+            y = y + scrollTop;
 
             switch(tooltipPositions[tooltipPosition]) {
                 case 'after':
@@ -92,31 +101,45 @@ export default function withTooltip(Component) {
         }
 
         onMouseEnter(e) {
+            this.clearTimeout();
             const pos = this.getTooltipPos(),
                 newProps = {
                     state: States[this.props.state],
                     onMouseEnter: this.onTooltipMouseEnter,
-                    onMouseLeave: this.tooltipOnMouseLeave
+                    onMouseLeave: this.onTooltipMouseLeave
                 };
 
             ReactDom.render(<Tooltip {...this.props} {...newProps} {...pos}/>, this.tooltipContainer);
         }
 
-        onTooltipMouseEnter(e) {
-            this._tooltipShowing = this.props.tooltipCanBeEntered;
+        onMouseLeave(e) {
+            this.clearTooltip();
         }
 
-        onMouseLeave(e) {
-            if (!this._tooltipShowing) {
-                this._leaveTimeout = setTimeout(() => {
+        onTooltipMouseEnter(e) {
+            this.clearTimeout();
+            e.stopPropagation();
+            this._onTooltip = this.props.tooltipCanBeEntered;
+        }
+
+        onTooltipMouseLeave(e) {
+           this._onTooltip = false;
+           this.clearTooltip();
+        }
+
+        clearTooltip() {
+            if (!this._onTooltip) {
+                tooltipTimeout = setTimeout(() => {
                     ReactDom.render(<Tooltip {...this.props} tooltip="" />, this.tooltipContainer);
-                    this._tooltipShowing = false;
-                }, this.props.tooltipCanBeEntered ? 500: 1);
+                }, this.props.tooltipCanBeEntered ? 300: 1);
             }
         }
 
-        tooltipOnMouseLeave(e) {
-            ReactDom.render(<Tooltip {...this.props} tooltip="" />, this.tooltipContainer);
+        clearTimeout() {
+            if (tooltipTimeout) {
+                window.clearTimeout(tooltipTimeout);
+                tooltipTimeout = null;
+            }
         }
 
         render() {

@@ -1,7 +1,8 @@
 .tooltips {
     padding: 40px;
+    box-sizing: border-box;
     button {
-        display: block;
+        display: inline-block;
         margin-bottom: 20px;
     }
 }

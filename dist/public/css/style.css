@@ -25,7 +25,7 @@ body {
   position: relative;
   background: #FFF; }
   .e-pane.leftPane {
-    background: #f5f7fa; }
+    background: #585758; }
   .e-pane.rightPane {
     width: 100%;
     background: gray; }
@@ -75,9 +75,10 @@ body {
     margin-bottom: 10px;
     padding-left: 20px; }
 
-.e-treeView li a:link {
+.e-treeView li a:link, .e-treeView li a:visited {
   text-decoration: none;
-  display: block; }
+  display: block;
+  color: #FFF; }
 
 .e-treeView li.focused {
   font-weight: 700; }

@@ -10,7 +10,7 @@
     position: relative;
     background: #FFF;
     &.leftPane {
-        background: rgba(245, 247, 250, 1);
+        background: #585758;
     }
     &.rightPane {
         width: 100%;
@@ -76,9 +76,10 @@
         }
     }
     li {
-        a:link {
+        a:link, a:visited{
             text-decoration: none;
             display: block;
+            color: #FFF;
         }
         &.focused {
             font-weight: 700;

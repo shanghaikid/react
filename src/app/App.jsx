@@ -35,12 +35,24 @@ export default class App extends BaseComponent {
         API.initWS();
 
         API.addWSListener(this);
-        API.wsSend('hello server');
-        API.wsSend('hello server2');
+        API.wsSend('hello server').then(d => {
+            console.log(d);
+        });
+        API.wsSend('hello server2').then(d => {
+            console.log(d);
+        });
+
+        API.wsSend('hello server3').then(d => {
+            console.log(d);
+        });
+
+        API.wsSend('hello server4').then(d => {
+            console.log(d);
+        });
     }
 
-    onData(e) {
-        console.log('onData', e);
+    onData(data) {
+        console.log(data);
     }
 
     getMemoryStat() {

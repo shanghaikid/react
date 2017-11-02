@@ -1,4 +1,6 @@
-let wsConnected = false;
+let wsConnected = false,
+    dataId = 0,
+    requests = new Map();
 
 const API = {
     initWS() {
@@ -11,10 +13,17 @@ const API = {
                     resolve(true);
                 });
             });
-            
+
             // Listen for messages
             this.ws.addEventListener('message', event => {
-                this._dispatch(event);
+                let data = JSON.parse(event.data);
+
+                if (requests.has(data.id)) {
+                    let resolver = requests.get(data.id);
+                    resolver(data);
+                }
+                // dispatch
+                this._dispatch(data);
             });
 
             wsConnected = true;
@@ -22,8 +31,12 @@ const API = {
     },
 
     wsSend(data) {
-        return Promise.all([this.wsOPenPromise]).then(() => {
-            this.ws.send(data);
+        return new Promise(resolver => {
+            Promise.all([this.wsOPenPromise]).then(() => {
+                let id = dataId++;
+                this.ws.send(JSON.stringify({id, data}));
+                requests.set(id, resolver);
+            });
         });
     },
 

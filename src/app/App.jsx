@@ -6,6 +6,7 @@ import TreeView from 'components/Layout/TreeView';
 import Switch from 'components/Layout/Switch';
 import BaseComponent from 'components/BaseComponent';
 import WindowMemoryViewer from 'components/Widgets/WindowMemoryViewer';
+import API from './API';
 
 export default class App extends BaseComponent {
     init() {
@@ -31,18 +32,15 @@ export default class App extends BaseComponent {
 
         this.getMemoryStat();
 
-        // Create WebSocket connection.
-        const socket = new WebSocket('ws://localhost:8081');
+        API.initWS();
 
-        // Connection opened
-        socket.addEventListener('open', function (event) {
-            socket.send('Hello Server!');
-        });
+        API.addWSListener(this);
+        API.wsSend('hello server');
+        API.wsSend('hello server2');
+    }
 
-        // Listen for messages
-        socket.addEventListener('message', function (event) {
-            console.log('Message from server ', event.data);
-        });
+    onData(e) {
+        console.log('onData', e);
     }
 
     getMemoryStat() {

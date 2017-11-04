@@ -18,6 +18,7 @@ export default function withTooltip(Component) {
             super.init(...props);
             this.onTooltipMouseEnter = this.onTooltipMouseEnter.bind(this);
             this.onTooltipMouseLeave = this.onTooltipMouseLeave.bind(this);
+            this.abc = Math.random();
         }
 
         componentDidMount(...args) {
@@ -29,7 +30,7 @@ export default function withTooltip(Component) {
             if (!tooltipContainer) {
                 tooltipContainer = document.createElement('tooltip');
                 tooltipContainer.className = 'tooltip';
-
+ 
                 document.body.appendChild(tooltipContainer);
             }
             // assign it to component local prop
@@ -42,7 +43,6 @@ export default function withTooltip(Component) {
         bindEvents() {
             this.domNode.addEventListener('mouseenter', this);
             this.domNode.addEventListener('mouseleave', this);
-
         }
 
         componentWillUnmount(...args) {
@@ -104,6 +104,7 @@ export default function withTooltip(Component) {
             this.clearTimeout();
             const pos = this.getTooltipPos(),
                 newProps = {
+                    tooltip: this.props.tooltip,
                     state: States[this.props.state],
                     onMouseEnter: this.onTooltipMouseEnter,
                     onMouseLeave: this.onTooltipMouseLeave

@@ -29,6 +29,8 @@ export default class ToolTip extends BaseComponent {
                 opacity
             });
 
+        console.log(tooltip)
+
         return (<div onMouseEnter={this.handleEvent} onMouseOver={this.handleEvent} onMouseLeave={this.handleEvent} className={cls} style={tooltip ? style : defaultStyle} dangerouslySetInnerHTML={{__html: tooltip}} />)
     }
 }

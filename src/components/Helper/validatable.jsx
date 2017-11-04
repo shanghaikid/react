@@ -36,7 +36,7 @@ export default function validatable(Component) {
         componentWillReceiveProps(nextProps) {
             super.componentWillReceiveProps && super.componentWillReceiveProps(nextProps);
 
-            const { disabled, inputValue} = this.props,
+            const { disabled, inputValue } = this.props,
                 nextDisabled = nextProps.disabled === true && disabled === false,
                 nextEnabled = nextProps.disabled === false && disabled === true,
                 valueChanged = nextProps.inputValue !== inputValue;

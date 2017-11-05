@@ -53,7 +53,6 @@ export default class BaseComponent extends Component {
         this.init(...args);
         this.register(...args);
         this.postRegister(...args);
-                    console.log('init', this.abc, this.componentId);
 
     }
 

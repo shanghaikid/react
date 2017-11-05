@@ -5,20 +5,16 @@ import Tooltip from '../Widgets/Tooltip';
 import { States } from '../../Constants';
 
 // shared tooltip state
-let tooltipTimeout = null;
+let tooltipTimeout = null,
+    register = new WeakMap(); 
 
 // withTooltip
 export default function withTooltip(Component) {
     class ComponentWithTooltip extends Component {
-        get focused() {
-            return this.domNode.contains(document.activeElement);
-        }
-
         init(...props) {
             super.init(...props);
             this.onTooltipMouseEnter = this.onTooltipMouseEnter.bind(this);
             this.onTooltipMouseLeave = this.onTooltipMouseLeave.bind(this);
-            this.abc = Math.random();
         }
 
         componentDidMount(...args) {
@@ -36,11 +32,13 @@ export default function withTooltip(Component) {
             // assign it to component local prop
             this.tooltipContainer = tooltipContainer;
 
+
             // bind events
             this.bindEvents();
         }
 
         bindEvents() {
+            this.domNode = ReactDOM.findDOMNode(this);
             this.domNode.addEventListener('mouseenter', this);
             this.domNode.addEventListener('mouseleave', this);
         }
@@ -48,8 +46,7 @@ export default function withTooltip(Component) {
         componentWillUnmount(...args) {
             super.componentWillUnmount && super.componentWillUnmount(...args);
             document.body.removeChild(this.tooltipContainer);
-            this.domNode.removeEventListener('mouseenter', this);
-            this.domNode.removeEventListener('mouseleave', this);
+            document.body.removeListener('mousemove', this);
         }
 
         getTooltipPos() {
@@ -141,15 +138,6 @@ export default function withTooltip(Component) {
                 window.clearTimeout(tooltipTimeout);
                 tooltipTimeout = null;
             }
-        }
-
-        render() {
-            return (
-                    <Component
-                    {...this.props}
-                    ref={this.processRef}
-                    />
-            );
         }
     }
 

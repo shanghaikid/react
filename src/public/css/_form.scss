@@ -11,10 +11,10 @@
         color: #999;
     }
     &.error {
-        border: 1px #C30 solid;
+        border: 1px #F44336 solid;
     }
     &.missing {
-        border: 1px rgb(231, 231, 6) solid;
+        border: 1px #FFEB3B solid;
     }
     &[disabled] {
         color: #CCC;

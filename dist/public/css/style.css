@@ -98,9 +98,9 @@ body {
   .e-textInput::placeholder {
     color: #999; }
   .e-textInput.error {
-    border: 1px #C30 solid; }
+    border: 1px #F44336 solid; }
   .e-textInput.missing {
-    border: 1px #e7e706 solid; }
+    border: 1px #FFEB3B solid; }
   .e-textInput[disabled] {
     color: #CCC;
     border: 1px #CCC solid; }
@@ -159,7 +159,7 @@ body {
   margin-right: 10px; }
 
 .e-tooltip {
-  background: #ffffca;
+  background: #FFFDE7;
   color: #000023;
   font-size: 12px;
   overflow-y: auto; }

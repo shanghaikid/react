@@ -10,8 +10,8 @@ export class TextInputView extends BaseComponent {
     }
 
     render() {
-        const { placeholder, type, disabled, name, mod, inputValue, autocomplete} = this.props,
-            cls = getClsName(this.className, mod)
+        const { placeholder, type, disabled, name, state, inputValue, autocomplete} = this.props,
+            cls = getClsName(this.className, state)
 
         return (
             <input ref={input => this.domNode = input}
@@ -39,7 +39,7 @@ TextInputView.defaultProps = {
 };
 
 TextInputView.propTypes = {
-    mod: PropTypes.string,
+    state: PropTypes.string,
     placeholder: PropTypes.string,
     type: PropTypes.string,
     disabled: PropTypes.bool,

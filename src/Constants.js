@@ -8,5 +8,6 @@ export const zIndexs = {
 export const States = {
     NORMAL: 'normal',
     WARNING:　'warning',
-    ERROR: 'error'
+    ERROR: 'error',
+    MISSING: 'missing'
 }

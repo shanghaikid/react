@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { isEmpty } from '../../utils';
+import { States } from '../../Constants';
 
 const initState = {
     message: '',
@@ -92,7 +93,7 @@ export default function validatable(Component) {
             const { required, onValidated } = this.props,
                 isValueEmpty = isEmpty(inputValue),
                 notValid = !this.isValid(inputValue),
-                mod = (isValueEmpty && required) ? 'missing' : notValid ? 'error' : '',
+                mod = (isValueEmpty && required) ? States.MISSING : notValid ? States.ERROR : '',
                 message = this.getMessage(mod);
 
             this.setState({ mod, message }, () => {
@@ -102,6 +103,7 @@ export default function validatable(Component) {
 
         render() {
             const newProps = {
+                state: this.state.mod,
                 mod: this.state.mod,
                 onBlur: this.onBlur,
                 onFocus: this.onFocus,

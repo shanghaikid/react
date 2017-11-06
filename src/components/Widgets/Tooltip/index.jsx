@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from '../../BaseComponent';
 import PropTypes from 'prop-types';
-import { States, zIndexs} from '../../../Constants';
+import { zIndexs } from '../../../Constants';
 import { getClsName } from '../../../utils';
 
 export default class ToolTip extends BaseComponent {
@@ -42,7 +42,7 @@ ToolTip.defaultProps = {
     maxWidth: 200,
     minHeight: 20,
     maxHeight: 100,
-    state: 'normal',
+    state: 'NORMAL',
     padding: 5,
     zIndex: zIndexs.Tooltip
 };

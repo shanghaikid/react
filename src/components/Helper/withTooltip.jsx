@@ -1,7 +1,6 @@
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import Tooltip from '../Widgets/Tooltip';
-import { States } from '../../Constants';
 
 // shared tooltip state
 let tooltipTimeout = null,
@@ -35,6 +34,8 @@ export default function withTooltip(Component) {
 
         bindEvents() {
             this.domNode = ReactDOM.findDOMNode(this);
+            // componentDidMount will be call multiple times if using in higher order way
+            // so we need to avoid register multiple same dom nodes
             if (!register.has(this.domNode)) {
                 this.domNode.addEventListener('mouseenter', this);
                 this.domNode.addEventListener('mouseleave', this);
@@ -98,15 +99,7 @@ export default function withTooltip(Component) {
 
         onMouseEnter(e) {
             this.clearTimeout();
-            const pos = this.getTooltipPos(),
-                newProps = {
-                    tooltip: this.props.tooltip,
-                    state: States[this.props.state],
-                    onMouseEnter: this.onTooltipMouseEnter,
-                    onMouseLeave: this.onTooltipMouseLeave
-                };
-
-            ReactDom.render(<Tooltip {...this.props} {...newProps} {...pos}/>, this.tooltipContainer);
+            this.renderTooltip();
         }
 
         onMouseLeave(e) {
@@ -129,6 +122,7 @@ export default function withTooltip(Component) {
                 tooltipTimeout = setTimeout(() => {
                     ReactDom.render(<Tooltip {...this.props} tooltip="" />, this.tooltipContainer);
                 }, this.props.tooltipCanBeEntered ? 300: 1);
+                this._tooltipShowing = false;
             }
         }
 
@@ -137,6 +131,28 @@ export default function withTooltip(Component) {
                 window.clearTimeout(tooltipTimeout);
                 tooltipTimeout = null;
             }
+        }
+
+        renderTooltip() {
+            if (this.domNode) {
+                const pos = this.getTooltipPos(),
+                    newProps = {
+                        tooltip: this.props.tooltip,
+                        state: this.props.state,
+                        onMouseEnter: this.onTooltipMouseEnter,
+                        onMouseLeave: this.onTooltipMouseLeave
+                    };
+
+                ReactDom.render(<Tooltip {...this.props} {...newProps} {...pos}/>, this.tooltipContainer);
+                this._tooltipShowing = true;
+            }
+        }
+
+        render() {
+            if (this._tooltipShowing) {
+                this.renderTooltip();
+            }
+            return super.render();
         }
     }
 
@@ -151,7 +167,7 @@ export default function withTooltip(Component) {
         },
         tooltipCanBeEntered: false,
         tooltipPosition: 'after',
-        state: 'NORMAL'
+        state: 'normal'
     }, Tooltip.defaultProps, Component.defaultProps);
 
     ComponentWithTooltip.propTypes = Object.assign({

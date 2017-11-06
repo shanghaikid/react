@@ -163,6 +163,9 @@ body {
   color: #000023;
   font-size: 12px;
   overflow-y: auto; }
+  .e-tooltip.error {
+    background: #F50057;
+    color: #FFF; }
 
 [data-tooltip] {
   position: relative; }

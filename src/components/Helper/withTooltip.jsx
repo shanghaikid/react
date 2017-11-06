@@ -1,12 +1,11 @@
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
-import { isEmpty } from '../../utils';
 import Tooltip from '../Widgets/Tooltip';
 import { States } from '../../Constants';
 
 // shared tooltip state
 let tooltipTimeout = null,
-    register = new WeakMap(); 
+    register = new WeakMap();
 
 // withTooltip
 export default function withTooltip(Component) {
@@ -31,16 +30,16 @@ export default function withTooltip(Component) {
             }
             // assign it to component local prop
             this.tooltipContainer = tooltipContainer;
-
-
-            // bind events
             this.bindEvents();
         }
 
         bindEvents() {
             this.domNode = ReactDOM.findDOMNode(this);
-            this.domNode.addEventListener('mouseenter', this);
-            this.domNode.addEventListener('mouseleave', this);
+            if (!register.has(this.domNode)) {
+                this.domNode.addEventListener('mouseenter', this);
+                this.domNode.addEventListener('mouseleave', this);
+                register.set(this.domNode);
+            }
         }
 
         componentWillUnmount(...args) {

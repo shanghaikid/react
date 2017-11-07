@@ -2,13 +2,13 @@
     width: 200px;
     height: 28px;
     line-height: 28px;
-    border: 1px #585858 solid;
+    border: 1px $input-border-color solid;
     padding: 1px 2px;
     &:focus {
-        outline: 1px #585858 solid;
+        outline: 1px $input-border-color solid;
     }
     &::placeholder {
-        color: #999;
+        color: $input-placeholder-color;
     }
     &.error {
         border: 1px #F44336 solid;
@@ -17,8 +17,8 @@
         border: 1px #FFEB3B solid;
     }
     &[disabled] {
-        color: #CCC;
-        border: 1px #CCC solid;
+        color: $disabled-font-color;
+        border: 1px $disabled-font-color solid;
     }
 }
 
@@ -26,8 +26,8 @@
     position: relative;
     width: 205px;
     .e-dropdownItem {
-        border: 1px #585858 solid;
-        background: #FFF;
+        border: 1px $input-border-color solid;
+        background: white;
         height: 28px;
         line-height: 28px;
         width: 204px;
@@ -45,15 +45,15 @@
         }
     }
     .e-placeholder {
-        color: #999;
+        color: $input-placeholder-color;
     }
     .e-dropdownWrapper {
         position: absolute;
         left: 0;
     }
     &[disabled] {
-        color: #CCC;
-        border: 1px #CCC solid;
+        color: $disabled-font-color;
+        border: 1px $disabled-font-color solid;
         pointer-events: 'none';
     }
 }

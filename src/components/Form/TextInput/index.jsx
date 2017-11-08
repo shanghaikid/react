@@ -11,7 +11,7 @@ export class TextInputView extends BaseComponent {
 
     render() {
         const { placeholder, type, disabled, name, state, inputValue, autocomplete} = this.props,
-            cls = getClsName(this.className, state)
+            cls = getClsName(this.className, state);
 
         return (
             <input ref={input => this.domNode = input}

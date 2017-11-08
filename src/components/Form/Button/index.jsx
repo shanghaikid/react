@@ -8,7 +8,7 @@ export class ButtonView extends BaseComponent {
         this.baseClassName = `button`;
     }
 
-   onClick(e) {
+    onClick(e) {
         const {onClicked} = this.props;
 
         if (onClicked) {

@@ -13,8 +13,12 @@ body {
     display: none; }
   body input {
     font-size: .75rem; }
+    body input[disabled] {
+      pointer-events: none; }
   body small {
     font-size: .6rem; }
+  body button[disabled] {
+    pointer-events: none; }
 
 .e-borderContainer {
   display: flex;

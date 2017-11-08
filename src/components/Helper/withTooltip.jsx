@@ -30,16 +30,18 @@ export default function withTooltip(Component) {
             // assign it to component local prop
             this.tooltipContainer = tooltipContainer;
             this.bindEvents();
+
+            this.displayValue = window.getComputedStyle(this.domNode, null).getPropertyValue('display');
         }
 
         bindEvents() {
-            this.domNode = ReactDOM.findDOMNode(this);
+            this.wrapNode = ReactDOM.findDOMNode(this);
             // componentDidMount will be call multiple times if using in higher order way
             // so we need to avoid register multiple same dom nodes
-            if (!register.has(this.domNode)) {
-                this.domNode.addEventListener('mouseenter', this);
-                this.domNode.addEventListener('mouseleave', this);
-                register.set(this.domNode);
+            if (!register.has(this.wrapNode)) {
+                this.wrapNode.addEventListener('mouseenter', this);
+                this.wrapNode.addEventListener('mouseleave', this);
+                register.set(this.wrapNode);
             }
         }
 
@@ -50,7 +52,7 @@ export default function withTooltip(Component) {
         }
 
         getTooltipPos() {
-            let {x, y, width, height} = this.domNode.getBoundingClientRect(),
+            let {x, y, width, height} = this.wrapNode.getBoundingClientRect(),
                 {scrollTop, scrollLeft} = document.documentElement,
                 {tooltipPosition, tooltipPositions, minWidth:tooltipWidth, minHeight:tooltipHeight, padding} = this.props;
 
@@ -134,7 +136,7 @@ export default function withTooltip(Component) {
         }
 
         renderTooltip() {
-            if (this.domNode) {
+            if (this.wrapNode) {
                 const pos = this.getTooltipPos(),
                     newProps = {
                         tooltip: this.props.tooltip,
@@ -152,7 +154,11 @@ export default function withTooltip(Component) {
             if (this._tooltipShowing) {
                 this.renderTooltip();
             }
-            return super.render();
+            const style = {
+                display: this.displayValue
+            };
+
+            return <div style={style}><Component ref={this.processRef}  {...this.props} /></div>;
         }
     }
 

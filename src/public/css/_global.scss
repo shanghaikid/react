@@ -15,8 +15,16 @@ body {
     }
     input {
         font-size: .75rem;
+        &[disabled] {
+            pointer-events: none;
+        }
     }
     small {
         font-size: .6rem
+    }
+    button {
+        &[disabled] {
+            pointer-events: none;
+        }
     }
 }

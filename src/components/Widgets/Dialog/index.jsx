@@ -96,8 +96,7 @@ DialogView.defaultProps = {
     closeBtnLabel: 'Close',
     isOpen: false,
     open: () => {},
-    close: () => {},
-    styleObj: {},
+    close: () => {}
 };
 
 DialogView.propTypes = {

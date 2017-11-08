@@ -25,6 +25,7 @@ export default function popupable(Component) {
 
             const {isOpen} = this.props,
                 nextOpen = nextProps.isOpen === true && isOpen === false;
+                
 
             if (nextOpen)  {
                 this.setState({
@@ -34,7 +35,11 @@ export default function popupable(Component) {
         }
 
         render() {
-            return (<Component {...this.props} zIndex={this.state.zIndex} ref={this.processRef.bind(this)} />);
+            const newProps = {
+                styleObj : {zIndex: this.state.zIndex},
+                zIndex: this.state.zIndex
+            };
+            return (<Component {...this.props} {...newProps} ref={this.processRef.bind(this)} />);
         }
     }
 

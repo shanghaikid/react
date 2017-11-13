@@ -5,10 +5,11 @@ import App from '../app/App';
 import Dialogs from './Dialogs';
 import Forms from './Forms';
 import Tooltips from './Tooltips';
+import Monitoring from './Monitoring';
 
 
 const navDef = [
-    {id: 'mon', label: 'Monitoring', url: '/#mon', component: <Header text="Monitoring" />},
+    {id: 'mon', label: 'Monitoring', url: '/#mon', component: <Monitoring />},
     {id: 'form', label: 'Form Elements', url: '/#form', component: <Forms />},
     {id: 'widgets', label: 'Widgets', expand: true, children: [
         {id: 'dialogs', label: 'Dialogs', url: '/#widgets/dialogs', component: <Dialogs />},

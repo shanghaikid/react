@@ -5,8 +5,8 @@ import {PassThrough} from 'stream';
 
 // create router
 const router = new Router();
-const sse = (event, data) => {
-  return `event:${ event }\ndata: ${ data }\n\n`
+const sse = (dataObj) => {
+  return `data: ${ JSON.stringify(dataObj) }\n\n`
 }
 // root
 router.get('/seed', async function (ctx, next) {
@@ -17,7 +17,11 @@ router.get('/seed', async function (ctx, next) {
     ctx.set('Connection', 'keep-alive');
 
     setInterval(() => {
-        stream.write(sse('a', 'i am testing'));
+        let dataObj = {
+            time: (new Date()).getTime(),
+            value: Math.random()
+        };
+        stream.write(sse(dataObj));
     }, 1000);
 
     ctx.body = stream;

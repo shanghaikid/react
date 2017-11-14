@@ -5,9 +5,13 @@ import BaseComponent from 'components/BaseComponent';
 export default class Monitoring extends BaseComponent {
     init() {
         let source = new EventSource("//localhost:3000/seed");
+        this.state = {
+            data: {time: Date.now(), value: 1}
+        };
+        source.addEventListener('message', e => {
+            let data = JSON.parse(e.data);
 
-        source.addEventListener('message', function(e) {
-            console.log(e.data);
+            this.state.data = data;
         }, false);
 
         source.addEventListener('open', function(e) {
@@ -30,7 +34,7 @@ export default class Monitoring extends BaseComponent {
 
         return (
             <div style={style}>
-                
+                {new Date(this.state.data.time).toLocaleString()} : {this.state.data.value}
             </div>
         );
     }

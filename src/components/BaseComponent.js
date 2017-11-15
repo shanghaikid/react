@@ -83,12 +83,12 @@ export default class BaseComponent extends Component {
         this.componentId = name.charAt(0).toLowerCase() + name.slice(1) + registry[name];
     }
 
-    setState(...args) {
-        if (isObj(args[0])) {
-            args[0] = this.transformState(args[0], '$', this.state);
+    setState(stateObj, then, keep = false) {
+        if (isObj(stateObj) && keep !== true) {
+            stateObj = this.transformState(stateObj, '$', this.state);
         }
 
-        super.setState(...args);
+        super.setState(stateObj, then);
     }
 
     // get state by name

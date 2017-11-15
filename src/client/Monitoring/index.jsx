@@ -9,20 +9,18 @@ export default class Monitoring extends BaseComponent {
             data: {time: Date.now(), value: 1}
         };
         source.addEventListener('message', e => {
-            let data = JSON.parse(e.data);
-
-            this.state.data = data;
+            this.setState({
+                data: JSON.parse(e.data)
+            }, undefined, true);
         }, false);
 
-        source.addEventListener('open', function(e) {
+        source.addEventListener('open', e => {
           // Connection was opened.
-          console.log('it is opened')
+          console.log('it is opened !');
         }, false);
 
-        source.addEventListener('error', function(e) {
-            if (e.readyState == EventSource.CLOSED) {
-                // Connection was closed.
-            }
+        source.addEventListener('error', e => {
+            this.setState({data: {time: Date.now(), value: 'Something wrong, reconnecting.....'}});
         }, false);
     }
 

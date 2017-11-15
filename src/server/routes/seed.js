@@ -8,6 +8,7 @@ const router = new Router();
 const sse = (dataObj) => {
   return `data: ${ JSON.stringify(dataObj) }\n\n`
 }
+
 // root
 router.get('/seed', async function (ctx, next) {
     const stream = new PassThrough();
@@ -16,7 +17,16 @@ router.get('/seed', async function (ctx, next) {
     ctx.set('Cache-Control', 'no-cache');
     ctx.set('Connection', 'keep-alive');
 
-    setInterval(() => {
+    function close() {
+        ctx.res.end();
+        clearInterval(update);
+    }
+
+    ctx.req.on('close', close);
+    ctx.req.on('finish', close);
+    ctx.req.on('error', close);
+
+    let update = setInterval(() => {
         let dataObj = {
             time: (new Date()).getTime(),
             value: Math.random()
@@ -25,8 +35,6 @@ router.get('/seed', async function (ctx, next) {
     }, 1000);
 
     ctx.body = stream;
-
-    console.log(ctx.response.type)
 });
 
 export default router;

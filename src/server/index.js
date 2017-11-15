@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import logger from 'koa-logger';
-import root from './routes/root'
+import root from './routes/root';
+import seed from './routes/seed';
 console.info('Env:', process.env.NODE_ENV);
 
 import WebSocket from 'ws';
@@ -19,6 +20,7 @@ app.use(logger())
         await next();
     })
     .use(root.routes())
+    .use(seed.routes())
     .use(root.allowedMethods())
     .listen(3000);
 

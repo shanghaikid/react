@@ -64,8 +64,6 @@ export default function withTooltip(Component) {
             x = x || rect.left + scrollLeft;
             y = y || rect.top + scrollTop;
 
-            console.log(x, width, height, y, this.wrapNode.getBoundingClientRect())
-
             switch(tooltipPositions[tooltipPosition]) {
                 case 'after':
                     left = x + width;
@@ -97,9 +95,6 @@ export default function withTooltip(Component) {
                     top = y - tooltipHeight - padding * 2;
                     break;
             }
-
-            console.log(left, top)
-
 
             return {left, top};
         }

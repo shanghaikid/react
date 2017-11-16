@@ -20,7 +20,7 @@ export const header_tpl = ({title="serverTemplate", charset="UTF-8", cssHref="pu
     <title>${title}</title>
     <script src="/public/js/react.production.min.js"></script>
     <script src="/public/js/react-dom.production.min.js"></script>
-
+    <script src="/public/js/core.min.js"></script>
     <link rel="stylesheet" type="text/css" href="${cssHref}" />
 </head>`;
 

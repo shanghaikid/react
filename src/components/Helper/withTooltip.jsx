@@ -52,7 +52,8 @@ export default function withTooltip(Component) {
         }
 
         getTooltipPos() {
-            let {x, y, width, height} = this.wrapNode.getBoundingClientRect(),
+            let rect = this.wrapNode.getBoundingClientRect(),
+                {x, y, width, height} = rect,
                 {scrollTop, scrollLeft} = document.documentElement,
                 {tooltipPosition, tooltipPositions, minWidth:tooltipWidth, minHeight:tooltipHeight, padding} = this.props;
 
@@ -60,8 +61,10 @@ export default function withTooltip(Component) {
                 top = -9999;
 
             // correct the scrolling value
-            x = x + scrollLeft;
-            y = y + scrollTop;
+            x = x || rect.left + scrollLeft;
+            y = y || rect.top + scrollTop;
+
+            console.log(x, width, height, y, this.wrapNode.getBoundingClientRect())
 
             switch(tooltipPositions[tooltipPosition]) {
                 case 'after':
@@ -94,6 +97,8 @@ export default function withTooltip(Component) {
                     top = y - tooltipHeight - padding * 2;
                     break;
             }
+
+            console.log(left, top)
 
 
             return {left, top};

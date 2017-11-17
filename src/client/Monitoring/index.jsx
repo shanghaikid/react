@@ -4,24 +4,28 @@ import BaseComponent from 'components/BaseComponent';
 // Dialogs page
 export default class Monitoring extends BaseComponent {
     init() {
-        let source = new EventSource("//localhost:3000/seed");
         this.state = {
             data: {time: Date.now(), value: 1}
         };
-        source.addEventListener('message', e => {
-            this.setState({
-                data: JSON.parse(e.data)
-            }, undefined, true);
-        }, false);
 
-        source.addEventListener('open', e => {
-          // Connection was opened.
-          console.log('it is opened !');
-        }, false);
+        if (window.EventSource) {
+            let source = new EventSource("//localhost:3000/seed");
 
-        source.addEventListener('error', e => {
-            this.setState({data: {time: Date.now(), value: 'Something wrong, reconnecting.....'}});
-        }, false);
+            source.addEventListener('message', e => {
+                this.setState({
+                    data: JSON.parse(e.data)
+                }, undefined, true);
+            }, false);
+
+            source.addEventListener('open', e => {
+              // Connection was opened.
+              console.log('it is opened !');
+            }, false);
+
+            source.addEventListener('error', e => {
+                this.setState({data: {time: Date.now(), value: 'Something wrong, reconnecting.....'}});
+            }, false);
+        }
     }
 
     render() {

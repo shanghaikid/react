@@ -2,6 +2,9 @@
 .e-borderContainer {
     display: flex;
     height: 100vh;
+    @include mobile-only {
+        flex-direction: column;
+    }
 }
 
 // component
@@ -11,16 +14,14 @@
     background: #FFF;
     &.leftPane {
         background: #585758;
+        @include mobile-only {
+            height: auto;
+            background: #FFF;
+        }
     }
     &.rightPane {
         width: 100%;
         background: gray;
-    }
-}
-
-@include mobile-only {
-    .e-pane {
-        
     }
 }
 
@@ -65,6 +66,9 @@
             border-color: transparent;
         }
     }
+    @include mobile-only {
+        display: none;
+    }
 }
 
 // component
@@ -82,7 +86,7 @@
         }
     }
     li {
-        a:link, a:visited{
+        a:link, a:visited {
             text-decoration: none;
             display: block;
             color: #FFF;
@@ -90,11 +94,21 @@
         &.focused {
             font-weight: 700;
         }
+
+        @include mobile-only {
+            a:link, a:visited {
+                color: $font-color;
+            }
+        }
     }
 }
+
 
 // component
 .e-contentPane {
     height: 100%;
     width: 100%;
+    @include mobile-only {
+        overflow: auto;
+    }
 }

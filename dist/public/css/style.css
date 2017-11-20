@@ -23,6 +23,9 @@ body {
 .e-borderContainer {
   display: flex;
   height: 100vh; }
+  @media (max-width: 480px) {
+    .e-borderContainer {
+      flex-direction: column; } }
 
 .e-pane {
   height: 100vh;
@@ -30,6 +33,10 @@ body {
   background: #FFF; }
   .e-pane.leftPane {
     background: #585758; }
+    @media (max-width: 480px) {
+      .e-pane.leftPane {
+        height: auto;
+        background: #FFF; } }
   .e-pane.rightPane {
     width: 100%;
     background: gray; }
@@ -67,6 +74,9 @@ body {
     cursor: not-allowed; }
     .e-splitter.disabled:hover {
       border-color: transparent; }
+  @media (max-width: 480px) {
+    .e-splitter {
+      display: none; } }
 
 .e-treeView ul, .e-treeView li {
   margin: 0;
@@ -87,9 +97,16 @@ body {
 .e-treeView li.focused {
   font-weight: 700; }
 
+@media (max-width: 480px) {
+  .e-treeView li a:link, .e-treeView li a:visited {
+    color: #585858; } }
+
 .e-contentPane {
   height: 100%;
   width: 100%; }
+  @media (max-width: 480px) {
+    .e-contentPane {
+      overflow: auto; } }
 
 .e-textInput {
   width: 200px;
@@ -147,6 +164,9 @@ body {
   max-height: 90%;
   padding: 1rem;
   z-index: 10; }
+  @media (max-width: 480px) {
+    .e-dialog {
+      min-width: 200px; } }
   .e-dialog .e-dialog-header {
     cursor: move; }
   .e-dialog .e-dialog-footer {

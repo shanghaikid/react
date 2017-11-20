@@ -2,10 +2,8 @@ import Koa from 'koa';
 import logger from 'koa-logger';
 import root from './routes/root';
 import seed from './routes/seed';
-console.info('Env:', process.env.NODE_ENV);
-
 import WebSocket from 'ws';
-
+console.info('Env:', process.env.NODE_ENV);
 
 // create koa server
 const app = new Koa(); 

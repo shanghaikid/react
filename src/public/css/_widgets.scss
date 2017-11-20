@@ -8,6 +8,9 @@
     max-height: 90%;
     padding: 1rem;
     z-index: 10;
+    @include mobile-only {
+        min-width: 200px;
+    }
     .e-dialog-header {
         cursor: move;
     }

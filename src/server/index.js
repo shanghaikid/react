@@ -2,6 +2,8 @@ import Koa from 'koa';
 import logger from 'koa-logger';
 import root from './routes/root';
 import seed from './routes/seed';
+import login from './routes/login';
+
 import WebSocket from 'ws';
 console.info('Env:', process.env.NODE_ENV);
 
@@ -17,6 +19,7 @@ app.use(logger())
         }
         await next();
     })
+    .use(login.routes())
     .use(root.routes())
     .use(seed.routes())
     .use(root.allowedMethods())

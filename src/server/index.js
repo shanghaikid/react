@@ -36,7 +36,7 @@ app.use(logger())
         await next();
     })
     .use(async function (ctx, next) {
-        if (ctx.session.ok !== 1) {
+        if (ctx.session.ok !== 1 && ctx.path !=='/login') {
             ctx.redirect('/login');
         }
         if (ctx.session.ok === 1 && ctx.path ==='/login') {
